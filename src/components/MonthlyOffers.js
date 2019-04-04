@@ -5,7 +5,7 @@ import RestaurantCard from './RestaurantCard'
 export default class MonthlyOffers extends Component {
 
   state = {
-    restaurant: []
+    restaurants: []
   }
 
 componentDidMount() {
@@ -27,12 +27,14 @@ componentDidMount() {
     })
   }
 
+
 render () {
   return (
     <div>
-      <h1> View All Monthly Offers Here </h1>
-      {this.renderCards}
+      <h1> View All Monthly Offers </h1>
+      {this.renderCards()}
     </div>
-  );
+  )
 }
-};
+
+}

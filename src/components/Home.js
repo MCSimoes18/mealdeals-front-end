@@ -28,22 +28,53 @@ class Home extends React.Component {
   }
 
   handleSearch = (searchTerm) => {
-    const body = JSON.stringify(searchTerm)
-    return fetch("http://localhost:3000/api/v1/yelp", {
-        method: "POST",
-        headers: {
-        'Accept': 'application/json',
-  'Content-Type': 'application/json',
-       },
-       'body': body
-   })
-    .then(res => res.json())
-    .then(console.log)
-    // .then(res => res = res.businesses.slice(0,8))
-    // .then(res => this.setState({
-    //   search: res
-    // }))
-  }
+   const body = JSON.stringify(searchTerm)
+   return fetch("http://localhost:3000/api/v1/search", {
+       method: "POST",
+       headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+      },
+      'body': body
+  })
+   .then(res => res.json())
+   .then(console.log)
+ }
+
+  // handleSearch = (searchTerm) => {
+  //   const body = JSON.stringify(searchTerm)
+  //   return fetch("http://localhost:3000/api/v1/search", {
+  //       method: "POST",
+  //       headers: {
+  //       'Accept': 'application/json',
+  // 'Content-Type': 'application/json',
+  //      },
+  //      'body': body
+  //  })
+  //   .then(res => res.json())
+  //   .then(console.log)
+  //   // .then(res => res = res.businesses.slice(0,8))
+  //   // .then(res => this.setState({
+  //   //   search: res
+  //   // }))
+  // }
+
+  // handleSearch = (searchTerm) => {
+  //   return fetch("http://localhost:3000/api/v1/yelp", {
+  //       method: "GET",
+  //       headers: {
+  //       'Accept': 'application/json',
+  // 'Content-Type': 'application/json',
+  //      },
+  //  })
+  //   .then(res => res.json())
+  //   .then(console.log)
+  //   // .then(res => res = res.businesses.slice(0,8))
+  //   // .then(res => this.setState({
+  //   //   search: res
+  //   // }))
+  // }
+
 
   mapStateToProps(state) {
   return {

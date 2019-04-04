@@ -7,7 +7,6 @@ function reducer(state = initialState, action, payload) {
   switch (action.type) {
     case "SEARCH":
       return {...state, keyword: action.payload }
-      debugger
     default:
       console.log('default case', state);
       return state;
