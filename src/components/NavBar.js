@@ -6,6 +6,7 @@ const NavBar = (props) => {
     <div className="navbar">
       <NavLink to="/"> Home </NavLink>
       <NavLink to="/MonthlyOffers" restaurants={props.restaurants}> Restaurants of the Month </NavLink>
+      <NavLink to="/Login"> Login </NavLink>
     </div>
   );
 };

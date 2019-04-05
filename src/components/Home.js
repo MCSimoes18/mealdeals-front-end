@@ -5,75 +5,49 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 // Import Components //
 import NavBar from './NavBar';
+import RestaurantCard from './RestaurantCard';
 
 class Home extends React.Component {
 
   state = {
-    term: "",
-    zip: "",
-    restaurants: []
+    cuisine: "",
+    location: "",
+    rests: []
   }
 
   handleChange = (event) => {
-    this.setState({ term: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.dispatch({ type: "SEARCH", payload: this.state.term })
-    this.setState({ term: "" });
-    console.log(this.state.term)
-
-    this.handleSearch(this.state.term)
+    this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.term })
+    this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.term })
+    this.setState({ location: "", cuisine: "" });
+    console.log("cuisine", this.state.cuisine)
+    console.log("location", this.state.location)
+    this.handleSearch(this.state.cuisine, this.state.location)
   }
 
-  handleSearch = (searchTerm) => {
-   const body = JSON.stringify(searchTerm)
+  handleSearch = (cuisine, location) => {
+   const data = {cuisine: cuisine, location: location };
    return fetch("http://localhost:3000/api/v1/search", {
        method: "POST",
        headers: {
        'Accept': 'application/json',
        'Content-Type': 'application/json',
       },
-      'body': body
+      body: JSON.stringify(data),
   })
    .then(res => res.json())
-   .then(console.log)
+   .then(results => {this.setState ({
+     rests: results
+   }, () => console.log("did this work?", this.state.rests))
+  })
+  this.renderSearchCards()
  }
-
-  // handleSearch = (searchTerm) => {
-  //   const body = JSON.stringify(searchTerm)
-  //   return fetch("http://localhost:3000/api/v1/search", {
-  //       method: "POST",
-  //       headers: {
-  //       'Accept': 'application/json',
-  // 'Content-Type': 'application/json',
-  //      },
-  //      'body': body
-  //  })
-  //   .then(res => res.json())
-  //   .then(console.log)
-  //   // .then(res => res = res.businesses.slice(0,8))
-  //   // .then(res => this.setState({
-  //   //   search: res
-  //   // }))
-  // }
-
-  // handleSearch = (searchTerm) => {
-  //   return fetch("http://localhost:3000/api/v1/yelp", {
-  //       method: "GET",
-  //       headers: {
-  //       'Accept': 'application/json',
-  // 'Content-Type': 'application/json',
-  //      },
-  //  })
-  //   .then(res => res.json())
-  //   .then(console.log)
-  //   // .then(res => res = res.businesses.slice(0,8))
-  //   // .then(res => this.setState({
-  //   //   search: res
-  //   // }))
-  // }
 
 
   mapStateToProps(state) {
@@ -83,19 +57,34 @@ class Home extends React.Component {
   console.log("here", state.keyword)
 }
 
-
+renderSearchCards = () => {
+  if (this.state.rests.length == 0) {
+    return null
+  } else {
+    return this.state.rests.businesses.map(rest => {
+      return (
+      <RestaurantCard restaurant={rest} />
+      )
+    }
+  )
+  }
+}
 
   render() {
     return (
       <div>
         <h1> This is my Homepage </h1>
         <form onSubmit={this.handleSubmit}>
-          Keyword: <input type="text" value={this.state.term} onChange={this.handleChange} />
-          Zip Code: <input type="text" value={this.state.zip} onChange={this.handleChange} />
+          Cuisine: <input type="text" value={this.state.cuisine} name="cuisine" onChange={this.handleChange} />
+          Locations: <input type="text" value={this.state.location} name="location" onChange={this.handleChange} />
           <input type="submit" value="Submit" />
         </form>
+
+        {this.renderSearchCards()}
+
       </div>
     );
   };
 }
+
 export default connect()(Home);

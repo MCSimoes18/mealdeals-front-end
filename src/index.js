@@ -10,6 +10,7 @@ import App from './App';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
 import MonthlyOffers from './components/MonthlyOffers';
+import Login from './components/Login';
 import store from './store';
 
 
@@ -18,7 +19,8 @@ ReactDOM.render((
     <Router>
       <NavBar />
       <Route exact path="/" component={Home} />
-      <Route exact path="/MonthlyOffers" component={MonthlyOffers} />
+      <Route exact path="/monthly_offers" component={MonthlyOffers} />
+      <Route exact path="/login" component={Login} />
     </Router>
   </Provider>
 ),
