@@ -1,7 +1,6 @@
 const initialState = {
   location: "",
-  cuisine: ""
-
+  cuisine: "",
 }
 
 function reducer(state = initialState, action, payload) {
