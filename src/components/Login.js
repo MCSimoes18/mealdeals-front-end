@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import RestaurantCard from './RestaurantCard'
 
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     username: "",
     password: ""
@@ -42,6 +43,7 @@ export default class Login extends Component {
     let login_user = json.find( user => user.username === username)
     if (login_user.password === password) {
       console.log("success!")
+      this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
     }
   })
 }
@@ -108,7 +110,9 @@ export default class Login extends Component {
           <br />
         Dont have an account? <NavLink to="/SignUp"> Sign Up Here </NavLink>
           <br />
-        ATTN: RESTAURANTS! Interested in working with us? <NavLink to="/RestaurantSignUp"> Register with us here </NavLink>
+        ATTN: RESTAURANTS! Interested in working with us?
+        <NavLink to="/RestaurantSignUp"> Register with us here </NavLink>
+        <NavLink to="/RestaurantLogin"> Restaurant Login</NavLink>
       </form>
       {
         this.props.errorLogin ?
@@ -120,21 +124,6 @@ export default class Login extends Component {
   )
 }
 
-// showSignUp = () => {
-//   this.setState({
-//     showLogin: false
-//   })
-// }
-
-// formToDisplay = () => {
-//   if (this.state.showLogin == true){
-//     return (this.renderLoginForm())
-//   }
-//   else {
-//     return (this.renderSignUpForm())
-//   }
-// }
-
 render () {
   return (
     <div>
@@ -145,3 +134,4 @@ render () {
 }
 
 }
+export default connect()(Login)

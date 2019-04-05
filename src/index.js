@@ -13,6 +13,7 @@ import MonthlyOffers from './components/MonthlyOffers';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import RestaurantSignUp from './components/RestaurantSignUp';
+import RestaurantLogin from './components/RestaurantLogin';
 import store from './store';
 
 
@@ -25,6 +26,7 @@ ReactDOM.render((
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/restaurantsignup" component={RestaurantSignUp} />
+      <Route exact path="/restaurantlogin" component={RestaurantLogin} />
     </Router>
   </Provider>
 ),

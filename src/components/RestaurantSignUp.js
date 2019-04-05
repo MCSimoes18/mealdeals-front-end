@@ -87,7 +87,6 @@ class RestaurantSignUp extends Component {
       if (this.state.foundBusiness === false){
           return this.renderSearchCards()
       } else {
-        debugger
         return (
           <div>
             <h2> Create Account For:  </h2>
@@ -95,7 +94,7 @@ class RestaurantSignUp extends Component {
             <p>  Address: {restaurant.location.address1} </p>
             <p>  {restaurant.location.city}, {restaurant.location.zip_code} </p>
             <p>  Phone: {restaurant.location.phone} </p>
-            <form>
+            <form onSubmit={() => this.registerRestaurant(restaurant)}>
               <label> Username: </label>
                 <br />
               <input onChange={this.handleChange} type="text"  name="username" placeholder="username" value={this.state.username}/>
@@ -104,6 +103,8 @@ class RestaurantSignUp extends Component {
                 <br />
               <input onChange={this.handleChange} type="password"  name="password" placeholder="password" value={this.state.password}/>
                 <br />
+                <br />
+              <button type="submit">Create Account</button>
             </form>
           </div>
         )
@@ -126,6 +127,42 @@ class RestaurantSignUp extends Component {
       return null
     }
   }
+
+  registerRestaurant(restaurant) {
+    debugger
+      let data = {
+        username: this.state.username,
+        password: this.state.password,
+        name: restaurant.name,
+        alias: restaurant.alias,
+        yelp_id: restaurant.id,
+        image_url: restaurant.image_url,
+        url: restaurant.url,
+        display_phone: restaurant.display_phone,
+        phone: restaurant.phone,
+        price: restaurant.price,
+        rating: restaurant.rating,
+        review_count: restaurant.review_count,
+        address1: restaurant.location.address1,
+        address2: restaurant.location.address2,
+        address3: restaurant.location.address3,
+        city: restaurant.location.city,
+        zip_code: restaurant.location.zip_code,
+        latitude: restaurant.coordinates.latitude,
+        longitude: restaurant.coordinates.longitude,
+      }
+
+     fetch("http://localhost:3000/api/v1/restaurants", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accepts": "application/json"
+        },
+          body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(console.log)
+    }
 
   render() {
     return (

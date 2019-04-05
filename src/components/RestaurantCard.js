@@ -7,22 +7,6 @@ export default class RestaurantCard extends React.Component {
 
   }
 
-  registerRestaurant(business) {
-    let data = {
-      name: business.name
-    }
-     fetch("http://localhost:3000/api/v1/restaurants", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accepts": "application/json"
-          },
-          body: JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(console.log)
-      }
-
     findBusiness = () => {
       this.setState({
         foundBusiness: true

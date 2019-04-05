@@ -50,12 +50,6 @@ class Home extends React.Component {
  }
 
 
-  mapStateToProps(state) {
-    return {
-      keyword: state.keyword,
-    }
-    console.log("here", state.keyword)
-  }
 
   renderSearchCards = () => {
     if (this.state.rests.length == 0) {
@@ -71,9 +65,10 @@ class Home extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
-        <h1> This is my Homepage </h1>
+        <h1> This is my homepage </h1>
         <form onSubmit={this.handleSubmit}>
           Cuisine: <input type="text" value={this.state.cuisine} name="cuisine" onChange={this.handleChange} />
           Locations: <input type="text" value={this.state.location} name="location" onChange={this.handleChange} />
@@ -87,4 +82,13 @@ class Home extends React.Component {
   };
 }
 
-export default connect()(Home);
+export default connect(mapStateToProps)(Home);
+
+
+function mapStateToProps(state) {
+  return {
+    keyword: state.keyword,
+    current_user: state.current_user
+  }
+  console.log("here", state.keyword)
+}

@@ -1,6 +1,7 @@
 const initialState = {
   location: "",
   cuisine: "",
+  current_user: null
 }
 
 function reducer(state = initialState, action, payload) {
@@ -10,6 +11,9 @@ function reducer(state = initialState, action, payload) {
       return {...state, location: action.payload }
     case "SEARCH_CUISINE":
       return {...state, cuisine: action.payload }
+    case "LOGIN_USER":
+      console.log("testing reducer", action.payload)
+      return {...state, current_user: action.payload }
     default:
       console.log('default case', state);
       return state;
