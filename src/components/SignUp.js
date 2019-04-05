@@ -8,7 +8,7 @@ export default class SignUp extends Component {
     password: "",
     email: "",
     password: "",
-    showLogin: true
+    showLogin: true,
   }
 
   handleChange = (e) => {
@@ -59,14 +59,14 @@ export default class SignUp extends Component {
           <input onChange={this.handleChange} type="password"  name="password" placeholder="8-16 characters" value={this.state.password}/><br />
             <br />
             <br />
-            <label>Email: </label>
-              <br />
-            <input onChange={this.handleChange} type="email"  name="email" placeholder="angelica.pickles@gmail.com" value={this.state.email}/><br />
-              <br />
-              <label>Phone: </label>
-                <br />
-              <input onChange={this.handleChange} type="phone"  name="phone" placeholder="(123)-456-7890" value={this.state.phone}/><br />
-                <br />
+          <label>Email: </label>
+            <br />
+          <input onChange={this.handleChange} type="email"  name="email" placeholder="angelica.pickles@gmail.com" value={this.state.email}/><br />
+            <br />
+          <label>Phone: </label>
+            <br />
+          <input onChange={this.handleChange} type="phone"  name="phone" placeholder="(123)-456-7890" value={this.state.phone}/><br />
+            <br />
           <button type="submit">Create Account</button>
         </form>
       </div>
@@ -76,13 +76,10 @@ export default class SignUp extends Component {
   render () {
     return (
       <div>
+        <h1> Ready For Exclusive Offers! </h1>
         {this.renderSignUpForm()}
       </div>
     )
   }
-
-
-
-
 
 }

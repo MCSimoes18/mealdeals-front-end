@@ -107,6 +107,8 @@ export default class Login extends Component {
           <br />
           <br />
         Dont have an account? <NavLink to="/SignUp"> Sign Up Here </NavLink>
+          <br />
+        ATTN: RESTAURANTS! Interested in working with us? <NavLink to="/RestaurantSignUp"> Register with us here </NavLink>
       </form>
       {
         this.props.errorLogin ?
@@ -118,11 +120,11 @@ export default class Login extends Component {
   )
 }
 
-showSignUp = () => {
-  this.setState({
-    showLogin: false
-  })
-}
+// showSignUp = () => {
+//   this.setState({
+//     showLogin: false
+//   })
+// }
 
 // formToDisplay = () => {
 //   if (this.state.showLogin == true){
@@ -136,6 +138,7 @@ showSignUp = () => {
 render () {
   return (
     <div>
+      <h1> Login </h1>
       {this.renderLoginForm()}
     </div>
   )

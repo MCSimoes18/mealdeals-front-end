@@ -51,24 +51,24 @@ class Home extends React.Component {
 
 
   mapStateToProps(state) {
-  return {
-    keyword: state.keyword,
-  }
-  console.log("here", state.keyword)
-}
-
-renderSearchCards = () => {
-  if (this.state.rests.length == 0) {
-    return null
-  } else {
-    return this.state.rests.businesses.map(rest => {
-      return (
-      <RestaurantCard restaurant={rest} />
-      )
+    return {
+      keyword: state.keyword,
     }
-  )
+    console.log("here", state.keyword)
   }
-}
+
+  renderSearchCards = () => {
+    if (this.state.rests.length == 0) {
+      return null
+    } else {
+      return this.state.rests.businesses.map(rest => {
+        return (
+        <RestaurantCard restaurant={rest} />
+        )
+      }
+    )
+    }
+  }
 
   render() {
     return (
