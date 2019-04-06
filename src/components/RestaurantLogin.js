@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import RestaurantCard from './RestaurantCard'
 
 
 class RestaurantLogin extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    redirect: false // in order to redirect to restaurant profile
   }
 
   handleChange = (e) => {
@@ -16,6 +18,14 @@ class RestaurantLogin extends Component {
     })
   }
 
+// use state to know when to re-direct to restaurant homepage
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+//if fields are not empty - call loginUser
   login = (e) => {
     e.preventDefault()
     if (this.state.username !== "" || this.state.password !== "") {
@@ -23,21 +33,29 @@ class RestaurantLogin extends Component {
     }
   }
 
+//find username match. if passwords match dispatch login_user to reducer & update global state for current user. Since user and restaurant login calls the same dispatch - should never be 2 log-ins at a time. Initiates redirect.
   loginUser = (username, password) => {
     console.log("will log in user", username, password);
-      fetch("http://localhost:3000/api/v1/restaurants")
-      .then(res => res.json())
-      .then( json => {
-      let login_user = json.find( rest => rest.username === username)
-      if (login_user.password === password) {
-        console.log("success!")
-        this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
-      }
-    })
-  console.log("hi", this.state.current_user)
-
+    fetch("http://localhost:3000/api/v1/restaurants")
+    .then(res => res.json())
+    .then( json => {
+    let login_user = json.find( rest => rest.username === username)
+    if (login_user.password === password) {
+      console.log("success!")
+      this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
+      this.setRedirect()
+    }
+  })
 }
 
+//listening in render() for changed state
+renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/RestaurantHome' />
+    }
+  }
+
+//login form
   renderLoginForm = () => {
   return (
     <div className="login">
@@ -67,14 +85,15 @@ class RestaurantLogin extends Component {
   )
 }
 
-render () {
-  return (
-    <div>
-      <h1> Login </h1>
-      {this.renderLoginForm()}
-    </div>
-  )
-}
+  render () {
+    return (
+      <div>
+        <h1> Login </h1>
+        {this.renderLoginForm()}
+        {this.renderRedirect()}
+      </div>
+    )
+  }
 
 }
 

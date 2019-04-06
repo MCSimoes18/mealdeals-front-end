@@ -14,6 +14,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import RestaurantSignUp from './components/RestaurantSignUp';
 import RestaurantLogin from './components/RestaurantLogin';
+import RestaurantHome from './components/RestaurantHome';
 import store from './store';
 
 
@@ -27,6 +28,7 @@ ReactDOM.render((
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/restaurantsignup" component={RestaurantSignUp} />
       <Route exact path="/restaurantlogin" component={RestaurantLogin} />
+      <Route exact path="/restauranthome" component={RestaurantHome} />
     </Router>
   </Provider>
 ),
