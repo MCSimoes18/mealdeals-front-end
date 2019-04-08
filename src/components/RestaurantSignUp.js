@@ -161,9 +161,7 @@ class RestaurantSignUp extends Component {
           body: JSON.stringify(data)
         })
         .then(res => res.json())
-        .then(res => {
-          this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
-        })
+        .then(console.log)
     }
 
   render() {
@@ -173,7 +171,7 @@ class RestaurantSignUp extends Component {
           {this.renderCardsOrForm(this.state.business, this.state.foundBusiness)}
         </div>
       );
-    };
+  };
   }
 
 export default connect()(RestaurantSignUp);

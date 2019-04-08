@@ -1,94 +1,462 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-// Redux //
-import { connect } from 'react-redux';
-// Import Components //
-import NavBar from './NavBar';
-import RestaurantCard from './RestaurantCard';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  List,
+  Menu,
+  Responsive,
+  Segment,
+  Sidebar,
+  Visibility,
+} from 'semantic-ui-react'
 
-class Home extends React.Component {
+// Heads up!
+// We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
+// For more advanced usage please check Responsive docs under the "Usage" section.
+const getWidth = () => {
+  const isSSR = typeof window === 'undefined'
 
-  state = {
-    cuisine: "",
-    location: "",
-    rests: []
-  }
+  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
+}
 
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
+/* eslint-disable react/no-multi-comp */
+/* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
+ * such things.
+ */
+const HomepageHeading = ({ mobile }) => (
+  <Container text>
+    <Header
+      as='h1'
+      content='Meal Steals'
+      inverted
+      style={{
+        fontSize: mobile ? '2em' : '4em',
+        fontWeight: 'normal',
+        marginBottom: -20,
+        marginTop: mobile ? '1.5em' : '3em',
+      }}
+    />
+    <Header
+      as='h2'
+      content='check-in at local restaurants for exclusive future offers.'
+      inverted
+      style={{
+        fontSize: mobile ? '1.5em' : '1.7em',
+        fontWeight: 'normal',
+        marginTop: mobile ? '0.5em' : '1.5em',
+      }}
+    />
+      <form onSubmit>
+        <label primary size='huge'> Cuisine: <input type="text" primary size='huge' value="" name="cuisine" /> </label>
+        Locations: <input type="text" primary size='huge' value="" name="location" />
+        <Button primary size='medium' type="submit" value="Submit">
+          Search
+          <Icon name='right arrow' />
+        </Button>
+      </form>
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.term })
-    this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.term })
-    this.setState({ location: "", cuisine: "" });
-    console.log("cuisine", this.state.cuisine)
-    console.log("location", this.state.location)
-    this.handleSearch(this.state.cuisine, this.state.location)
-  }
+  </Container>
+)
 
-  handleSearch = (cuisine, location) => {
-   const data = {cuisine: cuisine, location: location };
-   return fetch("http://localhost:3000/api/v1/search", {
-       method: "POST",
-       headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-  })
-   .then(res => res.json())
-   .then(results => {this.setState ({
-     rests: results
-   }, () => console.log("did this work?", this.state.rests))
-  })
-  this.renderSearchCards()
- }
+HomepageHeading.propTypes = {
+  mobile: PropTypes.bool,
+}
 
+/* Heads up!
+ * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
+ * It can be more complicated, but you can create really flexible markup.
+ */
+class DesktopContainer extends Component {
+  state = {}
 
-
-  renderSearchCards = () => {
-    if (this.state.rests.length == 0) {
-      return null
-    } else {
-      return this.state.rests.businesses.map(rest => {
-        return (
-        <RestaurantCard restaurant={rest} />
-        )
-      }
-    )
-    }
-  }
+  hideFixedMenu = () => this.setState({ fixed: false })
+  showFixedMenu = () => this.setState({ fixed: true })
 
   render() {
-    console.log(this.props)
+    const { children } = this.props
+    const { fixed } = this.state
+
     return (
-      <div>
-        <h1> This is my homepage </h1>
-        <form onSubmit={this.handleSubmit}>
-          Cuisine: <input type="text" value={this.state.cuisine} name="cuisine" onChange={this.handleChange} />
-          Locations: <input type="text" value={this.state.location} name="location" onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
-        </form>
+      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+        <Visibility
+          once={false}
+          onBottomPassed={this.showFixedMenu}
+          onBottomPassedReverse={this.hideFixedMenu}
+        >
+          <Segment
+            inverted
+            textAlign='center'
+            style={{ minHeight: 700, padding: '1em 0em' }}
+            vertical
+          >
+            <Menu
+              fixed={fixed ? 'top' : null}
+              inverted={!fixed}
+              pointing={!fixed}
+              secondary={!fixed}
+              size='large'
+            >
+              <Container>
+                <Menu.Item as='a' active>
+                  Home
+                </Menu.Item>
+                <Menu.Item as='a'>Work</Menu.Item>
+                <Menu.Item as='a'>Company</Menu.Item>
+                <Menu.Item as='a'>Careers</Menu.Item>
+                <Menu.Item position='right'>
+                  <Button as='a' inverted={!fixed}>
+                    Log in
+                  </Button>
+                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                    Sign Up
+                  </Button>
+                </Menu.Item>
+              </Container>
+            </Menu>
+            <HomepageHeading />
+          </Segment>
+        </Visibility>
 
-        {this.renderSearchCards()}
-
-      </div>
-    );
-  };
-}
-
-export default connect(mapStateToProps)(Home);
-
-
-function mapStateToProps(state) {
-  return {
-    keyword: state.keyword,
-    current_user: state.current_user
+        {children}
+      </Responsive>
+    )
   }
-  console.log("here", state.keyword)
 }
+
+DesktopContainer.propTypes = {
+  children: PropTypes.node,
+}
+
+class MobileContainer extends Component {
+  state = {}
+
+  handleSidebarHide = () => this.setState({ sidebarOpened: false })
+
+  handleToggle = () => this.setState({ sidebarOpened: true })
+
+  render() {
+    const { children } = this.props
+    const { sidebarOpened } = this.state
+
+    return (
+      <Responsive
+        as={Sidebar.Pushable}
+        getWidth={getWidth}
+        maxWidth={Responsive.onlyMobile.maxWidth}
+      >
+        <Sidebar
+          as={Menu}
+          animation='push'
+          inverted
+          onHide={this.handleSidebarHide}
+          vertical
+          visible={sidebarOpened}
+        >
+          <Menu.Item as='a' active>
+            Home
+          </Menu.Item>
+          <Menu.Item as='a'>Work</Menu.Item>
+          <Menu.Item as='a'>Company</Menu.Item>
+          <Menu.Item as='a'>Careers</Menu.Item>
+          <Menu.Item as='a'>Log in</Menu.Item>
+          <Menu.Item as='a'>Sign Up</Menu.Item>
+        </Sidebar>
+
+        <Sidebar.Pusher dimmed={sidebarOpened}>
+          <Segment
+            inverted
+            textAlign='center'
+            style={{ minHeight: 350, padding: '1em 0em' }}
+            vertical
+          >
+            <Container>
+              <Menu inverted pointing secondary size='large'>
+                <Menu.Item onClick={this.handleToggle}>
+                  <Icon name='sidebar' />
+                </Menu.Item>
+                <Menu.Item position='right'>
+                  <Button as='a' inverted>
+                    Log in
+                  </Button>
+                  <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
+                    Sign Up
+                  </Button>
+                </Menu.Item>
+              </Menu>
+            </Container>
+            <HomepageHeading mobile />
+          </Segment>
+
+          {children}
+        </Sidebar.Pusher>
+      </Responsive>
+    )
+  }
+}
+
+MobileContainer.propTypes = {
+  children: PropTypes.node,
+}
+
+const ResponsiveContainer = ({ children }) => (
+  <div>
+    <DesktopContainer>{children}</DesktopContainer>
+    <MobileContainer>{children}</MobileContainer>
+  </div>
+)
+
+ResponsiveContainer.propTypes = {
+  children: PropTypes.node,
+}
+
+const HomepageLayout = () => (
+  <ResponsiveContainer>
+    <Segment style={{ padding: '8em 0em' }} vertical>
+      <Grid container stackable verticalAlign='middle'>
+        <Grid.Row>
+          <Grid.Column width={8}>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+              We Help Companies and Companions
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>
+              We can give your company superpowers to do things that they never thought possible.
+              Let us delight your customers and empower your needs... through pure data analytics.
+            </p>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+              We Make Bananas That Can Dance
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>
+              Yes that's right, you thought it was the stuff of dreams, but even bananas can be
+              bioengineered.
+            </p>
+          </Grid.Column>
+          <Grid.Column floated='right' width={6}>
+            <Image bordered rounded size='large' src='/images/wireframe/white-image.png' />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column textAlign='center'>
+            <Button size='huge'>Check Them Out</Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Segment>
+    <Segment style={{ padding: '0em' }} vertical>
+      <Grid celled='internally' columns='equal' stackable>
+        <Grid.Row textAlign='center'>
+          <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+              "What a Company"
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>That is what they all say about us</p>
+          </Grid.Column>
+          <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+              "I shouldn't have gone with their competitor."
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>
+              <Image avatar src='/images/avatar/large/nan.jpg' />
+              <b>Nan</b> Chief Fun Officer Acme Toys
+            </p>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Segment>
+    <Segment style={{ padding: '8em 0em' }} vertical>
+      <Container text>
+        <Header as='h3' style={{ fontSize: '2em' }}>
+          Breaking The Grid, Grabs Your Attention
+        </Header>
+        <p style={{ fontSize: '1.33em' }}>
+          Instead of focusing on content creation and hard work, we have learned how to master the
+          art of doing nothing by providing massive amounts of whitespace and generic content that
+          can seem massive, monolithic and worth your attention.
+        </p>
+        <Button as='a' size='large'>
+          Read More
+        </Button>
+        <Divider
+          as='h4'
+          className='header'
+          horizontal
+          style={{ margin: '3em 0em', textTransform: 'uppercase' }}
+        >
+          <a href='#'>Case Studies</a>
+        </Divider>
+        <Header as='h3' style={{ fontSize: '2em' }}>
+          Did We Tell You About Our Bananas?
+        </Header>
+        <p style={{ fontSize: '1.33em' }}>
+          Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but
+          it's really true. It took years of gene splicing and combinatory DNA research, but our
+          bananas can really dance.
+        </p>
+        <Button as='a' size='large'>
+          I'm Still Quite Interested
+        </Button>
+      </Container>
+    </Segment>
+    <Segment inverted vertical style={{ padding: '5em 0em' }}>
+      <Container>
+        <Grid divided inverted stackable>
+          <Grid.Row>
+            <Grid.Column width={3}>
+              <Header inverted as='h4' content='About' />
+              <List link inverted>
+                <List.Item as='a'>Sitemap</List.Item>
+                <List.Item as='a'>Contact Us</List.Item>
+                <List.Item as='a'>Religious Ceremonies</List.Item>
+                <List.Item as='a'>Gazebo Plans</List.Item>
+              </List>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header inverted as='h4' content='Services' />
+              <List link inverted>
+                <List.Item as='a'>Banana Pre-Order</List.Item>
+                <List.Item as='a'>DNA FAQ</List.Item>
+                <List.Item as='a'>How To Access</List.Item>
+                <List.Item as='a'>Favorite X-Men</List.Item>
+              </List>
+            </Grid.Column>
+            <Grid.Column width={7}>
+              <Header as='h4' inverted>
+                Footer Header
+              </Header>
+              <p>
+                Extra space for a call to action inside the footer that could help re-engage users.
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </Segment>
+  </ResponsiveContainer>
+)
+export default HomepageLayout
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { Component } from 'react';
+// import ReactDOM from 'react-dom';
+// import { BrowserRouter as Router, Route } from 'react-router-dom';
+// // Redux //
+// import { connect } from 'react-redux';
+// // Import Components //
+// import NavBar from './NavBar';
+// import RestaurantCard from './RestaurantCard';
+// import { Card, Button } from 'semantic-ui-react'
+//
+//
+// class Home extends React.Component {
+//
+//   state = {
+//     cuisine: "",
+//     location: "",
+//     rests: []
+//   }
+//
+//   handleChange = (event) => {
+//     this.setState({
+//       [event.target.name]: event.target.value
+//     })
+//   }
+//
+//   handleSubmit = (event) => {
+//     event.preventDefault();
+//     this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.term })
+//     this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.term })
+//     this.setState({ location: "", cuisine: "" });
+//     console.log("cuisine", this.state.cuisine)
+//     console.log("location", this.state.location)
+//     this.handleSearch(this.state.cuisine, this.state.location)
+//   }
+//
+//   handleSearch = (cuisine, location) => {
+//    const data = {cuisine: cuisine, location: location };
+//    return fetch("http://localhost:3000/api/v1/search", {
+//        method: "POST",
+//        headers: {
+//        'Accept': 'application/json',
+//        'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(data),
+//   })
+//    .then(res => res.json())
+//    .then(results => {this.setState ({
+//      rests: results
+//    }, () => console.log("did this work?", this.state.rests))
+//   })
+//   this.renderSearchCards()
+//  }
+//
+//
+//
+//   renderSearchCards = () => {
+//     if (this.state.rests.length == 0) {
+//       return null
+//     } else {
+//       return this.state.rests.businesses.map(rest => {
+//         return (
+//         <RestaurantCard restaurant={rest} />
+//         )
+//       }
+//     )
+//     }
+//   }
+//
+//   render() {
+//     console.log(this.props)
+//     return (
+//       <div>
+//         <h1> This is my homepage </h1>
+//         <form onSubmit={this.handleSubmit}>
+//           Cuisine: <input type="text" value={this.state.cuisine} name="cuisine" onChange={this.handleChange} />
+//           Locations: <input type="text" value={this.state.location} name="location" onChange={this.handleChange} />
+//           <input type="submit" value="Submit" />
+//         </form>
+//
+//         <Card.Group>
+//           {this.renderSearchCards()}
+//         </Card.Group>
+//
+//       </div>
+//     );
+//   };
+// }
+//
+// export default connect(mapStateToProps)(Home);
+//
+//
+// function mapStateToProps(state) {
+//   return {
+//     keyword: state.keyword,
+//     current_user: state.current_user
+//   }
+//
+//   console.log("here", state.keyword)
+// }

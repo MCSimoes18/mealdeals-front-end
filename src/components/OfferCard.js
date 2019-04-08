@@ -63,7 +63,7 @@ class OfferCard extends React.Component {
       offer_id: this.props.offer.id,
       user_id: this.props.current_user.id,
       active: false,
-      status: "not-yet-redeemable"
+      status: ""
     }
     fetch("http://localhost:3000/api/v1/coupon_users", {
        method: "POST",

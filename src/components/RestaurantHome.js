@@ -104,18 +104,18 @@ class RestaurantHome extends Component {
           <label> Select "Earn Month" <br/> This is the month, customers will visit & check-in at your restaurant </label> <br/>
           <select className="month_dropdown" onChange={this.handleChange} name="earn_month" value={this.state.earn_month} >
             <option value="">Select</option>
-            <option value="jan">January</option>
-            <option value="feb">February</option>
-            <option value="march">March</option>
-            <option value="april">April</option>
-            <option value="may">May</option>
-            <option value="june">June</option>
-            <option value="july">July</option>
-            <option value="aug">August</option>
-            <option value="sept">September</option>
-            <option value="oct">October</option>
-            <option value="nov">November</option>
-            <option value="dec">December</option>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
           </select>
           <br/>
           Description of Redemption Offer:
@@ -131,18 +131,18 @@ class RestaurantHome extends Component {
           <label> Select "Redeem Month" This is the month, customers will visit & redeem coupon offers. *Restaurant must be willing to accept all activated offers. </label>
           <select className="month_dropdown" onChange={this.handleChange} name="redeem_month" value={this.state.redeem_month} >
             <option value="">Select</option>
-            <option value="jan">January</option>
-            <option value="feb">February</option>
-            <option value="march">March</option>
-            <option value="april">April</option>
-            <option value="may">May</option>
-            <option value="june">June</option>
-            <option value="july">July</option>
-            <option value="aug">August</option>
-            <option value="sept">September</option>
-            <option value="oct">October</option>
-            <option value="nov">November</option>
-            <option value="dec">December</option>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
           </select>
           <br/>
           <button type="submit">Submit Coupon</button>

@@ -30,7 +30,8 @@ componentDidMount() {
   // }
 
   renderCards = () => {
-  let current_month = "jan"
+  var d = new Date();
+  let current_month = d.getMonth()
   let currentOffers = this.state.offers.filter(offer => offer.earn_month === current_month)
   return currentOffers.map(offer => {
       return (
