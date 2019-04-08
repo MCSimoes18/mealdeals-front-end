@@ -20,6 +20,7 @@ class RestaurantLogin extends Component {
 
 // use state to know when to re-direct to restaurant homepage
   setRedirect = () => {
+    debugger
     this.setState({
       redirect: true
     })
@@ -43,6 +44,7 @@ class RestaurantLogin extends Component {
     if (login_user.password === password) {
       console.log("success!")
       this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
+      this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
       this.setRedirect()
     }
   })
@@ -51,6 +53,7 @@ class RestaurantLogin extends Component {
 //listening in render() for changed state
 renderRedirect = () => {
     if (this.state.redirect) {
+      debugger
       return <Redirect to='/RestaurantHome' />
     }
   }

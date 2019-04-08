@@ -5,7 +5,7 @@ const NavBar = (props) => {
   return (
     <div className="navbar">
       <NavLink to="/"> Home </NavLink>
-      <NavLink to="/MonthlyOffers" restaurants={props.restaurants}> Restaurants of the Month </NavLink>
+      <NavLink to="/MonthlyOffers"> Restaurants of the Month </NavLink>
       <NavLink to="/Login"> Login </NavLink>
     </div>
   );

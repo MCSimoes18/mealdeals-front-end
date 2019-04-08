@@ -1,32 +1,45 @@
 import React, { Component, Fragment } from 'react'
 import RestaurantCard from './RestaurantCard'
+import OfferCard from './OfferCard'
 
 
 export default class MonthlyOffers extends Component {
 
   state = {
-    restaurants: []
+    restaurants: [],
+    offers: []
   }
 
 componentDidMount() {
-  fetch("http://localhost:3000/api/v1/restaurants")
+  fetch("http://localhost:3000/api/v1/offers")
   .then(res=>res.json())
-  .then(rest => {
+  .then(res => {
     this.setState({
-      restaurants: rest
-    }, () => console.log("?", this.state.restaurants))
+      offers: res
+    }, () => console.log("?", this.state.offers))
   })
 }
 
 
+  // renderCards = () => {
+  // return this.state.restaurants.map(rest => {
+  //     return (
+  //       <RestaurantCard restaurant={rest} />
+  //     )
+  //   })
+  // }
+
   renderCards = () => {
-  return this.state.restaurants.map(rest => {
+  let current_month = "jan"
+  let currentOffers = this.state.offers.filter(offer => offer.earn_month === current_month)
+  return currentOffers.map(offer => {
       return (
-        <RestaurantCard restaurant={rest} />
+        <OfferCard
+        offer={offer}
+        />
       )
     })
   }
-
 
 render () {
   return (

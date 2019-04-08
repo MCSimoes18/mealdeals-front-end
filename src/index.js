@@ -15,6 +15,7 @@ import SignUp from './components/SignUp';
 import RestaurantSignUp from './components/RestaurantSignUp';
 import RestaurantLogin from './components/RestaurantLogin';
 import RestaurantHome from './components/RestaurantHome';
+import UserProfile from './components/UserProfile';
 import store from './store';
 
 
@@ -23,12 +24,13 @@ ReactDOM.render((
     <Router>
       <NavBar />
       <Route exact path="/" component={Home} />
-      <Route exact path="/monthly_offers" component={MonthlyOffers} />
+      <Route exact path="/monthlyoffers" component={MonthlyOffers} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/restaurantsignup" component={RestaurantSignUp} />
       <Route exact path="/restaurantlogin" component={RestaurantLogin} />
       <Route exact path="/restauranthome" component={RestaurantHome} />
+      <Route exact path="/userprofile" component={UserProfile} />
     </Router>
   </Provider>
 ),

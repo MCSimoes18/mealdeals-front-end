@@ -4,6 +4,7 @@ import OfferCard from './OfferCard'
 
 
 class RestaurantHome extends Component {
+
   state = {
     offer: "",
     earn_month: "",
@@ -35,6 +36,11 @@ class RestaurantHome extends Component {
          body: JSON.stringify(data)
        })
        .then(res => res.json())
+       .then(res => {
+         this.setState( prevState => {
+           return { allOffers: [...prevState.allOffers, res] }
+         })
+       })
      }
 
  componentDidMount = () => {
@@ -54,12 +60,17 @@ class RestaurantHome extends Component {
     })
   }
 
+
   renderRestOffers = () => {
     if (this.state.allOffers == "") {
       return (<p> testing </p>)
     }
     else {
+    // let allMonths = ["jan", "feb", "mar", "april", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]
     let ResOffers = this.state.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+    // let sortedRes0ffers = ResOffers.sort(function(a,b){
+    //   return allMonths.indexOf(a) - allMonths.indexOf(b);
+    // })
     return ResOffers.map(offer => {
       return <OfferCard offer={offer}/>
     })
@@ -134,8 +145,10 @@ class RestaurantHome extends Component {
             <option value="dec">December</option>
           </select>
           <br/>
-          <button type="submit">Create Account</button>
+          <button type="submit">Submit Coupon</button>
         </form>
+        <h1> Your Offers </h1>
+        {this.renderRestOffers()}
       </div>
       )
     }
