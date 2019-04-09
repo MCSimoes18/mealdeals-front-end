@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Redirect } from 'react-router-dom'
 import RestaurantCard from './RestaurantCard'
 import UserProfile from './UserProfile'
+import { Form, Input, Button } from 'semantic-ui-react'
 
 
 class Login extends Component {
@@ -58,17 +59,17 @@ class Login extends Component {
   renderLoginForm = () => {
   return (
     <div className="login">
-      <form onSubmit={this.login}>
-        <label>Username: </label>
-          <br/>
-        <input onChange={this.handleChange} type="text"  name="username" value={this.state.username}/><br />
-          <br />
-        <label>Password: </label>
-          <br />
-        <input onChange={this.handleChange} type="password"  name="password" value={this.state.password}/><br />
-          <br />
-          <br />
-        <button type="submit">Submit</button>
+      <Form onSubmit={this.login}>
+        <Form.Field className="inputText" control={Input} label='Username'
+          placeholder='username' onChange={this.handleChange} type="text" name="username" value={this.state.username}
+        />
+        <br />
+        <Form.Field className="inputText" control={Input} label='Password' placeholder='password' onChange={this.handleChange} type="password"    name="password" value={this.state.password}
+        />
+        <br />
+        <Form.Field control={Button} content='Login'type="submit" />
+
+        </Form>
           <br />
           <br />
         Dont have an account? <NavLink to="/SignUp"> Sign Up Here </NavLink>
@@ -76,7 +77,8 @@ class Login extends Component {
         ATTN: RESTAURANTS! Interested in working with us?
         <NavLink to="/RestaurantSignUp"> Register with us here </NavLink>
         <NavLink to="/RestaurantLogin"> Restaurant Login</NavLink>
-      </form>
+
+
       {
         this.props.errorLogin ?
         <p>Invalid Username or Password</p>

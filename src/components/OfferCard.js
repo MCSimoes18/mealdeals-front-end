@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import Login from './Login';
+import { Button, Card, Image } from 'semantic-ui-react'
 
 class OfferCard extends React.Component {
   state = {
@@ -80,33 +83,69 @@ class OfferCard extends React.Component {
 
 
 renderOfferCard = () => {
+  var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+    let earn_month = month[this.props.offer.earn_month]
+    let redeem_month = month[this.props.offer.redeem_month]
   if(this.props.user_type === "restaurant" || this.props.user_type === null){
+    let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
     return(
-      <div>
-          <p> Offer: {this.props.offer.offer} </p>
-          <p> Earn Month: {this.props.offer.earn_month} </p>
-          <p> Redeem Month: {this.props.offer.redeem_month} </p>
-          <p> ----------------------------- </p>
-      </div>
+        <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
+          <Card.Content>
+            <Image floated='top' size='large' src={restaurant.image_url} />
+            <Card.Header> {this.props.offer.offer} </Card.Header>
+            <Card.Meta> {restaurant.name} </Card.Meta>
+            <Card.Meta> {restaurant.address1} , {restaurant.city} </Card.Meta>
+            <Card.Description> Earn During: {earn_month} </Card.Description>
+          <Card.Description> Redeem During: {redeem_month} </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+        <Button basic color='blue' style={{ width: '18.5em'}} >
+        <NavLink to="/Login" component={Login}>
+        Sign In To Redeem
+        </NavLink>
+        </Button>
+        </Card.Content>
+      </Card>
     )
   } else if (this.props.user_type === "user"){
+    let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
     return(
-      <div>
-          <p> Offer: {this.props.offer.offer} </p>
-          <p> Earn Month: {this.props.offer.earn_month} </p>
-          <p> Redeem Month: {this.props.offer.redeem_month} </p>
-          <button onClick={() => this.getLocation()}> Check In Now </button>
-          <p> ----------------------------- </p>
-      </div>
+        <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
+          <Card.Content>
+            <Image floated='top' size='large' src={restaurant.image_url} />
+            <Card.Header> {this.props.offer.offer} </Card.Header>
+            <Card.Meta> {restaurant.name} </Card.Meta>
+            <Card.Meta> {restaurant.address1} , {restaurant.city} </Card.Meta>
+            <Card.Description> Earn During: {earn_month} </Card.Description>
+            <Card.Description> Redeem During: {redeem_month} </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+          <Button onClick={() => this.getLocation()} basic color='yellow' style={{ width: '18.5em'}} > Check In Now </Button>
+          </Card.Content>
+      </Card>
       )
     }
   }
 
+
   render () {
+    console.log("testinggggg", this.props.allRestaurants)
     return (
-      <div>
+      <Fragment>
         {this.renderOfferCard()}
-      </div>
+      </Fragment>
     )
   }
 }
@@ -117,6 +156,7 @@ export default connect(mapStateToProps)(OfferCard)
 function mapStateToProps(state) {
   return {
     current_user: state.current_user,
-    user_type: state.user_type
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants
   }
 }

@@ -1,0 +1,56 @@
+h1{
+text-align: center;
+}
+
+.searchBar {
+  text-align: center;
+}
+
+.login{
+  text-align: center;
+}
+
+.inputText{
+  width: 800px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.signup {
+  text-align: center;
+}
+.firstName {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.userName{
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.email{
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.password {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.phone {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}

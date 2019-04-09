@@ -16,6 +16,7 @@ import RestaurantSignUp from './components/RestaurantSignUp';
 import RestaurantLogin from './components/RestaurantLogin';
 import RestaurantHome from './components/RestaurantHome';
 import UserProfile from './components/UserProfile';
+import Search from './components/Search';
 import store from './store';
 
 
@@ -31,6 +32,7 @@ ReactDOM.render((
       <Route exact path="/restaurantlogin" component={RestaurantLogin} />
       <Route exact path="/restauranthome" component={RestaurantHome} />
       <Route exact path="/userprofile" component={UserProfile} />
+      <Route exact path="/search" component={Search} />
     </Router>
   </Provider>
 ),

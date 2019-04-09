@@ -3,7 +3,8 @@ const initialState = {
   cuisine: "",
   current_user: null,
   user_type: null,
-  allRestaurants: []
+  allRestaurants: [],
+  rests: null
 }
 
 function reducer(state = initialState, action, payload) {
@@ -13,6 +14,9 @@ function reducer(state = initialState, action, payload) {
       return {...state, location: action.payload }
     case "SEARCH_CUISINE":
       return {...state, cuisine: action.payload }
+    case "SEARCH_RESULTS":
+      console.log("testing results", action.payload)
+      return {...state, rests: action.payload }
     case "LOGIN_USER":
       console.log("testing reducer1", action.payload)
       return {...state, current_user: action.payload }

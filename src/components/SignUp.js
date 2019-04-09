@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react'
+import { Form, Input, Button } from 'semantic-ui-react'
+
 
 export default class SignUp extends Component {
 
@@ -45,30 +47,14 @@ export default class SignUp extends Component {
   renderSignUpForm = () => {
     return (
       <div className="signup">
-        <form onSubmit={this.signupSubmit}>
-          <label> Name: </label>
-          <input onChange={this.handleChange} type="text" name="firstName" placeholder="Angelica" value={this.state.firstName}/> <br />
-            <br />
-          <label> Username: </label>
-            <br />
-          <input onChange={this.handleChange} type="text"  name="username" placeholder="AngelicaPickles" value={this.state.username}/>
-            <br />
-            <br />
-          <label>Password: </label>
-            <br />
-          <input onChange={this.handleChange} type="password"  name="password" placeholder="8-16 characters" value={this.state.password}/><br />
-            <br />
-            <br />
-          <label>Email: </label>
-            <br />
-          <input onChange={this.handleChange} type="email"  name="email" placeholder="angelica.pickles@gmail.com" value={this.state.email}/><br />
-            <br />
-          <label>Phone: </label>
-            <br />
-          <input onChange={this.handleChange} type="phone"  name="phone" placeholder="(123)-456-7890" value={this.state.phone}/><br />
-            <br />
-          <button type="submit">Create Account</button>
-        </form>
+        <Form onSubmit={this.signupSubmit}>
+          <Form.Field className="firstName" control={Input} label="First Name" onChange={this.handleChange} type="text" name="firstName" placeholder="Angelica" value={this.state.firstName}/> <br />
+          <Form.Field className="userName" control={Input} label="Username:" onChange={this.handleChange} type="text"  name="username" placeholder="AngelicaPickles" value={this.state.username}/> <br />
+          <Form.Field className="password" control={Input} label="Password:"onChange={this.handleChange} type="password"  name="password" placeholder="8-16 characters" value={this.state.password}/> <br />
+          <Form.Field className="email" control={Input} label= "Email:" onChange={this.handleChange} type="email"  name="email" placeholder="angelica.pickles@gmail.com" value={this.state.email}/><br />
+          <Form.Field className="phone" control={Input} label="Phone"onChange={this.handleChange} type="phone"  name="phone" placeholder="(123)-456-7890" value={this.state.phone}/><br />
+          <Form.Field className="signUpBtn" control={Button} content="Sign Up" type="submit"/>
+        </Form>
       </div>
     )
   }

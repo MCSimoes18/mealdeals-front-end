@@ -53,7 +53,6 @@ class RestaurantLogin extends Component {
 //listening in render() for changed state
 renderRedirect = () => {
     if (this.state.redirect) {
-      debugger
       return <Redirect to='/RestaurantHome' />
     }
   }

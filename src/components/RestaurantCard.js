@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Card, Image, Button, Rating } from 'semantic-ui-react'
+import { Card, Image, Button, Rating, Container} from 'semantic-ui-react'
 
 
 export default class RestaurantCard extends React.Component {
@@ -15,25 +15,9 @@ export default class RestaurantCard extends React.Component {
       this.props.selectRestaurant(this.props.restaurant)
     }
 
-//     <Row>
-// <Col m={6} s={12}>
-// <Card header={<CardTitle />} actions={[<a />]}>
-// Here is the standard card with an image thumbnail.
-// </Card>
-// </Col>
-// </Row>
-// <Card
-//   image='/images/avatar/large/elliot.jpg'
-//   header='Elliot Baker'
-//   meta='Friend'
-//   description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-//   extra={extra}
-// />
-
-
   render () {
     return (
-      <Card>
+      <Card style={{ marginLeft: '4em', marginRight: '2em'}}>
         <Card.Content>
           <Image src={this.props.restaurant.image_url} alt="image" style={{width:'350px'}, {height:'300px'}}/>
           <h1>{this.props.restaurant.name}</h1>

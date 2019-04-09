@@ -3,20 +3,17 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 // Redux //
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
 // Import Components //
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
-import Search from './Search';
 import { Card, Button, Input, Container} from 'semantic-ui-react'
 
 
 class Home extends React.Component {
 
   state = {
-    cuisine: "",
-    location: "",
-    redirect: false
+    loc: "",
+    food: ""
   }
 
   handleChange = (event) => {
@@ -27,27 +24,10 @@ class Home extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.location })
-    this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.cuisine })
-    this.setState({ location: "", cuisine: "" });
-    console.log("cuisine", this.state.cuisine)
-    console.log("location", this.state.location)
-    this.handleSearch(this.state.cuisine, this.state.location)
+    this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.loc })
+    this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.food })
+    this.handleSearch(this.state.food, this.state.loc)
   }
-
-
-  //listening in render() for changed state
-  renderRedirect = () => {
-      if (this.props.rests === undefined ){
-        return null
-      }
-      else if (this.props.rests === null ){
-        return null
-      }
-      else if (this.props.rests.businesses.length > 0) {
-        return <Redirect to='/Search' />
-      }
-    }
 
   handleSearch = (cuisine, location) => {
    const data = {cuisine: cuisine, location: location };
@@ -64,18 +44,20 @@ class Home extends React.Component {
  }
 
 
-  // renderSearchCards = () => {
-  //   if (this.state.rests.length == 0) {
-  //     return null
-  //   } else {
-  //     return this.state.rests.businesses.map(rest => {
-  //       return (
-  //       <RestaurantCard restaurant={rest} />
-  //       )
-  //     }
-  //   )
-  //   }
-  // }
+  renderSearchCards = () => {
+    if (this.props.rests === null) {
+      return null
+    } else if (this.props.rests === undefined) {
+      return null
+    } else {
+      return this.props.rests.businesses.map(rest => {
+        return (
+        <RestaurantCard restaurant={rest} />
+        )
+      }
+    )
+    }
+  }
 
   render() {
     console.log(this.props)
@@ -84,12 +66,13 @@ class Home extends React.Component {
         <h1> Meal Steals </h1>
         <div className="searchBar">
           <form onSubmit={this.handleSubmit}>
-            <Input type="text" name="cuisine" onChange={this.handleChange} placeholder="cuisine.."/>
-            <Input type="text" name="location" onChange={this.handleChange} placeholder="location.." action={{ icon: 'search' }}/>
+            <Input type="text" name="food" onChange={this.handleChange} placeholder="cuisine.."/>
+            <Input type="text" name="loc" onChange={this.handleChange} placeholder="location.." action={{ icon: 'search' }}/>
           </form>
+          <h3> displaying results For {this.props.cuisine} food, in {this.props.location}... </h3>
         </div>
-        <Card.Group text style={{ marginTop: '7em' }}>
-          {this.renderRedirect()}
+        <Card.Group text style={{ marginTop: '7em' }} >
+          {this.renderSearchCards()}
         </Card.Group>
 
       </div>
@@ -104,7 +87,10 @@ function mapStateToProps(state) {
   return {
     keyword: state.keyword,
     current_user: state.current_user,
-    rests: state.rests
+    rests: state.rests,
+    cuisine: state.cuisine,
+    location: state.location
+
   }
 
   console.log("here", state.keyword)
