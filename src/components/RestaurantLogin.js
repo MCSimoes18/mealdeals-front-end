@@ -12,6 +12,14 @@ class RestaurantLogin extends Component {
     redirect: false // in order to redirect to restaurant profile
   }
 
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/restaurants")
+      .then(res => res.json())
+      .then(res => {
+        this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+      })
+    }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -20,7 +28,6 @@ class RestaurantLogin extends Component {
 
 // use state to know when to re-direct to restaurant homepage
   setRedirect = () => {
-    debugger
     this.setState({
       redirect: true
     })

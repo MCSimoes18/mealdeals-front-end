@@ -72,7 +72,7 @@ class RestaurantHome extends Component {
     //   return allMonths.indexOf(a) - allMonths.indexOf(b);
     // })
     return ResOffers.map(offer => {
-      return <OfferCard offer={offer}/>
+      return <OfferCard offer={offer} />
     })
   }
 }

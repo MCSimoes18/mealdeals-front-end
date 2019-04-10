@@ -149,7 +149,7 @@ renderOfferCard = () => {
     month[11] = "December";
     let earn_month = month[this.props.offer.earn_month]
     let redeem_month = month[this.props.offer.redeem_month]
-  if(this.props.user_type === "restaurant" || this.props.user_type === null){
+  if (this.props.user_type === null){
     let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
     return(
         <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
@@ -188,7 +188,27 @@ renderOfferCard = () => {
       </Card>
       )
     }
+    if (this.props.user_type === "restaurant"){
+      let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+      return(
+          <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
+            <Card.Content>
+              <Image floated='top' size='large' src={restaurant.image_url} />
+              <Card.Header> {this.props.offer.offer} </Card.Header>
+              <Card.Meta> {restaurant.name} </Card.Meta>
+              <Card.Meta> {restaurant.address1} , {restaurant.city} </Card.Meta>
+              <Card.Description> Earn During: {earn_month} </Card.Description>
+            <Card.Description> Redeem During: {redeem_month} </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+          <Button basic color='red' style={{ width: '18.5em'}} >
+          Delete Offer
+          </Button>
+          </Card.Content>
+        </Card>
+      )
   }
+}
 
 
   render () {

@@ -130,7 +130,6 @@ class RestaurantSignUp extends Component {
   }
 
   registerRestaurant(restaurant) {
-    debugger
       let data = {
         username: this.state.username,
         password: this.state.password,
