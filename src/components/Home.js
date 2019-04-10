@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, StyleSheet } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 // Redux //
@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom'
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
 import Search from './Search';
-import { Card, Button, Input, Container} from 'semantic-ui-react'
+import { Card, Button, Input, Container, Grid, Divider, Segment} from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -77,10 +77,19 @@ class Home extends React.Component {
   //   }
   // }
 
+
   render() {
+
+
     console.log(this.props)
     return (
       <div>
+      <img
+      className="pizza"
+      style={{width: '400px'}}
+      src={process.env.PUBLIC_URL + '/pizza.jpg'}
+      alt="pizza"
+      />
         <h1> Meal Deals </h1>
         <div className="searchBar">
           <form onSubmit={this.handleSubmit}>
@@ -88,6 +97,17 @@ class Home extends React.Component {
             <Input type="text" name="location" onChange={this.handleChange} placeholder="location.." action={{ icon: 'search' }}/>
           </form>
         </div>
+        <Segment style={{height: '900px;'}}>
+          <Grid columns={2} relaxed='very' stackable >
+            <Grid.Column>
+            "I eat food"
+            </Grid.Column>
+            "I make food"
+            <Grid.Column verticalAlign='middle'>
+            </Grid.Column>
+            </Grid>
+            <Divider vertical>Or</Divider>
+            </Segment>
         <Card.Group text style={{ marginTop: '7em' }}>
           {this.renderRedirect()}
         </Card.Group>
