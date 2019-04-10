@@ -2,14 +2,56 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Login from './Login';
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Modal } from 'semantic-ui-react'
 
 class OfferCard extends React.Component {
   state = {
     allRestaurants: [],
     user_latitude: "",
-    user_longitude: ""
+    user_longitude: "",
+    open: false,
+    current_restaurant: null
   }
+
+  close = () => this.setState({ open: false })
+
+  openModal = () => {
+    if (this.state.open === "checkInTrue" ) {
+      let current_restaurant = this.state.current_restaurant
+      return (
+      <Fragment>
+      <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
+      <Modal.Header>Congrats! Youre Checked In!</Modal.Header>
+      <Modal.Content>
+      <p>A coupon for {this.state.current_restaurant.name} has been added to your coupons. </p>
+      </Modal.Content>
+      <Modal.Actions>
+      <Button onClick={()=>this.close()}positive icon='checkmark' labelPosition='right' content='Got It!' />
+      </Modal.Actions>
+      </Modal>
+      </Fragment>
+    )
+  } else if (this.state.open === "checkInFalse"  ) {
+      let current_restaurant = this.state.current_restaurant
+      return (
+      <Fragment>
+      <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
+      <Modal.Header>Oops! Something went wrong...</Modal.Header>
+      <Modal.Content>
+      <p> It doesnt appear that youre at {this.state.current_restaurant.name} at {this.state.current_restaurant.address1}, in {this.state.current_restaurant.city}. Please be sure to check in when you are on-site at this restaurant. </p>
+      </Modal.Content>
+      <Modal.Actions>
+      <Button onClick={()=>this.close()}positive icon='checkmark' labelPosition='right' content='Got It!' />
+      </Modal.Actions>
+      </Modal>
+      </Fragment>
+    )
+    }
+    else  {
+      return null
+
+  }
+}
 
   componentDidMount(){
     fetch("http://localhost:3000/api/v1/restaurants")
@@ -44,6 +86,9 @@ class OfferCard extends React.Component {
 
   compareLocations = () => {
    let checkInRestaurant = this.state.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+   this.setState({
+     current_restaurant: checkInRestaurant
+   })
    console.log("rest", checkInRestaurant.latitude)
    console.log("rest", checkInRestaurant.longitude)
    console.log("me", this.state.user_latitude)
@@ -56,8 +101,14 @@ class OfferCard extends React.Component {
    if (floatRestLatitude == floatUserLatitude && floatRestLongitude == floatUserLongitude){
      console.log("check in")
      this.createCoupon()
+     this.setState({
+       open: "checkInTrue"
+     })
    } else {
      console.log("not checked in")
+     this.setState({
+       open: "checkInFalse"
+     })
    }
   }
 
@@ -145,6 +196,7 @@ renderOfferCard = () => {
     return (
       <Fragment>
         {this.renderOfferCard()}
+        {this.openModal()}
       </Fragment>
     )
   }

@@ -81,7 +81,7 @@ class Home extends React.Component {
     console.log(this.props)
     return (
       <div>
-        <h1> Meal Steals </h1>
+        <h1> Meal Deals </h1>
         <div className="searchBar">
           <form onSubmit={this.handleSubmit}>
             <Input type="text" name="cuisine" onChange={this.handleChange} placeholder="cuisine.."/>

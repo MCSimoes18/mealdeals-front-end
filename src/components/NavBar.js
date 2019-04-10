@@ -35,6 +35,12 @@ class NavBar extends Component {
                 <NavLink to="/MonthlyOffers">
                   <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
                 </NavLink>
+                <NavLink to="/Login">
+                  <Menu.Item name='Login' active={activeItem === 'Login'} onClick={this.handleItemClick} />
+                </NavLink>
+                <NavLink to="/RestaurantLogin">
+                  <Menu.Item name='I am a Restaurant' active={activeItem === "I am a Restaurant"} onClick={this.handleItemClick} />
+                </NavLink>
               </Menu>
             </Segment>
       );

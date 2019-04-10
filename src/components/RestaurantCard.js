@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { Card, Image, Button, Rating, Container} from 'semantic-ui-react'
+import { connect } from 'react-redux';
 
 
-export default class RestaurantCard extends React.Component {
+class RestaurantCard extends React.Component {
 
   state = {
     foundBusiness: false
@@ -15,21 +16,56 @@ export default class RestaurantCard extends React.Component {
       this.props.selectRestaurant(this.props.restaurant)
     }
 
+    renderRestCards() {
+      if (this.props.user_type === "before_restaurant") {
+        return (
+          <Card style={{ marginLeft: '4em', marginRight: '2em'}}>
+            <Card.Content>
+              <Image src={this.props.restaurant.image_url} alt="image" style={{width:'350px'}, {height:'300px'}}/>
+              <h1>{this.props.restaurant.name}</h1>
+              <h4><b>{this.props.restaurant.location.display_address}</b></h4>
+              <p>{this.props.restaurant.price}</p>
+              <Rating icon='star' defaultRating={this.props.restaurant.rating} maxRating={5} disabled />
+            </Card.Content>
+            <button onClick={() => this.findBusiness()}>
+              This is Me
+            </button>
+          </Card>
+          )
+      } else if (this.props.user_type === null || this.props.user_type === "user") {
+        return (
+          <Card style={{ marginLeft: '4em', marginRight: '2em'}}>
+            <Card.Content>
+              <Image src={this.props.restaurant.image_url} alt="image" style={{width:'350px'}, {height:'300px'}}/>
+              <h1>{this.props.restaurant.name}</h1>
+              <h4><b>{this.props.restaurant.location.display_address}</b></h4>
+              <p>{this.props.restaurant.price}</p>
+              <Rating icon='star' defaultRating={this.props.restaurant.rating} maxRating={5} disabled />
+            </Card.Content>
+            <button>
+              <a href={this.props.restaurant.url} target="_blank"> View On Yelp </a>
+            </button>
+          </Card>
+          )
+      }
+    }
+
   render () {
     return (
-      <Card style={{ marginLeft: '4em', marginRight: '2em'}}>
-        <Card.Content>
-          <Image src={this.props.restaurant.image_url} alt="image" style={{width:'350px'}, {height:'300px'}}/>
-          <h1>{this.props.restaurant.name}</h1>
-          <h4><b>{this.props.restaurant.location.display_address}</b></h4>
-          <p>{this.props.restaurant.price}</p>
-          <Rating icon='star' defaultRating={this.props.restaurant.rating} maxRating={5} disabled />
-        </Card.Content>
-        <button>
-          <a href={this.props.restaurant.url} target="_blank"> View On Yelp </a>
-        </button>
-      </Card>
-      )
+      <div>
+      {this.renderRestCards()}
+      </div>
+    )
+  }
+}
+
+  export default connect(mapStateToProps)(RestaurantCard)
+
+
+  function mapStateToProps(state) {
+    return {
+      current_user: state.current_user,
+      user_type: state.user_type
     }
   }
 

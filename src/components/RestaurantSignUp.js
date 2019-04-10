@@ -30,6 +30,7 @@ class RestaurantSignUp extends Component {
     event.preventDefault();
     this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.location })
     this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.cuisine })
+    this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "before_restaurant" })
     this.setState({ location: "", cuisine: "" });
     console.log("cuisine", this.state.cuisine)
     console.log("location", this.state.location)
