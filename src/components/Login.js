@@ -34,26 +34,56 @@ class Login extends Component {
         }
       }
 
-  login = (e) => {
-    e.preventDefault()
-    if (this.state.username !== "" || this.state.password !== "") {
-      this.loginUser(this.state.username, this.state.password)
-    }
-  }
+  // login = (e) => {
+  //   e.preventDefault()
+  //   if (this.state.username !== "" || this.state.password !== "") {
+  //     this.loginUser(this.state.username, this.state.password)
+  //   }
+  // }
+  //
+  // loginUser = (username, password) => {
+  //   console.log("will log in user", username, password);
+  //   fetch("http://localhost:3000/api/v1/users")
+  //   .then(res => res.json())
+  //   .then( json => {
+  //   let login_user = json.find( user => user.username === username)
+  //     if (login_user.password === password) {
+  //       console.log("success!")
+  //       this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
+  //       this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+  //       this.setRedirect()
+  //     }
+  //   })
+  // }
 
-  loginUser = (username, password) => {
-    console.log("will log in user", username, password);
-    fetch("http://localhost:3000/api/v1/users")
-    .then(res => res.json())
-    .then( json => {
-    let login_user = json.find( user => user.username === username)
-      if (login_user.password === password) {
-        console.log("success!")
-        this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
-        this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
-        this.setRedirect()
-      }
-    })
+login = (e) => {
+  let data = {
+    username: this.state.username,
+    password: this.state.password
+  }
+    fetch("http://localhost:3000/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json",
+      },
+      body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then((response) => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+            // we need to login at the top level where we are holding our current user!
+            // setState in App to currentuser
+            let login_user = response.user
+            this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
+            this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+            localStorage.setItem('jwt', response.jwt)
+            this.props.history.push(`/UserProfile`)
+
+          }
+        })
   }
 
   renderLoginForm = () => {

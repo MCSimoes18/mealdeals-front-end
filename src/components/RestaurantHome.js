@@ -79,6 +79,7 @@ class RestaurantHome extends Component {
 
   renderCouponForm = () => {
     if (this.state.showCouponForm === false) {
+      debugger
       return (
         <div>
           <h1> {this.props.current_user.name} </h1>
@@ -95,7 +96,7 @@ class RestaurantHome extends Component {
   else if (this.state.showCouponForm === true) {
       return (
         <div>
-          <h1> this.props.current_user.name} </h1>
+          <h1>{this.props.current_user.name} </h1>
           <p> {this.props.current_user.address1} </p>
           <p> {this.props.current_user.city} </p>
           <p> {this.props.current_user.zip_code} </p>

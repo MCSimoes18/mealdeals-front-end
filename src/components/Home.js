@@ -100,9 +100,25 @@ class Home extends React.Component {
         <Segment style={{height: '900px;'}}>
           <Grid columns={2} relaxed='very' stackable >
             <Grid.Column>
-            "I eat food"
+            <h1> I eat food </h1>
+            <br/>
+            <img
+            className="eat"
+            style={{width: '200px', textAlign:'center;'}}
+            src={process.env.PUBLIC_URL + '/food.png'}
+            alt="user"
+            />
             </Grid.Column>
-            "I make food"
+            <h1 style={{textAlign:'center;'}}
+            > I make food </h1>
+            <h4> Register your business with us to promote local offers on Meal Deals. Each offer will be eligible for a full month (what we call the "Redeem Month"), contingent that the customer checked-in at your restaurant, during the prior month, (what we call the "Earn Month"). Meal Deals is great way to promote your businesses visibility, acquire new customers and return customers </h4>
+            <br/>
+            <img
+            className="feed"
+            style={{width: '250px', height: '230px', float:'center;'}}
+            src={process.env.PUBLIC_URL + '/chef.png'}
+            alt="restaurant"
+            />
             <Grid.Column verticalAlign='middle'>
             </Grid.Column>
             </Grid>
