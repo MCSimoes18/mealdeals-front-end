@@ -14,6 +14,14 @@ class Login extends Component {
     redirect: false // in order to redirect to user profile
   }
 
+  componentDidMount = () => {
+    fetch("http://localhost:3000/api/v1/restaurants")
+    .then(res => res.json())
+    .then(res => {
+      this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+    })
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value

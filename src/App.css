@@ -54,3 +54,79 @@ text-align: center;
   text-align: center;
   display: inline-block;
 }
+
+.feed {
+width: 222px;
+height: 220px;
+margin: auto;
+text-align: center;
+display: inline-block;
+}
+
+.userSide {
+margin: auto;
+text-align: center;
+display: inline-block;
+}
+
+.restSide {
+margin: auto;
+text-align: center;
+display: inline-block;
+/* background-color: rgb(229, 239, 201); */
+}
+
+.EarnMonth {
+margin: auto;
+text-align: center;
+display: inline-block;
+}
+
+.centerBtn {
+  text-align: center;
+  border: 'red';
+}
+
+.RedeemMonth {
+margin: auto;
+text-align: center;
+display: inline-block;
+/* background-color: rgb(229, 239, 201); */
+}
+
+.home {
+  background-color: #AF473C;
+  margin-top: -15px;
+  margin-bottom: 1000px;
+}
+
+.offerTitle {
+  margin: auto;
+  text-align: center;
+  /* display: inline-block; */
+}
+
+.title {
+  padding-top: 100px;
+  padding-bottom: 90px;
+}
+
+.coupon {
+  height: 25px;
+  width: 25px;
+  padding-left: 41px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.searchBar {
+  padding-bottom: 200px;
+}
+
+.sideNav {
+  height: 1000px;
+}
+
+.navContent1 {
+  margin-top: 20px;
+}

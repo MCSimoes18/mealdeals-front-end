@@ -74,12 +74,10 @@ login = (e) => {
       .then(res => res.json())
       .then((response) => {
         if (response.errors) {
-          debugger
           alert(response.errors)
         } else {
             // we need to login at the top level where we are holding our current user!
             // setState in App to currentuser
-            debugger
             let login_user = response.restaurant
             this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })

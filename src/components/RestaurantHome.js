@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import OfferCard from './OfferCard'
+import { Grid, Container, Form, Select, List, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+
 
 
 class RestaurantHome extends Component {
@@ -10,12 +12,31 @@ class RestaurantHome extends Component {
     earn_month: "",
     redeem_month: "",
     showCouponForm: false,
-    allOffers: ""
+    allOffers: "",
+    animation: 'scale down',
+    direction: 'left',
+    dimmed: false,
+    visible: false,
+    displayContent: 'coupon',
+    displayHeader: 'Your Offers',
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  updateContent = (content, header) => {
+    this.setState({
+      displayContent: content,
+      displayHeader: header
+    })
+  }
+
+  renderOfferDescription = (passedOffer) => {
+    this.setState({
+      offer: passedOffer
     })
   }
 
@@ -53,13 +74,6 @@ class RestaurantHome extends Component {
      )
    }
 
-  toggleCouponFormState = () => {
-    let toggledCouponForm = !this.state.showCouponForm
-    this.setState({
-      showCouponForm: toggledCouponForm
-    })
-  }
-
 
   renderRestOffers = () => {
     if (this.state.allOffers == "") {
@@ -78,90 +92,152 @@ class RestaurantHome extends Component {
 }
 
   renderCouponForm = () => {
-    if (this.state.showCouponForm === false) {
-      debugger
+    const monthOptions = [
+      { key: 'January', text: 'January', value: 0 },
+      { key: 'February', text: 'February', value: 1 },
+      { key: 'March', text: 'March', value: 2 },
+      { key: 'April', text: 'April', value: 3},
+      { key: 'May', text: 'May', value: 4 },
+      { key: 'June', text: 'June', value: 5 },
+      { key: 'July', text: 'July', value: 6 },
+      { key: 'August', text: 'August', value: 7 },
+      { key: 'September', text: 'September', value: 8},
+      { key: 'October', text: 'October', value: 9 },
+      { key: 'November', text: 'November', value: 10 },
+      { key: 'December', text: 'December', value: 11 },
+    ]
+
+    let offer1 = "$10 OFF A $50 PURCHASE OR MORE"
+    let offer2 = "BUY ONE APPETIZER, GET ONE FREE"
+    let offer3 = "10% OFF YOUR ENTIRE MEAL"
       return (
         <div>
+          <h4> Valid At: </h4>
+          <List>
+            <List.Item>
+              <List.Icon name='food' />
+              <List.Content>{this.props.current_user.name} </List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Icon name='marker' />
+              <List.Content>{this.props.current_user.address1}, {this.props.current_user.city} {this.props.current_user.zip_code} </List.Content>
+            </List.Item>
+          </List>
+
+          <Form onSubmit={(e)=>this.createOffer(e)}>
+
+          <Segment style={{height: '900px;'}} >
+            <Grid columns={2}  >
+              <Grid.Column>
+                <Container fluid className="EarnMonth">
+                  <h2> Earn Month </h2>
+                  <h4>Customers will check-in at your restaurant during this month </h4> <br/> <br/> <br/>
+                  <Select placeholder='Select Earn Month' options={monthOptions} onChange={this.handleChange}/><br/> <br/>
+                </Container>
+              </Grid.Column>
+            <Grid.Column verticalAlign='middle'>
+              <Container fluid className="RedeemMonth">
+                <h2> Redeem Month </h2>
+                <h4> Customers will redeem coupon offers this month </h4>
+                <p> **Restaurant must be willing to accept all activated offers. </p> <br/>
+                <Select placeholder='Select Redeem Month' options={monthOptions} onChange={this.handleChange}/><br/> <br/>
+              </Container>
+              </Grid.Column>
+              </Grid>
+              <Divider vertical>AND</Divider>
+              </Segment>
+
+
+          <Container fluid className="description">
+          <h2 className="offerTitle"> Offer Description </h2>
+          <h4> Suggested Offers </h4>
+          <List divided verticalAlign='middle'>
+          <List.Item>
+            <List.Content floated='right'>
+              <Button onClick={() => this.renderOfferDescription(offer1)}>Use This Offer</Button>
+            </List.Content>
+            <List.Content> {offer1} </List.Content>
+          </List.Item>
+
+            <List.Item>
+            <List.Content floated='right'>
+              <Button onClick={() => this.renderOfferDescription(offer2)}>Use This Offer</Button>
+            </List.Content>
+            <List.Content> {offer2} </List.Content>
+          </List.Item>
+          <List.Item>
+
+            <List.Content floated='right'>
+              <Button onClick={() => this.renderOfferDescription(offer3)}>Use This Offer</Button>
+            </List.Content>
+            <List.Content> {offer3} </List.Content>
+          </List.Item>
+          </List>
+
+          <Form.Field floated='center' control={Input} label='Offer Description'
+             onChange={this.handleChange} type="offer" name="offer" value={this.state.offer}/><br/>
+          <div className='centerBtn'>
+          <Form.Field control={Button} content='Submit Offer'type="submit" />
+          </div>
+          </Container>
+        </Form>
+      </div>
+      )
+  }
+
+    renderContent = () => {
+    if (this.state.displayContent === 'coupon') {
+         return (
+          <div>
           <h1> {this.props.current_user.name} </h1>
           <p> {this.props.current_user.address1} </p>
           <p> {this.props.current_user.city} </p>
           <p> {this.props.current_user.zip_code} </p>
-          <button onClick={()=> this.toggleCouponFormState()}> Submit A New Coupon </button>
-          <h1> Your Offers </h1>
           {this.renderRestOffers()}
-
-        </div>
+          </div>
       )
-    }
-  else if (this.state.showCouponForm === true) {
+    } else if (this.state.displayContent === 'food') {
       return (
-        <div>
-          <h1>{this.props.current_user.name} </h1>
-          <p> {this.props.current_user.address1} </p>
-          <p> {this.props.current_user.city} </p>
-          <p> {this.props.current_user.zip_code} </p>
-          <button onClick={()=> this.toggleCouponFormState()}> Remove Coupon Form </button>
-        <form onSubmit={(e)=>this.createOffer(e)}>
-          <label> Select "Earn Month" <br/> This is the month, customers will visit & check-in at your restaurant </label> <br/>
-          <select className="month_dropdown" onChange={this.handleChange} name="earn_month" value={this.state.earn_month} >
-            <option value="">Select</option>
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-          <br/>
-          Description of Redemption Offer:
-          <br/>
-          Examples Include:
-            <ul>
-              <li> $10 OFF A $50 PURCHASE OR MORE </li>
-              <li> BUY ONE APPETIZER, GET ONE FREE </li>
-              <li> 10% OFF YOUR ENTIRE MEAL </li>
-            </ul>
-          Offer Description: <input onChange={this.handleChange} type="text"  name="offer" value={this.state.offer}/> <br />
-            <br/>
-          <label> Select "Redeem Month" This is the month, customers will visit & redeem coupon offers. *Restaurant must be willing to accept all activated offers. </label>
-          <select className="month_dropdown" onChange={this.handleChange} name="redeem_month" value={this.state.redeem_month} >
-            <option value="">Select</option>
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-          <br/>
-          <button type="submit">Submit Coupon</button>
-        </form>
-        <h1> Your Offers </h1>
-        {this.renderRestOffers()}
-      </div>
+        this.renderCouponForm()
       )
+    } else if (this.state.displayContent === 'setting'){
+      console.log("this will update user info")
     }
   }
 
 
   render () {
+    const { activeItem } = this.state
+    const { animation, dimmed, direction, visible } = this.state
+    const vertical = direction === 'bottom' || direction === 'top'
     console.log("user is...", this.props.current_user)
     return (
-      <div>
-      {this.renderCouponForm()}
-      </div>
+      <Sidebar.Pushable as={Segment} className="sideNav">
+        <Sidebar as={Menu} animation='scale down' icon='labeled' vertical visible width='thin'>
+          <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'Your Offers')}>
+          <Icon name='cut' />
+           My Offers
+          </Menu.Item >
+          <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('food', 'Submit a New Offer')}>
+            <Icon name='food' />
+            Submit A New Offer
+          </Menu.Item>
+          <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('setting')}>
+            <Icon name='setting' />
+            Settings
+          </Menu.Item>
+        </Sidebar>
+        <Sidebar.Pusher>
+          <Segment basic dimmed={dimmed && visible}>
+            <Header as='h3'></Header>
+            <h1> Welcome Back {this.props.current_user.name} ! </h1>
+            <Divider />
+            <h2> {this.state.displayHeader}</h2>
+            <Divider />
+            {this.renderContent()}
+          </Segment>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
     )
   }
 

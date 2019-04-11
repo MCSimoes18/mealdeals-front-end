@@ -14,7 +14,10 @@ export default class App extends React.Component {
   componentDidMount() {
     fetch('http://localhost:3000/api/v1/restaurants')
     .then(res=>res.json())
-    .then(console.log)
+    .then(res => {
+      this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+    })
+
     const jwt = localStorage.getItem('jwt')
 
     if (jwt){

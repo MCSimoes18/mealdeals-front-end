@@ -12,6 +12,16 @@ class OfferCard extends React.Component {
     open: false,
     current_restaurant: null
   }
+  
+  componentDidMount(){
+    fetch("http://localhost:3000/api/v1/restaurants")
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        allRestaurants: res
+      })
+    })
+  }
 
   close = () => this.setState({ open: false })
 
@@ -53,15 +63,6 @@ class OfferCard extends React.Component {
   }
 }
 
-  componentDidMount(){
-    fetch("http://localhost:3000/api/v1/restaurants")
-    .then(res => res.json())
-    .then(res => {
-      this.setState({
-        allRestaurants: res
-      })
-    })
-  }
 
   getLocation = () => {
     if (navigator.geolocation) {

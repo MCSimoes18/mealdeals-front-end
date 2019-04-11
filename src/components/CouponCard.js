@@ -4,12 +4,12 @@ import { Card, Button, Input, Container, Grid, Divider, Segment, Modal} from 'se
 class CouponCard extends React.Component {
 
   state = {
-    currentRestaurant: "",
     current_status: "not yet status",
     open: false,
     couponColor: 'green',
     buttonText: 'Activate Now',
-    showStatus: 'inactive'
+    showStatus: 'inactive',
+    currentRestaurant: null
   }
 
   close = () => this.setState({ open: false })
@@ -114,8 +114,6 @@ else {
 }
   }
 
-
-
 renderCoupon = () => {
     let d = new Date();
     var month = new Array();
@@ -203,22 +201,22 @@ renderCoupon = () => {
         </Card>
       </Card.Group>
 )} else if (this.state.current_status === 'Redeemed' ) {
-return (
-  <Card.Group>
-  <Card fluid color='gray' style={{backgroundColor: 'rgb(221, 234, 255)'}}>
-  <Card.Content>
-    <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
-    <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
-    <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
-    <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
-    <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
-    <Card.Content extra>
-    <Card.Header style={{marginLeft: '800px;'}}> Status: {this.state.current_status} </Card.Header>
-    </Card.Content>
-    </Card.Content>
-    </Card>
-  </Card.Group>
-)
+      return (
+        <Card.Group>
+        <Card fluid color='gray' style={{backgroundColor: 'rgb(221, 234, 255)'}}>
+        <Card.Content>
+          <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
+          <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
+          <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
+          <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
+          <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+          <Card.Content extra>
+          <Card.Header style={{marginLeft: '800px;'}}> Status: {this.state.current_status} </Card.Header>
+          </Card.Content>
+          </Card.Content>
+          </Card>
+        </Card.Group>
+      )
 }
 }
 
