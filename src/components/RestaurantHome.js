@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import OfferCard from './OfferCard'
-import { Grid, Container, Form, Select, List, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { Grid, Modal, Radio, Container, Form, Select, List, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar, Card } from 'semantic-ui-react'
 
 
 
@@ -19,11 +19,19 @@ class RestaurantHome extends Component {
     visible: false,
     displayContent: 'coupon',
     displayHeader: 'Your Offers',
+    open: false
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  handleSelectChange = (e, data) => {
+    console.log("handling select change")
+    this.setState({
+      [data.name]: data.value
     })
   }
 
@@ -41,6 +49,7 @@ class RestaurantHome extends Component {
   }
 
   createOffer = (e) => {
+    debugger
     e.preventDefault()
     let data = {
       restaurant_id: this.props.current_user.id,
@@ -59,9 +68,35 @@ class RestaurantHome extends Component {
        .then(res => res.json())
        .then(res => {
          this.setState( prevState => {
-           return { allOffers: [...prevState.allOffers, res] }
+           return { allOffers: [...prevState.allOffers, res], open: true, offer: ""}
          })
        })
+     }
+
+     close = () => {
+       this.setState({ open: false })
+       this.updateContent('coupon', 'Your Offers')
+     }
+
+     offerSuccess = () => {
+       if (this.state.open === true) {
+       return (
+       <Fragment>
+       <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
+       <Modal.Header>Congratulations! Get Ready for Business! </Modal.Header>
+       <Modal.Content>
+       <p> Your offer has been added to Meal Deals. </p>
+       </Modal.Content>
+       <Modal.Actions>
+       <Button onClick={() => this.close()} positive icon='checkmark' labelPosition='right' content='Got It!' />
+       </Modal.Actions>
+       </Modal>
+       </Fragment>
+     )
+   }
+   else {
+     return null
+   }
      }
 
  componentDidMount = () => {
@@ -93,12 +128,12 @@ class RestaurantHome extends Component {
 
   renderCouponForm = () => {
     const monthOptions = [
-      { key: 'January', text: 'January', value: 0 },
-      { key: 'February', text: 'February', value: 1 },
-      { key: 'March', text: 'March', value: 2 },
-      { key: 'April', text: 'April', value: 3},
-      { key: 'May', text: 'May', value: 4 },
-      { key: 'June', text: 'June', value: 5 },
+      { key: 'January', text: 'January', value: 0, name: 'earn_month'},
+      { key: 'February', text: 'February', value: 1, name: 'earn_month'},
+      { key: 'March', text: 'March', value: 2, name: 'earn_month'},
+      { key: 'April', text: 'April', value: 3, name: 'earn_month'},
+      { key: 'May', text: 'May', value: 4, name: 'earn_month'},
+      { key: 'June', text: 'June', value: 5, name: 'earn_month'},
       { key: 'July', text: 'July', value: 6 },
       { key: 'August', text: 'August', value: 7 },
       { key: 'September', text: 'September', value: 8},
@@ -111,7 +146,7 @@ class RestaurantHome extends Component {
     let offer2 = "BUY ONE APPETIZER, GET ONE FREE"
     let offer3 = "10% OFF YOUR ENTIRE MEAL"
       return (
-        <div>
+        <div className="form">
           <h4> Valid At: </h4>
           <List>
             <List.Item>
@@ -132,7 +167,7 @@ class RestaurantHome extends Component {
                 <Container fluid className="EarnMonth">
                   <h2> Earn Month </h2>
                   <h4>Customers will check-in at your restaurant during this month </h4> <br/> <br/> <br/>
-                  <Select placeholder='Select Earn Month' options={monthOptions} onChange={this.handleChange}/><br/> <br/>
+                  <Form.Field control={Select} placeholder='Select Earn Month' name='earn_month' options={monthOptions} onChange={(e, data) => this.handleSelectChange(e, data)}/><br/> <br/>
                 </Container>
               </Grid.Column>
             <Grid.Column verticalAlign='middle'>
@@ -140,7 +175,7 @@ class RestaurantHome extends Component {
                 <h2> Redeem Month </h2>
                 <h4> Customers will redeem coupon offers this month </h4>
                 <p> **Restaurant must be willing to accept all activated offers. </p> <br/>
-                <Select placeholder='Select Redeem Month' options={monthOptions} onChange={this.handleChange}/><br/> <br/>
+                <Form.Field control={Select} placeholder='Select Redeem Month' name="redeem_month"  options={monthOptions} onChange={(e, data) => this.handleSelectChange(e, data )}/><br/> <br/>
               </Container>
               </Grid.Column>
               </Grid>
@@ -152,31 +187,33 @@ class RestaurantHome extends Component {
           <h2 className="offerTitle"> Offer Description </h2>
           <h4> Suggested Offers </h4>
           <List divided verticalAlign='middle'>
+
           <List.Item>
-            <List.Content floated='right'>
-              <Button onClick={() => this.renderOfferDescription(offer1)}>Use This Offer</Button>
-            </List.Content>
-            <List.Content> {offer1} </List.Content>
+          <List.Content floated='right'>
+          <Button type="button" onClick={() => this.renderOfferDescription(offer1)}>Use This Offer</Button>
+          </List.Content>
+          <List.Content> {offer1} </List.Content>
           </List.Item>
 
-            <List.Item>
-            <List.Content floated='right'>
-              <Button onClick={() => this.renderOfferDescription(offer2)}>Use This Offer</Button>
-            </List.Content>
-            <List.Content> {offer2} </List.Content>
+          <List.Item>
+          <List.Content floated='right'>
+          <Button type="button" onClick={() => this.renderOfferDescription(offer2)}>Use This Offer</Button>
+          </List.Content>
+          <List.Content> {offer2} </List.Content>
           </List.Item>
           <List.Item>
 
-            <List.Content floated='right'>
-              <Button onClick={() => this.renderOfferDescription(offer3)}>Use This Offer</Button>
-            </List.Content>
-            <List.Content> {offer3} </List.Content>
+          <List.Content floated='right'>
+          <Button type="button" onClick={() => this.renderOfferDescription(offer3)}>Use This Offer</Button>
+          </List.Content>
+          <List.Content> {offer3} </List.Content>
           </List.Item>
           </List>
 
           <Form.Field floated='center' control={Input} label='Offer Description'
-             onChange={this.handleChange} type="offer" name="offer" value={this.state.offer}/><br/>
+             name="offer" value={this.state.offer} onChange={(e) => this.handleChange(e)}/><br/>
           <div className='centerBtn'>
+
           <Form.Field control={Button} content='Submit Offer'type="submit" />
           </div>
           </Container>
@@ -190,9 +227,6 @@ class RestaurantHome extends Component {
          return (
           <div>
           <h1> {this.props.current_user.name} </h1>
-          <p> {this.props.current_user.address1} </p>
-          <p> {this.props.current_user.city} </p>
-          <p> {this.props.current_user.zip_code} </p>
           {this.renderRestOffers()}
           </div>
       )
@@ -229,12 +263,14 @@ class RestaurantHome extends Component {
         </Sidebar>
         <Sidebar.Pusher>
           <Segment basic dimmed={dimmed && visible}>
-            <Header as='h3'></Header>
+            <div className="welcomeBack">
             <h1> Welcome Back {this.props.current_user.name} ! </h1>
+            </div>
             <Divider />
             <h2> {this.state.displayHeader}</h2>
             <Divider />
             {this.renderContent()}
+            {this.offerSuccess()}
           </Segment>
         </Sidebar.Pusher>
       </Sidebar.Pushable>

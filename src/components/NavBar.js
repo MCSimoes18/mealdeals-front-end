@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { NavLink } from 'react-router-dom';
-import { Menu, Segment } from 'semantic-ui-react'
+import { Menu, Segment, Button, Fixed } from 'semantic-ui-react'
+import { connect } from 'react-redux';
 
 const colors = [
   'red',
@@ -23,37 +24,125 @@ class NavBar extends Component {
   state = { activeItem: 'home' }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name, color: 'yellow'} )
 
-  render () {
+  logout = () => {
+    debugger
+    localStorage.removeItem("token")
+    debugger
+    this.props.dispatch({ type: "LOGIN_USER", payload: null })
+    this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: null })
+  }
+
+
+  handleNavBar = () => {
     const { activeItem } = this.state
     const { color } = this.props
-    return (
+    if (this.props.user_type === 'user') {
+      return (
       <Segment inverted>
-              <Menu inverted pointing secondary >
-                <NavLink to="/">
-                  <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-                </NavLink>
-                <NavLink to="/MonthlyOffers">
-                  <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
-                </NavLink>
-                <NavLink to="/Login">
-                  <Menu.Item name='Login' active={activeItem === 'Login'} onClick={this.handleItemClick} />
-                </NavLink>
-                <NavLink to="/RestaurantLogin">
-                  <Menu.Item name='I am a Restaurant' active={activeItem === "I am a Restaurant"} onClick={this.handleItemClick} />
-                </NavLink>
-                <NavLink to="/UserProfile">
-                  <Menu.Item name='I am a Person' active={activeItem === "I am a Person"} onClick={this.handleItemClick} />
-                </NavLink>
-              </Menu>
-            </Segment>
+          <Menu inverted pointing secondary >
+
+            <NavLink to="/">
+              <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+            </NavLink>
+
+            <NavLink to="/MonthlyOffers">
+              <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
+            </NavLink>
+
+            <Menu.Item position='right'>
+            <NavLink to="/UserProfile">
+              <Button as='a' >
+                My Account
+              </Button>
+            </NavLink>
+            <NavLink to="/">
+              <Button onClick={() => this.logout()}as='a' style={{ marginLeft: '0.5em' }}>
+                Sign Out
+              </Button>
+            </NavLink>
+            </Menu.Item>
+
+
+
+          </Menu>
+        </Segment>
+      )
+
+    }
+    else if (this.props.user_type === 'restaurant') {
+
+      return (
+      <Segment inverted>
+          <Menu inverted pointing secondary >
+            <NavLink to="/">
+              <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+            </NavLink>
+
+            <Menu.Item position='right'>
+            <NavLink to="/RestaurantHome">
+              <Button as='a' >
+                My Account
+              </Button>
+            </NavLink>
+            <NavLink to="/">
+              <Button onClick={() => this.logout()}as='a' style={{ marginLeft: '0.5em' }}>
+                Sign Out
+              </Button>
+            </NavLink>
+            </Menu.Item>
+
+
+          </Menu>
+        </Segment>
+      )
+
+    }
+    else if (this.props.user_type === null || this.props.user_type === 'before_restaurant') {
+      return (
+      <Segment inverted>
+          <Menu inverted pointing secondary >
+            <NavLink to="/">
+              <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+            </NavLink>
+            <NavLink to="/MonthlyOffers">
+              <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
+            </NavLink>
+
+
+            <Menu.Item position='right'>
+            <NavLink to="/Login">
+              <Button as='a' >
+                Log in
+              </Button>
+            </NavLink>
+            <NavLink to="/SignUp">
+              <Button as='a' style={{ marginLeft: '0.5em' }}>
+                Sign Up
+              </Button>
+            </NavLink>
+            </Menu.Item>
+          </Menu>
+        </Segment>
+      )
+
+    }
+  }
+
+  render () {
+    return (
+      <Fragment>
+      {this.handleNavBar()}
+      </Fragment>
       );
     }
   };
 
-export default NavBar;
+  export default connect(mapStateToProps)(NavBar)
 
-// <div className="navbar">
-// <NavLink to="/"> Home </NavLink>
-// <NavLink to="/MonthlyOffers"> Restaurants of the Month </NavLink>
-// <NavLink to="/Login"> Login </NavLink>
-// </div>
+
+  function mapStateToProps(state) {
+    return {
+      current_user: state.current_user,
+      user_type: state.user_type
+    }
+  }

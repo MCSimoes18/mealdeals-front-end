@@ -5,8 +5,9 @@ import * as serviceWorker from './serviceWorker';
 import NavBar from './components/NavBar';
 // import $ from "jquery";
 import './App.css';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     restaurants: [],
   }
@@ -31,7 +32,8 @@ export default class App extends React.Component {
           if (response.errors) {
             alert(response.errors)
           } else {
-            this.setState({currentUser: response})
+            this.props.dispatch({ type: "LOGIN_USER", payload: response.user })
+            this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
           }
         })
       }
@@ -56,7 +58,9 @@ export default class App extends React.Component {
 
   // // we need to reset state and remove the current user and remove the token
   // logout = () => {
-  //   // localStorage.removeItem("token")
+  //   localStorage.removeItem("token")
+  //   this.props.dispatch({ type: "LOGIN_USER", payload: null })
+  //   this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: null })
   //   this.setState({
   //     currentUser: null
   //   }, () => { this.props.history.push("/login") })
@@ -65,8 +69,19 @@ export default class App extends React.Component {
 render () {
     return (
       <div>
-        <NavBar restaurants={this.state.restaurants}/>
+        <NavBar restaurants={this.state.restaurants} logout={this.logout}/>
       </div>
     );
   }
-};
+}
+
+export default connect(mapStateToProps)(App)
+
+
+
+function mapStateToProps(state) {
+  return {
+    current_user: state.current_user,
+    user_type: state.user_type
+  }
+}

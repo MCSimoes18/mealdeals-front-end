@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 // Import Components //
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
+import { Container, Form, Input, Button } from 'semantic-ui-react'
 
 class RestaurantSignUp extends Component {
 
@@ -117,11 +118,18 @@ class RestaurantSignUp extends Component {
       return (
         <div>
           <h1> Find Your Business </h1>
-          <form onSubmit={this.handleSubmit}>
-          Business Name: <input type="text" value={this.state.cuisine} name="cuisine" onChange={this.handleChange} />
-          Location: <input type="text" value={this.state.location} name="location" onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
-          </form>
+          <Form onSubmit={this.handleSubmit} className="signUp">
+           <Form.Field control={Input} className="restSignUp1" label="Business Name"
+            placeholder='shake shack' onChange={this.handleChange} type="text" name="cuisine" value={this.state.cuisine}
+            />
+            <Form.Field control={Input} className="restSignUp2" label="Location"
+              placeholder='new york city' onChange={this.handleChange} type="text" name="location" value={this.state.location}
+              />
+              <br/>
+          <div className='centerBtn'>
+          <Button type="submit"> Search </Button>
+          </div>
+          </Form>
         </div>
       )
     } else {

@@ -94,17 +94,19 @@ display: inline-block;
 /* background-color: rgb(229, 239, 201); */
 }
 
+
 .home {
   background-color: #AF473C;
   margin-top: -15px;
   margin-bottom: 1000px;
 }
 
-.offerTitle {
+/* .offerTitle {
   margin: auto;
   text-align: center;
   /* display: inline-block; */
-}
+
+
 
 .title {
   padding-top: 100px;
@@ -123,10 +125,71 @@ display: inline-block;
   padding-bottom: 200px;
 }
 
-.sideNav {
-  height: 1000px;
+.navContent1{
+  margin-top: 20px;
 }
 
-.navContent1 {
-  margin-top: 20px;
+.restSignUp1 {
+  width: 650px;
+  text-align: center;
+  display: inline-block;
+  padding-left: 400px;
+}
+.restSignUp2 {
+  width: 250px;
+  text-align: center;
+  display: inline-block;
+}
+
+.pieChart1 {
+  margin-top: -340px;
+  margin-bottom: 50px;
+}
+
+.pieChart2 {
+  margin-top: -350px;
+  margin-bottom: 200px;
+  margin-left: 550px;
+}
+
+.rateTxt1 {
+  margin-left: 505px;
+  margin-bottom: -100px;
+  margin-top: 100px;
+}
+
+.rateTxt2 {
+  margin-left: 790px;
+  margin-bottom: -100px;
+  margin-top: 100px;
+}
+
+.rate1 {
+  margin-left: 542px;
+  margin-bottom: -150px;
+  margin-top: 100px;
+}
+
+.rate2 {
+  margin-left: 820px;
+  margin-top: 100px;
+  margin-bottom: -100px;
+}
+
+.restOfferCard {
+  margin-bottom: 300px;
+  background-color: green;
+}
+
+.sideNav {
+  height: fixed;
+  margin-top: -2000px;
+  background-color: red;
+}
+.pusher {
+  margin-top: -300px;
+}
+
+.welcomeBack {
+  margin-top: 200px;
 }

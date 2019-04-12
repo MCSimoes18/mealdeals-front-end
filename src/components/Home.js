@@ -10,6 +10,8 @@ import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
 import Login from './Login';
 import RestaurantLogin from './RestaurantLogin';
+import SignUp from './SignUp';
+import RestaurantSignUp from './RestaurantSignUp';
 import Search from './Search';
 import { Card, Button, Input, Container, Grid, Divider, Segment} from 'semantic-ui-react'
 
@@ -106,15 +108,21 @@ class Home extends React.Component {
             alt="user"
             />
             <h1> I eat food </h1>
-            <p> Visit Restaurants of the Month during the earn month. Check-In on the app while dining at the restaurant and receive a coupon voucher to come back during the redeem month. Make sure to activate the coupon in front of a server. </p>
+            <br/> Get rewarded for eating with eating. <br/>
+            <p> Check-In at local restaurants during their designated earn-period.
+            <br/> Then come back and redeem exclusive offers. </p>
+            <Button>
+            <NavLink to="/SignUp" component={SignUp}>
+                Sign Up
+            </NavLink>
+            </Button>
             <Button>
             <NavLink to="/Login" component={Login}>
-                Sign Up
+                Login
             </NavLink>
             </Button>
             </Container>
             </Grid.Column>
-
             <Grid.Column verticalAlign='middle'>
             <Container fluid className="restSide">
             <img
@@ -124,11 +132,17 @@ class Home extends React.Component {
             />
             <h1 style={{textAlign:'center;'}}
             > I make food </h1>
-            <p> Register your business with us to promote local offers on Meal Deals. <br/> Each offer will be eligible for a full month (what we call the "Redeem Month"), contingent that the customer checked-in at your restaurant, during the prior month, (what we call the "Earn Month"). <br/> Meal Deals is great way to promote your businesses <br/> visibility, acquire new customers and return customers </p>
+            <p> Promote your business with Meal Deals.
+            <br/> Gain visibility, acquire new customers and increase your customer retention. <br/>Sign up and start submitting exclusive offers.</p>
             <br/>
             <Button>
-            <NavLink to="/RestaurantLogin" component={RestaurantLogin}>
+            <NavLink to="/RestaurantSignUp" component={RestaurantSignUp}>
                 Sign Up
+            </NavLink>
+            </Button>
+            <Button>
+            <NavLink to="/RestaurantLogin" component={RestaurantLogin}>
+                Login
             </NavLink>
             </Button>
             </Container>

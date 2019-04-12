@@ -77,7 +77,7 @@ class UserProfile extends Component {
     const vertical = direction === 'bottom' || direction === 'top'
      return (
        <Sidebar.Pushable as={Segment} className="sideNav">
-         <Sidebar as={Menu} animation='push' icon='labeled' vertical visible width='thin'>
+         <Sidebar as={Menu} animation='scale down' icon='labeled' vertical visible width='thin'>
            <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'Your Coupons')}>
              <img
              className="coupon"
@@ -100,8 +100,7 @@ class UserProfile extends Component {
          </Sidebar>
          <Sidebar.Pusher>
            <Segment basic dimmed={dimmed && visible}>
-             <Header as='h3'></Header>
-             <h1> Welcome Back {this.props.current_user.name} ! </h1>
+             <h1 className="wecomeBack"> Welcome Back {this.props.current_user.name} ! </h1>
              <Divider />
              <h2> {this.state.displayHeader}</h2>
              <Divider />

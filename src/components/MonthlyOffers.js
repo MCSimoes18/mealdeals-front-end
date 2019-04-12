@@ -68,7 +68,7 @@ render () {
   return (
     <Fragment>
       <h1> {current_month} Offers </h1>
-      <Card.Group centered items={OfferCard}>
+      <Card.Group centered >
         {this.renderCards()}
       </Card.Group>
     </Fragment>
@@ -83,6 +83,7 @@ export default connect(mapStateToProps)(MonthlyOffers)
 function mapStateToProps(state) {
   return {
     current_user: state.current_user,
-    allRestaurants: state.allRestaurants
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers
   }
 }
