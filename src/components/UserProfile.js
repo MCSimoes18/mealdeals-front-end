@@ -1,13 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import CouponCard from './CouponCard'
-import UserLeftNav from './UserLeftNav'
 import MonthlyOffers from './MonthlyOffers'
 import { Form, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class UserProfile extends Component {
+
+  static defaultProps = { // <-- DEFAULT PROPS
+      userCoupons: []      // undefined gets converted to array,render won't trigger error
+  }
+
   state = {
-    allCoupons: [],
+    // allCoupons: [],
     userCoupons: [],
     activeItem: 'home',
     animation: 'push',
@@ -18,14 +22,13 @@ class UserProfile extends Component {
     displayHeader: 'Your Coupons'
   }
 
+
+
   updateContent = (content, header) => {
     this.setState({
       displayContent: content,
       displayHeader: header
     })
-  }
-
-  componentDidMount() {
     fetch("http://localhost:3000/api/v1/coupon_users")
     .then(res => res.json())
     .then(res => {
@@ -34,41 +37,58 @@ class UserProfile extends Component {
         userCoupons: findUserCoupons
       })
     })
-    fetch("http://localhost:3000/api/v1/restaurants")
-    .then(res => res.json())
-    .then(res => {
-      this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
-    })
   }
 
-  findUserCoupons = () => {
-    let findUserCoupons = this.state.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
-    this.setState({
-      userCoupons: findUserCoupons
-    }, () => console.log("here are my coupons", this.state.userCoupons))
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/coupon_users")
+    .then(res => res.json())
+    .then(res => {
+      let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
+      this.setState({
+        userCoupons: findUserCoupons
+      })
+    })
   }
+    // })
+  //   fetch("http://localhost:3000/api/v1/restaurants")
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+  //   })
+
+  // findUserCoupons = () => {
+  //   let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
+  //   this.setState({
+  //     userCoupons: findUserCoupons
+  //   }, () => console.log("here are my coupons", this.state.userCoupons))
+  // }
 
   renderContent = () => {
   if (this.state.displayContent === 'coupon') {
-    return this.state.userCoupons.map(coupon => {
+    if (this.state.userCoupons.length === 0){
+      return (
+        <h1> You do not have any coupons </h1>
+      )
+    } else {
+      return this.state.userCoupons.map(coupon => {
         return (
           <CouponCard
-          coupon={coupon}
+          coupon= {coupon}
           />
         )
       })
+    }
     } else if (this.state.displayContent === 'food') {
       return (
         <MonthlyOffers />
       )
     } else if (this.state.displayContent === 'heart') {
-      console.log("this will be something")
+      return <h1> This feature is not yet available </h1>
     }
     else if (this.state.displayContent === 'setting'){
       console.log("this will update user info")
     }
-  }
-
+ }
 
   // next step is to create coupon cards and iterate through them
   render() {
@@ -117,6 +137,11 @@ export default connect(mapStateToProps)(UserProfile)
 
 function mapStateToProps(state) {
   return {
-    current_user: state.current_user
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons,
+    newCoupon: state.newCoupon
   }
 }

@@ -49,7 +49,6 @@ class RestaurantHome extends Component {
   }
 
   createOffer = (e) => {
-    debugger
     e.preventDefault()
     let data = {
       restaurant_id: this.props.current_user.id,
@@ -112,7 +111,7 @@ class RestaurantHome extends Component {
 
   renderRestOffers = () => {
     if (this.state.allOffers == "") {
-      return (<p> testing </p>)
+      return (<p> You do not have any offers. </p>)
     }
     else {
     // let allMonths = ["jan", "feb", "mar", "april", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]

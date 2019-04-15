@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
 import { Card, Button, Input, Container} from 'semantic-ui-react'
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 
 class Home extends React.Component {
@@ -59,6 +60,26 @@ class Home extends React.Component {
     }
   }
 
+  renderMap = () => {
+    const mapStyles = {
+    width: '100%',
+    height: '100%'
+  };
+
+    return (
+      <Map
+           google={this.props.google}
+           zoom={14}
+           style={mapStyles}
+           initialCenter={{
+            lat: -1.2884,
+            lng: 36.8233
+           }}
+         />
+       )
+     }
+
+
   render() {
     console.log(this.props)
     return (
@@ -71,16 +92,19 @@ class Home extends React.Component {
           </form>
           <h3> displaying results For {this.props.cuisine} food, in {this.props.location}... </h3>
         </div>
+          {this.renderMap()}
         <Card.Group text style={{ marginTop: '7em' }} >
           {this.renderSearchCards()}
         </Card.Group>
-
       </div>
     );
   };
 }
 
-export default connect(mapStateToProps)(Home);
+// export default connect(mapStateToProps)(Home);
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyCfIfVkpVNgZlpN9nI7QFlxsrNPkRLCPAo'
+})(Home);
 
 
 function mapStateToProps(state) {
@@ -89,7 +113,13 @@ function mapStateToProps(state) {
     current_user: state.current_user,
     rests: state.rests,
     cuisine: state.cuisine,
-    location: state.location
+    location: state.location,
+
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons
+
 
   }
 

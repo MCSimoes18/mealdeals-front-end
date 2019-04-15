@@ -96,7 +96,7 @@ class RestaurantSignUp extends Component {
             <p>  Address: {restaurant.location.address1} </p>
             <p>  {restaurant.location.city}, {restaurant.location.zip_code} </p>
             <p>  Phone: {restaurant.location.phone} </p>
-            <form onSubmit={() => this.registerRestaurant(restaurant)}>
+            <form onSubmit={(e) => this.registerRestaurant(e, restaurant)}>
               <label> Username: </label>
                 <br />
               <input onChange={this.handleChange} type="text"  name="username" placeholder="username" value={this.state.username}/>
@@ -137,7 +137,8 @@ class RestaurantSignUp extends Component {
     }
   }
 
-  registerRestaurant(restaurant) {
+  registerRestaurant(e, restaurant) {
+      e.preventDefault()
       let data = {
         username: this.state.username,
         password: this.state.password,
@@ -169,8 +170,16 @@ class RestaurantSignUp extends Component {
           body: JSON.stringify(data)
         })
         .then(res => res.json())
-        .then(console.log)
-    }
+          // we need to login at the top level where we are holding our current user!
+          // setState in App to currentuser
+          .then(response => {
+            debugger
+          this.props.dispatch({ type: "LOGIN_USER", payload: response })
+          this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
+          localStorage.setItem('jwt', response.jwt)
+          })
+          .then(this.props.history.push(`/RestaurantHome`))
+        }
 
   render() {
     return (
@@ -183,3 +192,14 @@ class RestaurantSignUp extends Component {
   }
 
 export default connect()(RestaurantSignUp);
+
+function mapStateToProps(state) {
+  return {
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons,
+    newCoupon: state.newCoupon
+  }
+}

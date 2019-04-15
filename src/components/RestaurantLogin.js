@@ -34,30 +34,6 @@ class RestaurantLogin extends Component {
     })
   }
 
-//if fields are not empty - call loginUser
-  // login = (e) => {
-  //   e.preventDefault()
-  //   if (this.state.username !== "" || this.state.password !== "") {
-  //     this.loginUser(this.state.username, this.state.password)
-  //   }
-  // }
-
-//find username match. if passwords match dispatch login_user to reducer & update global state for current user. Since user and restaurant login calls the same dispatch - should never be 2 log-ins at a time. Initiates redirect.
-  // loginUser = (username, password) => {
-  //   console.log("will log in user", username, password);
-  //   fetch("http://localhost:3000/api/v1/restaurants")
-  //   .then(res => res.json())
-  //   .then( json => {
-  //   let login_user = json.find( rest => rest.username === username)
-  //   if (login_user.password === password) {
-  //     console.log("success!")
-  //     this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
-  //     this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
-  //     this.setRedirect()
-  //   }
-  // })
-// }
-
 login = (e) => {
   let data = {
     username: this.state.username,
@@ -79,7 +55,7 @@ login = (e) => {
             // we need to login at the top level where we are holding our current user!
             // setState in App to currentuser
             let login_user = response.restaurant
-            this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
+            this.props.dispatch({ type: "LOGIN_USER", payload: response.restaurant })
             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
             localStorage.setItem('jwt', response.jwt)
             this.props.history.push(`/RestaurantHome`)
@@ -134,3 +110,13 @@ renderRedirect = () => {
 }
 
 export default connect()(RestaurantLogin)
+
+function mapStateToProps(state) {
+  return {
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons
+  }
+}

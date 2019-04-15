@@ -3,43 +3,38 @@ import RestaurantCard from './RestaurantCard'
 import OfferCard from './OfferCard'
 import { connect } from 'react-redux';
 import { Button, Card, Image } from 'semantic-ui-react'
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 
 class MonthlyOffers extends Component {
 
   state = {
     restaurants: [],
-    offers: []
   }
 
-componentDidMount() {
-  fetch("http://localhost:3000/api/v1/offers")
-  .then(res=>res.json())
-  .then(res => {
-    this.setState({
-      offers: res
-    }, () => console.log("?", this.state.offers))
-  })
-  fetch("http://localhost:3000/api/v1/restaurants")
-    .then(res => res.json())
-    .then(res => {
-      this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
-    })
-  }
+// componentDidMount() {
+//   fetch("http://localhost:3000/api/v1/offers")
+//   .then(res=>res.json())
+//   .then(res => {
+//     this.props.dispatch({ type: "ALL_OFFERS", payload: res })
+//   })
+//   fetch("http://localhost:3000/api/v1/restaurants")
+//     .then(res => res.json())
+//     .then(res => {
+//       this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+//     })
+//     fetch("http://localhost:3000/api/v1/coupon_users")
+//     .then(res => res.json())
+//     .then(res => {
+//       this.props.dispatch({ type: "ALL_COUPONS", payload: res })
+//     })
+//   }
 
-
-  // renderCards = () => {
-  // return this.state.restaurants.map(rest => {
-  //     return (
-  //       <RestaurantCard restaurant={rest} />
-  //     )
-  //   })
-  // }
 
   renderCards = () => {
   var d = new Date();
   let current_month = d.getMonth()
-  let currentOffers = this.state.offers.filter(offer => offer.earn_month === current_month)
+  let currentOffers = this.props.allOffers.filter(offer => offer.earn_month === current_month)
   return currentOffers.map(offer => {
     return (
         <OfferCard
@@ -47,7 +42,7 @@ componentDidMount() {
         />
       )
     })
-  }
+}
 
 render () {
   let d = new Date();
@@ -84,6 +79,7 @@ function mapStateToProps(state) {
   return {
     current_user: state.current_user,
     allRestaurants: state.allRestaurants,
-    allOffers: state.allOffers
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons
   }
 }

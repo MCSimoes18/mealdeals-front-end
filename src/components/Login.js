@@ -84,12 +84,16 @@ login = (e) => {
         } else {
             // we need to login at the top level where we are holding our current user!
             // setState in App to currentuser
-            let login_user = response.user
-            this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
+            if (response.user) {
+              console.log("true")
+            }
+            else {
+                console.log("true")
+              }
+            this.props.dispatch({ type: "LOGIN_USER", payload: response.user })
             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
             localStorage.setItem('jwt', response.jwt)
             this.props.history.push(`/UserProfile`)
-
           }
         })
   }
@@ -139,3 +143,13 @@ render () {
 
 }
 export default connect()(Login)
+
+function mapStateToProps(state) {
+  return {
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons
+  }
+}

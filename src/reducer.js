@@ -4,7 +4,10 @@ const initialState = {
   current_user: null,
   user_type: null,
   allRestaurants: [],
-  rests: null
+  rests: null,
+  allOffers: [],
+  allCoupons: [],
+  newCoupon: null
 }
 
 function reducer(state = initialState, action, payload) {
@@ -23,9 +26,16 @@ function reducer(state = initialState, action, payload) {
     case "LOGIN_USER_TYPE":
       console.log("testing reducer2", action.payload)
       return {...state, user_type: action.payload }
-      case "ALL_RESTAURANTS":
-        console.log("testing reducer3", action.payload)
-        return {...state, allRestaurants: action.payload }
+    case "ALL_RESTAURANTS":
+      return {...state, allRestaurants: action.payload }
+    case "ALL_OFFERS":
+      return {...state, allOffers: action.payload }
+    case "ALL_COUPONS":
+      return {...state, allCoupons: action.payload }
+      case "NEW_COUPON":
+        return {...state, allCoupons: action.payload }
+    case "ADD_COUPON":
+      return { ...state, newCoupon: action.payload }
     default:
       console.log('default case', state);
       return state;

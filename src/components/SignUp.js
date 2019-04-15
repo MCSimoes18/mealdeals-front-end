@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import { Form, Input, Button } from 'semantic-ui-react'
+import UserProfile from './UserProfile'
+import { connect } from 'react-redux';
 
 
-export default class SignUp extends Component {
+class SignUp extends Component {
 
   state = {
     firstName: "",
@@ -11,6 +13,7 @@ export default class SignUp extends Component {
     email: "",
     password: "",
     showLogin: true,
+    redirect: false // in order to redirect to restaurant profile
   }
 
   handleChange = (e) => {
@@ -18,6 +21,13 @@ export default class SignUp extends Component {
       [e.target.name]: e.target.value
     })
   }
+
+  // use state to know when to re-direct to restaurant homepage
+    setRedirect = () => {
+      this.setState({
+        redirect: true
+      })
+    }
 
   signupSubmit = (e) => {
     e.preventDefault()
@@ -41,7 +51,16 @@ export default class SignUp extends Component {
       body: JSON.stringify(data)
     })
     .then(res => res.json())
-    .then(console.log)
+      // we need to login at the top level where we are holding our current user!
+      // setState in App to currentuser
+      .then(response => {
+        debugger
+      this.props.dispatch({ type: "LOGIN_USER", payload: response })
+      this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+      localStorage.setItem('jwt', response.jwt)
+      this.props.history.push(`/UserProfile`)
+      console.log("success!")
+      })
   }
 
   renderSignUpForm = () => {
@@ -68,4 +87,16 @@ export default class SignUp extends Component {
     )
   }
 
+}
+
+export default connect()(SignUp)
+
+function mapStateToProps(state) {
+  return {
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons
+  }
 }

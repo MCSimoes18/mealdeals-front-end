@@ -48,6 +48,29 @@ class CouponCard extends React.Component {
     }
   }
 
+  sendText = (checkInRest) => {
+    debugger
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
+     const data = {
+       date: today,
+       offer: this.props.coupon.offer.offer,
+       rest: checkInRest.name,
+       phoneNumber: this.props.current_user.phone,
+     }
+     fetch("http://localhost:3000/api/v1/text", {
+         method: "POST",
+         headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+  }
+
   patchStatus = (current_status) => {
     let data = {
       status: current_status
@@ -61,7 +84,9 @@ class CouponCard extends React.Component {
         body: JSON.stringify(data)
       })
       .then(res => res.json())
-      .then(console.log)
+      .then(res => {
+        this.props.dispatch({ type: "UPDATE_COUPONS", payload: res })
+      })
     }
 
   openState = () => {
@@ -76,6 +101,7 @@ class CouponCard extends React.Component {
       let text = `Active Now:    ${d}`
       let t = setInterval(() => {
       var z = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+      this.sendText(this.state.currentRestaurant)
       this.patchStatus('Active Now')
       this.setState({
         couponColor: z,
@@ -139,6 +165,7 @@ renderCoupon = () => {
         <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
         <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
         <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+        <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
         <Card.Content extra>
         Status: {this.state.current_status}
         <Button fluid style={{backgroundColor: 'green' }} onClick={()=> this.openState()}>
@@ -160,6 +187,7 @@ renderCoupon = () => {
         <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
         <Card.Content extra style={{marginLeft: '800px;'}}>
         <Card.Header> Status: {this.state.current_status} </Card.Header>
+        <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
         </Card.Content>
         </Card.Content>
         </Card>
@@ -175,6 +203,7 @@ renderCoupon = () => {
             <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
             <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
             <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+            <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
             <Card.Content extra>
             Status: {this.state.current_status}
             <Button fluid style={{backgroundColor: this.state.couponColor }} onClick={()=> this.openState()}>
@@ -194,6 +223,7 @@ renderCoupon = () => {
         <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
         <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
         <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+        <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
         <Card.Content extra>
         <Card.Header style={{marginLeft: '800px;'}}> Status: {this.state.current_status} </Card.Header>
         </Card.Content>
@@ -210,6 +240,7 @@ renderCoupon = () => {
           <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
           <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
           <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+          <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
           <Card.Content extra>
           <Card.Header style={{marginLeft: '800px;'}}> Status: {this.state.current_status} </Card.Header>
           </Card.Content>
@@ -237,7 +268,10 @@ renderCoupon = () => {
     return {
       keyword: state.keyword,
       current_user: state.current_user,
-      allRestaurants: state.allRestaurants
+      allRestaurants: state.allRestaurants,
+      user_type: state.user_type,
+      allOffers: state.allOffers,
+      allCoupons: state.allCoupons
     }
 
     console.log("here", state.keyword)

@@ -95,22 +95,39 @@ display: inline-block;
 }
 
 
-.home {
+body {
   background-color: #AF473C;
+  background: url( 'https://cdn.firstcrycdn.com/2018/03/446808145-H.jpg');
+  /* background: url( 'https://img.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1220-1491.jpg?size=626&ext=jpg'); */
+  /* background: url( 'https://www.healthyalternative.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg'); */
+  /* background: url( 'https://image.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1309-136.jpg'); */
   margin-top: -15px;
   margin-bottom: 1000px;
+  /* background-repeat: no-repeat; */
+  background-size: cover;
 }
 
 /* .offerTitle {
   margin: auto;
   text-align: center;
   /* display: inline-block; */
+/* @font-face {
+    font-family: 'Crimson Text', serif;
+    src: url("https://fonts.googleapis.com/css?family=Crimson+Text")
+  } */
 
-
+@font-face{
+  font-family: 'A Love of Thunder';
+  font-style: normal;
+  src: local('A Love of Thunder'), local('A Love of Thunder'),
+}
 
 .title {
-  padding-top: 100px;
+  font-family: 'A Love of Thunder';
+  font-size: 100px;
+  padding-top: 250px;
   padding-bottom: 90px;
+  color: white;
 }
 
 .coupon {
@@ -122,7 +139,7 @@ display: inline-block;
 }
 
 .searchBar {
-  padding-bottom: 200px;
+  padding-bottom: 250px;
 }
 
 .navContent1{
@@ -182,12 +199,13 @@ display: inline-block;
 }
 
 .sideNav {
-  height: fixed;
+  /* height: fixed;
   margin-top: -2000px;
-  background-color: red;
+  background-color: red; */
+  min-height: 100vh;
 }
 .pusher {
-  margin-top: -300px;
+  margin-top: 200px;
 }
 
 .welcomeBack {

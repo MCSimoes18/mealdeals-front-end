@@ -9,9 +9,9 @@ ReactChartkick.addAdapter(Chart)
 
 class OfferCard extends React.Component {
   state = {
-    allRestaurants: [],
-    allOffers: [],
-    allCoupons: [],
+    // allRestaurants: [],
+    // allOffers: [],
+    // allCoupons: [],
     user_latitude: "",
     user_longitude: "",
     open: false,
@@ -21,40 +21,20 @@ class OfferCard extends React.Component {
   componentDidMount(){
     fetch("http://localhost:3000/api/v1/restaurants")
     .then(res => res.json())
-    .then(res => {
-      this.setState({
-        allRestaurants: res
-      })
+      .then(res => {
+        this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
     })
     fetch("http://localhost:3000/api/v1/offers")
     .then(res => res.json())
-    .then(res => {
-      this.setState({
-        allOffers: res
+      .then(res => {
+        this.props.dispatch({ type: "ALL_OFFERS", payload: res })
       })
-    })
     fetch("http://localhost:3000/api/v1/coupon_users")
     .then(res => res.json())
     .then(res => {
-      this.setState({
-        allCoupons: res
-      })
+      this.props.dispatch({ type: "ALL_COUPONS", payload: res })
     })
   }
-
-  // marketingAnalytics = () => {
-  //
-  //   //  all coupons this month
-  //   let thisMonthsCoupons = this.state.allCoupons.filter(coupon => coupon.offer.earn_month === this.props.offer.earn_month)
-  //   // all coupons this month belonging to this offer
-  //   let myCouponsThisMonth = thisMonthsCoupons.filter(coupon => coupon.offer.id === this.props.offer.id)
-  //   // all coupons this month belonging to this offer that are redeemed
-  //   let redeemedCoupons = myCouponsThisMonth.filter(coupon => coupon.status === 'redeemed')
-  //   // how many people checked into this offer out of all the check ins this month?
-  //   let checkInRate = (myCouponsThisMonth.count / thisMonthsCoupons.count)
-  //   // how many of my coupons for this offer have been redeemed?
-  //   let redemptionRate = (redeemedCoupons.count / myCouponsThisMonth.count)
-  // }
 
   close = () => this.setState({ open: false })
 
@@ -96,7 +76,6 @@ class OfferCard extends React.Component {
   }
 }
 
-
   getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
@@ -119,14 +98,10 @@ class OfferCard extends React.Component {
   }
 
   compareLocations = () => {
-   let checkInRestaurant = this.state.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+   let checkInRestaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
    this.setState({
      current_restaurant: checkInRestaurant
    })
-   console.log("rest", checkInRestaurant.latitude)
-   console.log("rest", checkInRestaurant.longitude)
-   console.log("me", this.state.user_latitude)
-   console.log("me", this.state.user_longitude)
    let floatRestLatitude = this.floatCoordinates(checkInRestaurant.latitude)
    let floatRestLongitude = this.floatCoordinates(checkInRestaurant.longitude)
    let floatUserLatitude = this.floatCoordinates(this.state.user_latitude)
@@ -147,6 +122,7 @@ class OfferCard extends React.Component {
   }
 
   createCoupon = () => {
+    console.log("pre-dispatch", this.props.allCoupons)
     let data = {
       offer_id: this.props.offer.id,
       user_id: this.props.current_user.id,
@@ -162,7 +138,10 @@ class OfferCard extends React.Component {
          body: JSON.stringify(data)
        })
        .then(res => res.json())
-       .then(console.log)
+       .then(res => {
+         this.props.dispatch({ type: "ADD_COUPON", payload: res })
+         this.props.dispatch({ type: "NEW_COUPON", payload: res })
+       })
   }
 
 
@@ -185,23 +164,6 @@ renderOfferCard = () => {
     // using month array to display string instead of value
     let earn_month = month[this.props.offer.earn_month]
     let redeem_month = month[this.props.offer.redeem_month]
-    ////////////////////////////////////////////////////////
-    /////// variables defined for coupon analytics /////////
-    ////////////////////////////////////////////////////////
-    //  all coupons this month
-    let thisMonthsCoupons = this.state.allCoupons.filter(coupon => coupon.offer.earn_month === this.props.offer.earn_month)
-    // all coupons this month belonging to this offer
-    let myCouponsThisMonth = thisMonthsCoupons.filter(coupon => coupon.offer.id === this.props.offer.id)
-    let myCouponCount = myCouponsThisMonth.length
-    let notMyCouponCount = thisMonthsCoupons.length - myCouponCount.length
-    // all coupons this month belonging to this offer that are redeemed
-    let redeemedCoupons = myCouponsThisMonth.filter(coupon => coupon.status === "Redeemed")
-    // how many people checked into this offer out of all the check ins this month?
-    let checkInRate = ((myCouponsThisMonth.length / thisMonthsCoupons.length) * 100).toFixed(0)
-    // how many of my coupons for this offer have been redeemed?
-    let redemptionRate = (redeemedCoupons.length / myCouponsThisMonth.length) * 100
-    let redeemedCount = parseInt(redeemedCoupons.length)
-    let unRedeemedCount = parseInt(myCouponsThisMonth.length - redeemedCount)
 
   if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){
     let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
@@ -218,6 +180,10 @@ renderOfferCard = () => {
         <Card.Content extra>
         <Button basic color='blue' style={{ width: '18.5em'}} >
         <NavLink to="/Login" component={Login}>
+        Sign In To Redeem
+        </NavLink>
+        </Button>
+        <Button basic color='blue' style={{ width: '18.5em'}} >
         Sign In To Redeem
         </NavLink>
         </Button>
@@ -244,6 +210,23 @@ renderOfferCard = () => {
     }
     if (this.props.user_type === "restaurant"){
       let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+      ////////////////////////////////////////////////////////
+      /////// variables defined for coupon analytics /////////
+      ////////////////////////////////////////////////////////
+      //  all coupons this month////
+      let thisMonthsCoupons = this.props.allCoupons.filter(coupon => coupon.offer.earn_month === this.props.offer.earn_month)
+      // all coupons this month belonging to this offer
+      let myCouponsThisMonth = thisMonthsCoupons.filter(coupon => coupon.offer.id === this.props.offer.id)
+      let myCouponCount = myCouponsThisMonth.length
+      let notMyCouponCount = thisMonthsCoupons.length - myCouponCount.length
+      // all coupons this month belonging to this offer that are redeemed
+      let redeemedCoupons = myCouponsThisMonth.filter(coupon => coupon.status === "Redeemed")
+      // how many people checked into this offer out of all the check ins this month?
+      let checkInRate = ((myCouponsThisMonth.length / thisMonthsCoupons.length) * 100).toFixed(0)
+      // how many of my coupons for this offer have been redeemed?
+      let redemptionRate = (redeemedCoupons.length / myCouponsThisMonth.length) * 100
+      let redeemedCount = parseInt(redeemedCoupons.length)
+      let unRedeemedCount = parseInt(myCouponsThisMonth.length - redeemedCount)
       if (isNaN(redemptionRate)){
         redemptionRate = "N/A"
       }
@@ -253,13 +236,25 @@ renderOfferCard = () => {
       if (isNaN(checkInRate)){
         checkInRate = "N/A"
       }
+
+      //moving this out for now...
+      // <h4 className="rateTxt2"> Check In Rate </h4>
+      // <h2 className="rate2"> {checkInRate} </h2>
+      // <div className='pieChart2'>
+      // <PieChart data={[["Your Check-Ins", myCouponCount], ["Total Months Check-Ins", notMyCouponCount]]} />
+      // </div>
+      // <Card.Content extra>
+      // <Button basic color='red' style={{ width: '18.5em'}}>
+      // Delete Offer
+      // </Button>
+      // </Card.Content>
       return(
         <div>
         <Container>
         <h4 className="rateTxt1"> Redemption Rate </h4>
         <h2 className="rate1"> {redemptionRate}  </h2>
-        <h4 className="rateTxt2"> Check In Rate </h4>
-        <h2 className="rate2"> {checkInRate} </h2>
+        <br/>
+        <br/>
           <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'} className="restOfferCard">
             <Card.Content>
               <Image floated='top' size='large' src={restaurant.image_url} />
@@ -269,17 +264,9 @@ renderOfferCard = () => {
               <Card.Description> Earn During: {earn_month} </Card.Description>
             <Card.Description> Redeem During: {redeem_month} </Card.Description>
           </Card.Content>
-          <Card.Content extra>
-          <Button basic color='red' style={{ width: '18.5em'}}>
-          Delete Offer
-          </Button>
-          </Card.Content>
         </Card>
         <div className='pieChart1'>
         <PieChart data={[["Redeemed", redeemedCount], ["Total Check-Ins", unRedeemedCount]]} />
-        </div>
-        <div className='pieChart2'>
-        <PieChart data={[["Your Check-Ins", myCouponCount], ["Total Months Check-Ins", notMyCouponCount]]} />
         </div>
         </Container>
         <Divider />
@@ -288,12 +275,6 @@ renderOfferCard = () => {
   }
 }
 
-// render() {
-//   return (
-//     <PieChart data={[["Blueberry", 44], ["Strawberry", 23]]} />
-//   )
-// }
-// }
 
 
   render () {
@@ -315,6 +296,8 @@ function mapStateToProps(state) {
   return {
     current_user: state.current_user,
     user_type: state.user_type,
-    allRestaurants: state.allRestaurants
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons
   }
 }
