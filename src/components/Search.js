@@ -7,8 +7,6 @@ import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
 import { Card, Button, Input, Container} from 'semantic-ui-react'
-import { Map, GoogleApiWrapper } from 'google-maps-react';
-
 
 class Home extends React.Component {
 
@@ -53,47 +51,31 @@ class Home extends React.Component {
     } else {
       return this.props.rests.businesses.map(rest => {
         return (
-        <RestaurantCard restaurant={rest} />
+        <RestaurantCard
+        restaurant={rest}
+        viewOnMap={this.props.viewOnMap}
+        />
         )
       }
     )
     }
   }
 
-  renderMap = () => {
-    const mapStyles = {
-    width: '100%',
-    height: '100%'
-  };
-
-    return (
-      <Map
-           google={this.props.google}
-           zoom={14}
-           style={mapStyles}
-           initialCenter={{
-            lat: -1.2884,
-            lng: 36.8233
-           }}
-         />
-       )
-     }
-
-
   render() {
     console.log(this.props)
     return (
       <div>
-        <h1> Meal Steals </h1>
+        <h1 className="MealSteals"> MEAL
+        <img className="headerMarker" src={process.env.PUBLIC_URL + '/foodMarker.png'}/> STEALS
+        </h1>
         <div className="searchBar">
           <form onSubmit={this.handleSubmit}>
             <Input type="text" name="food" onChange={this.handleChange} placeholder="cuisine.."/>
             <Input type="text" name="loc" onChange={this.handleChange} placeholder="location.." action={{ icon: 'search' }}/>
           </form>
           <h3> displaying results For {this.props.cuisine} food, in {this.props.location}... </h3>
-        </div>
-          {this.renderMap()}
-        <Card.Group text style={{ marginTop: '7em' }} >
+          </div>
+        <Card.Group >
           {this.renderSearchCards()}
         </Card.Group>
       </div>
@@ -101,10 +83,8 @@ class Home extends React.Component {
   };
 }
 
-// export default connect(mapStateToProps)(Home);
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyCfIfVkpVNgZlpN9nI7QFlxsrNPkRLCPAo'
-})(Home);
+export default connect(mapStateToProps)(Home);
+
 
 
 function mapStateToProps(state) {

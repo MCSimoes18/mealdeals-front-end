@@ -111,7 +111,12 @@ class RestaurantHome extends Component {
 
   renderRestOffers = () => {
     if (this.state.allOffers == "") {
-      return (<p> You do not have any offers. </p>)
+      return (
+        <Fragment>
+        <p> You do not have any offers. </p>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        </Fragment>
+      )
     }
     else {
     // let allMonths = ["jan", "feb", "mar", "april", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]
@@ -240,10 +245,12 @@ class RestaurantHome extends Component {
 
 
   render () {
+    debugger
     const { activeItem } = this.state
     const { animation, dimmed, direction, visible } = this.state
     const vertical = direction === 'bottom' || direction === 'top'
     console.log("user is...", this.props.current_user)
+    let current_user = this.props.current_user
     return (
       <Sidebar.Pushable as={Segment} className="sideNav">
         <Sidebar as={Menu} animation='scale down' icon='labeled' vertical visible width='thin'>
@@ -263,7 +270,7 @@ class RestaurantHome extends Component {
         <Sidebar.Pusher>
           <Segment basic dimmed={dimmed && visible}>
             <div className="welcomeBack">
-            <h1> Welcome Back {this.props.current_user.name} ! </h1>
+            <h1> Welcome Back {current_user.name} ! </h1>
             </div>
             <Divider />
             <h2> {this.state.displayHeader}</h2>

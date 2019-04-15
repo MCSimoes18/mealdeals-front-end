@@ -4,6 +4,7 @@ text-align: center;
 
 .searchBar {
   text-align: center;
+  padding-bottom: 100px;
 }
 
 .login{
@@ -94,17 +95,26 @@ display: inline-block;
 /* background-color: rgb(229, 239, 201); */
 }
 
+.chooseRestTxt1 {
+  text-align: center;
+  color: red;
+  font-family: 'A Love of Thunder';
+}
 
-body {
+.chooseRestTxt2 {
+  text-align: center;
+  font-family: 'A Love of Thunder';
+}
+
+/* background: url( 'https://img.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1220-1491.jpg?size=626&ext=jpg'); */
+/* background: url( 'https://www.healthyalternative.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg'); */
+/* background: url( 'https://image.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1309-136.jpg'); */
+
+.home {
   background-color: #AF473C;
   background: url( 'https://cdn.firstcrycdn.com/2018/03/446808145-H.jpg');
-  /* background: url( 'https://img.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1220-1491.jpg?size=626&ext=jpg'); */
-  /* background: url( 'https://www.healthyalternative.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg'); */
-  /* background: url( 'https://image.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1309-136.jpg'); */
   margin-top: -15px;
-  margin-bottom: 1000px;
-  /* background-repeat: no-repeat; */
-  background-size: cover;
+  background-size: contain;
 }
 
 /* .offerTitle {
@@ -138,9 +148,6 @@ body {
   margin-bottom: 10px;
 }
 
-.searchBar {
-  padding-bottom: 250px;
-}
 
 .navContent1{
   margin-top: 20px;
@@ -198,16 +205,39 @@ body {
   background-color: green;
 }
 
-.sideNav {
+.closeMap {
+  z-index: 1;
+}
+
+.innerBtn {
+  color: rgb(178, 58, 58);
+}
+
+.footer {
+  padding-top: -100px;
+}
+
+.headerMarker {
+  height: 50px;
+  width: 50px;
+}
+
+.MealSteals {
+font-family: 'A Love of Thunder';
+font-size: 40px;
+}
+
+/* .sideNav {
   /* height: fixed;
   margin-top: -2000px;
   background-color: red; */
-  min-height: 100vh;
-}
-.pusher {
-  margin-top: 200px;
-}
+  /* min-height: 100vh; */
+/* } */
+/* .pusher { */
+  /* margin-top: 200px; */
+  /* min-height: 100vh; */
+/* } */
 
-.welcomeBack {
+/* .welcomeBack {
   margin-top: 200px;
-}
+} */

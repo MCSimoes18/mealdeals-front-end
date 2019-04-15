@@ -13,7 +13,7 @@ import RestaurantLogin from './RestaurantLogin';
 import SignUp from './SignUp';
 import RestaurantSignUp from './RestaurantSignUp';
 import Search from './Search';
-import { Card, Button, Input, Container, Grid, Divider, Segment} from 'semantic-ui-react'
+import { Card, Button, Input, Container, Grid, Divider, Segment, List, Header} from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -107,17 +107,17 @@ class Home extends React.Component {
             src={process.env.PUBLIC_URL + '/food.png'}
             alt="user"
             />
-            <h1> I eat food </h1>
-            <br/> Get rewarded for eating with eating. <br/>
+            <h1 className="chooseRestTxt2"> I AM LOOKING FOR DEALS </h1>
+            Get rewarded for eating with eating. <br/>
             <p> Check-In at local restaurants during their designated earn-period.
-            <br/> Then come back and redeem exclusive offers. </p>
+            <br/> Then come back and redeem exclusive offers. </p> <br/>
             <Button>
-            <NavLink to="/SignUp" component={SignUp}>
+            <NavLink className="innerBtn" to="/SignUp" component={SignUp}>
                 Sign Up
             </NavLink>
             </Button>
             <Button>
-            <NavLink to="/Login" component={Login}>
+            <NavLink className="innerBtn" to="/Login" component={Login}>
                 Login
             </NavLink>
             </Button>
@@ -130,18 +130,17 @@ class Home extends React.Component {
             src={process.env.PUBLIC_URL + '/chef.png'}
             alt="restaurant"
             />
-            <h1 style={{textAlign:'center;'}}
-            > I make food </h1>
+            <h1 className="chooseRestTxt2"> I HAVE DEALS TO GIVE </h1>
             <p> Promote your business with Meal Deals.
             <br/> Gain visibility, acquire new customers and increase your customer retention. <br/>Sign up and start submitting exclusive offers.</p>
             <br/>
-            <Button>
-            <NavLink to="/RestaurantSignUp" component={RestaurantSignUp}>
+            <Button className="outerBtn">
+            <NavLink className="innerBtn" to="/RestaurantSignUp" component={RestaurantSignUp}>
                 Sign Up
             </NavLink>
             </Button>
-            <Button>
-            <NavLink to="/RestaurantLogin" component={RestaurantLogin}>
+            <Button className="outerBtn">
+            <NavLink className="innerBtn" to="/RestaurantLogin" component={RestaurantLogin}>
                 Login
             </NavLink>
             </Button>
@@ -150,6 +149,43 @@ class Home extends React.Component {
             </Grid>
             <Divider vertical>Or</Divider>
             </Segment>
+
+            <Segment inverted vertical style={{ padding: '5em 0em', marginTop: '-1em', marginBottom: '-10em'}}>
+             <Container>
+               <Grid divided inverted stackable>
+                 <Grid.Row>
+                   <Grid.Column width={3}>
+                     <Header inverted as='h4' content='About' />
+                     <List link inverted>
+                       <List.Item as='a'>Sitemap</List.Item>
+                       <List.Item as='a'>Contact Us</List.Item>
+                       <List.Item as='a'>Religious Ceremonies</List.Item>
+                       <List.Item as='a'>Gazebo Plans</List.Item>
+                     </List>
+                   </Grid.Column>
+                   <Grid.Column width={3}>
+                     <Header inverted as='h4' content='Services' />
+                     <List link inverted>
+                       <List.Item as='a'>Banana Pre-Order</List.Item>
+                       <List.Item as='a'>DNA FAQ</List.Item>
+                       <List.Item as='a'>How To Access</List.Item>
+                       <List.Item as='a'>Favorite X-Men</List.Item>
+                     </List>
+                   </Grid.Column>
+                   <Grid.Column width={7}>
+                     <Header as='h4' inverted>
+                       Meal Deals Mission
+                     </Header>
+                     <p>
+                      Using geo-location check-in services, we reward our users for dining out with exclusive offers.
+                     </p>
+                   </Grid.Column>
+                 </Grid.Row>
+               </Grid>
+             </Container>
+           </Segment>
+
+
         <Card.Group text style={{ marginTop: '7em' }}>
           {this.renderRedirect()}
         </Card.Group>

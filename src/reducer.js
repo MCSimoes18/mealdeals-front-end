@@ -21,6 +21,7 @@ function reducer(state = initialState, action, payload) {
       console.log("testing results", action.payload)
       return {...state, rests: action.payload }
     case "LOGIN_USER":
+      debugger
       console.log("testing reducer1", action.payload)
       return {...state, current_user: action.payload }
     case "LOGIN_USER_TYPE":

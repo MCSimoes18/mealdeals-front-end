@@ -17,6 +17,8 @@ import RestaurantLogin from './components/RestaurantLogin';
 import RestaurantHome from './components/RestaurantHome';
 import UserProfile from './components/UserProfile';
 import Search from './components/Search';
+import SearchWithMap from './components/SearchWithMap';
+import GoogleMap from './components/GoogleMap';
 import store from './store';
 
 
@@ -33,6 +35,8 @@ ReactDOM.render((
       <Route exact path="/restauranthome" component={RestaurantHome} />
       <Route exact path="/userprofile" component={UserProfile} />
       <Route exact path="/search" component={Search} />
+      <Route exact path="/GoogleMap" component={GoogleMap} />
+      <Route exact path="/SearchWithMap" component={SearchWithMap} />
       <App />
     </Router>
   </Provider>

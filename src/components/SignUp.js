@@ -58,9 +58,9 @@ class SignUp extends Component {
       this.props.dispatch({ type: "LOGIN_USER", payload: response })
       this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
       localStorage.setItem('jwt', response.jwt)
-      this.props.history.push(`/UserProfile`)
       console.log("success!")
       })
+      .then(() => this.props.history.push(`/UserProfile`))
   }
 
   renderSignUpForm = () => {

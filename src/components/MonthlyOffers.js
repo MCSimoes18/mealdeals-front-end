@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import RestaurantCard from './RestaurantCard'
 import OfferCard from './OfferCard'
+import GoogleMap from './GoogleMap'
 import { connect } from 'react-redux';
 import { Button, Card, Image } from 'semantic-ui-react'
 import { Map, GoogleApiWrapper } from 'google-maps-react';
@@ -39,9 +40,14 @@ class MonthlyOffers extends Component {
     return (
         <OfferCard
         offer={offer}
+        viewOnMap={this.props.viewOnMap}
         />
       )
     })
+}
+
+renderMap = () => {
+  return ( <GoogleMap />)
 }
 
 render () {
@@ -66,6 +72,8 @@ render () {
       <Card.Group centered >
         {this.renderCards()}
       </Card.Group>
+      <div>
+      </div>
     </Fragment>
   )
 }

@@ -49,7 +49,6 @@ class CouponCard extends React.Component {
   }
 
   sendText = (checkInRest) => {
-    debugger
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -157,8 +156,7 @@ renderCoupon = () => {
     month[11] = "December";
   if (this.state.current_status === "inactive") {
     return (
-      <Card.Group>
-      <Card fluid color='green' style={{backgroundColor: 'rgb(229, 239, 201)' }}>
+      <Card color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
       <Card.Content>
         <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -174,11 +172,9 @@ renderCoupon = () => {
         </Card.Content>
         </Card.Content>
         </Card>
-      </Card.Group>
     )} else if (this.state.current_status === "upcoming") {
     return (
-      <Card.Group>
-      <Card fluid color='yellow' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
+      <Card color='yellow' style={{backgroundColor: 'rgb(229, 239, 201)', width:'1000px;'}}>
       <Card.Content>
         <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -191,12 +187,10 @@ renderCoupon = () => {
         </Card.Content>
         </Card.Content>
         </Card>
-      </Card.Group>
       )
       } else if (this.state.current_status === 'Active Now') {
         return (
-          <Card.Group>
-          <Card fluid color='green' style={{backgroundColor: 'rgb(229, 239, 201)' }}>
+          <Card color='green' style={{backgroundColor: 'rgb(229, 239, 201)', width: '1000px;'}}>
           <Card.Content>
             <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
             <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -212,11 +206,9 @@ renderCoupon = () => {
             </Card.Content>
             </Card.Content>
             </Card>
-          </Card.Group>
     )} else if (this.state.current_status === "expired" ) {
     return (
-      <Card.Group>
-      <Card fluid color='gray' style={{backgroundColor: 'rgb(224, 224, 224)'}}>
+      <Card color='gray' style={{backgroundColor: 'rgb(224, 224, 224)', width: '1000px;'}}>
       <Card.Content>
         <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -229,11 +221,9 @@ renderCoupon = () => {
         </Card.Content>
         </Card.Content>
         </Card>
-      </Card.Group>
 )} else if (this.state.current_status === 'Redeemed' ) {
       return (
-        <Card.Group>
-        <Card fluid color='gray' style={{backgroundColor: 'rgb(221, 234, 255)'}}>
+        <Card color='gray' style={{backgroundColor: 'rgb(221, 234, 255)', width: '1000px;'}}>
         <Card.Content>
           <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
           <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -246,7 +236,6 @@ renderCoupon = () => {
           </Card.Content>
           </Card.Content>
           </Card>
-        </Card.Group>
       )
 }
 }
@@ -254,7 +243,9 @@ renderCoupon = () => {
   render() {
     return (
       <Fragment>
+      <Card.Group itemsPerRow={2} centered>
       {this.renderCoupon()}
+      </Card.Group>
       {this.confirmActivation()}
       </Fragment>
     )

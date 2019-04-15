@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 // Redux //
 import { connect } from 'react-redux';
 // Import Components //
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
-import { Container, Form, Input, Button } from 'semantic-ui-react'
+import { Container, Form, Input, Button, Card } from 'semantic-ui-react'
 
 class RestaurantSignUp extends Component {
 
@@ -18,7 +19,8 @@ class RestaurantSignUp extends Component {
     showSearch: true,
     foundBusiness: false,
     username: null,
-    password: null
+    password: null,
+    redirect: false
   }
 
   handleChange = (event) => {
@@ -38,6 +40,20 @@ class RestaurantSignUp extends Component {
     this.handleSearch(this.state.cuisine, this.state.location)
   }
 
+  // use state to know when to re-direct to restaurant homepage
+    setRedirect = () => {
+      this.setState({
+        redirect: true
+      })
+    }
+
+    //listening in render() for changed state
+    renderRedirect = () => {
+        if (this.state.redirect) {
+          return <Redirect to='/RestaurantHome' />
+        }
+      }
+
   handleSearch = (cuisine, location) => {
    const data = {cuisine: cuisine, location: location };
    return fetch("http://localhost:3000/api/v1/search", {
@@ -51,9 +67,10 @@ class RestaurantSignUp extends Component {
    .then(res => res.json())
    .then(results => {this.setState ({
      rests: results
-      }, () => console.log("did this work?", this.state.rests))
+      })
     })
     this.renderSearchCards()
+
   }
 
   mapStateToProps(state) {
@@ -128,6 +145,8 @@ class RestaurantSignUp extends Component {
               <br/>
           <div className='centerBtn'>
           <Button type="submit"> Search </Button>
+          <br/>
+          <br/>
           </div>
           </Form>
         </div>
@@ -173,19 +192,22 @@ class RestaurantSignUp extends Component {
           // we need to login at the top level where we are holding our current user!
           // setState in App to currentuser
           .then(response => {
-            debugger
           this.props.dispatch({ type: "LOGIN_USER", payload: response })
           this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
           localStorage.setItem('jwt', response.jwt)
           })
-          .then(this.props.history.push(`/RestaurantHome`))
+          .then(() => this.setRedirect())
+          // .then(this.props.history.push(`/RestaurantHome`))
         }
 
   render() {
     return (
         <div>
           {this.showSearch()}
+          <Card.Group centered >
           {this.renderCardsOrForm(this.state.business, this.state.foundBusiness)}
+          {this.renderRedirect()}
+          </Card.Group>
         </div>
       );
   };

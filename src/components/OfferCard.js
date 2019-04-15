@@ -183,9 +183,8 @@ renderOfferCard = () => {
         Sign In To Redeem
         </NavLink>
         </Button>
-        <Button basic color='blue' style={{ width: '18.5em'}} >
-        Sign In To Redeem
-        </NavLink>
+        <Button basic color='blue' style={{ width: '18.5em'}} onClick={() => this.props.viewOnMap(restaurant)}>
+        View On Map
         </Button>
         </Card.Content>
       </Card>
@@ -224,7 +223,7 @@ renderOfferCard = () => {
       // how many people checked into this offer out of all the check ins this month?
       let checkInRate = ((myCouponsThisMonth.length / thisMonthsCoupons.length) * 100).toFixed(0)
       // how many of my coupons for this offer have been redeemed?
-      let redemptionRate = (redeemedCoupons.length / myCouponsThisMonth.length) * 100
+      let redemptionRate = ((redeemedCoupons.length / myCouponsThisMonth.length) * 100).toFixed(0)
       let redeemedCount = parseInt(redeemedCoupons.length)
       let unRedeemedCount = parseInt(myCouponsThisMonth.length - redeemedCount)
       if (isNaN(redemptionRate)){
@@ -239,10 +238,6 @@ renderOfferCard = () => {
 
       //moving this out for now...
       // <h4 className="rateTxt2"> Check In Rate </h4>
-      // <h2 className="rate2"> {checkInRate} </h2>
-      // <div className='pieChart2'>
-      // <PieChart data={[["Your Check-Ins", myCouponCount], ["Total Months Check-Ins", notMyCouponCount]]} />
-      // </div>
       // <Card.Content extra>
       // <Button basic color='red' style={{ width: '18.5em'}}>
       // Delete Offer
@@ -253,6 +248,8 @@ renderOfferCard = () => {
         <Container>
         <h4 className="rateTxt1"> Redemption Rate </h4>
         <h2 className="rate1"> {redemptionRate}  </h2>
+        <h4 className="rateTxt2"> Check In Rate </h4>
+        <h2 className="rate2"> {checkInRate} </h2>
         <br/>
         <br/>
           <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'} className="restOfferCard">
@@ -267,6 +264,9 @@ renderOfferCard = () => {
         </Card>
         <div className='pieChart1'>
         <PieChart data={[["Redeemed", redeemedCount], ["Total Check-Ins", unRedeemedCount]]} />
+        </div>
+        <div className='pieChart2'>
+        <PieChart data={[["Your Check-Ins", myCouponCount], ["Total Meal Deals Check-Ins", notMyCouponCount]]} />
         </div>
         </Container>
         <Divider />

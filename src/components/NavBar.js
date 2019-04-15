@@ -108,9 +108,15 @@ class NavBar extends Component {
             <NavLink to="/">
               <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
             </NavLink>
+
             <NavLink to="/MonthlyOffers">
               <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
             </NavLink>
+
+            <NavLink to="/GoogleMap">
+              <Menu.Item name='Map' active={activeItem === 'Map'} onClick={this.handleItemClick} />
+            </NavLink>
+
             <Menu.Item position='right'>
             <NavLink to="/Login">
               <Button as='a' >
@@ -126,7 +132,6 @@ class NavBar extends Component {
           </Menu>
         </Segment>
       )
-
     }
   }
 

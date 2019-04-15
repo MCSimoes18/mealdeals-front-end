@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import CouponCard from './CouponCard'
 import MonthlyOffers from './MonthlyOffers'
-import { Form, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { Card, Form, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class UserProfile extends Component {
 
@@ -43,7 +43,7 @@ class UserProfile extends Component {
     fetch("http://localhost:3000/api/v1/coupon_users")
     .then(res => res.json())
     .then(res => {
-      let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
+      let findUserCoupons = res.filter(coupon => coupon.user_id === this.props.current_user.id)
       this.setState({
         userCoupons: findUserCoupons
       })
@@ -67,7 +67,10 @@ class UserProfile extends Component {
   if (this.state.displayContent === 'coupon') {
     if (this.state.userCoupons.length === 0){
       return (
+        <Fragment>
         <h1> You do not have any coupons </h1>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        </Fragment>
       )
     } else {
       return this.state.userCoupons.map(coupon => {
@@ -83,10 +86,20 @@ class UserProfile extends Component {
         <MonthlyOffers />
       )
     } else if (this.state.displayContent === 'heart') {
-      return <h1> This feature is not yet available </h1>
+      return (
+        <Fragment>
+        <h1> This Feature is Not Yet Available </h1>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        </Fragment>
+      )
     }
     else if (this.state.displayContent === 'setting'){
-      console.log("this will update user info")
+      return (
+        <Fragment>
+        <h1> You do not have any coupons </h1>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        </Fragment>
+      )
     }
  }
 
@@ -97,7 +110,7 @@ class UserProfile extends Component {
     const vertical = direction === 'bottom' || direction === 'top'
      return (
        <Sidebar.Pushable as={Segment} className="sideNav">
-         <Sidebar as={Menu} animation='scale down' icon='labeled' vertical visible width='thin'>
+         <Sidebar as={Menu} animation='push' icon='labeled' vertical visible width='thin'>
            <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'Your Coupons')}>
              <img
              className="coupon"
