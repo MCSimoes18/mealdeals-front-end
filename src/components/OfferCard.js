@@ -9,9 +9,6 @@ ReactChartkick.addAdapter(Chart)
 
 class OfferCard extends React.Component {
   state = {
-    // allRestaurants: [],
-    // allOffers: [],
-    // allCoupons: [],
     user_latitude: "",
     user_longitude: "",
     open: false,
@@ -168,7 +165,7 @@ renderOfferCard = () => {
   if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){
     let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
     return(
-        <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
+        <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'red'}>
           <Card.Content>
             <Image floated='top' size='large' src={restaurant.image_url} />
             <Card.Header> {this.props.offer.offer} </Card.Header>
@@ -178,13 +175,13 @@ renderOfferCard = () => {
           <Card.Description> Redeem During: {redeem_month} </Card.Description>
         </Card.Content>
         <Card.Content extra>
-        <Button basic color='blue' style={{ width: '18.5em'}} >
-        <NavLink to="/Login" component={Login}>
+        <Button basic color='blue' style={{ width: '18.5em', marginBottom: '1em'}} onClick={() => this.props.viewOnMap(restaurant)}>
+        View On Map
+        </Button>
+        <Button basic color='red' style={{ width: '18.5em', marginBottom: '1em'}} >
+        <NavLink to="/Login" component={Login} style={{color: 'red'}}>
         Sign In To Redeem
         </NavLink>
-        </Button>
-        <Button basic color='blue' style={{ width: '18.5em'}} onClick={() => this.props.viewOnMap(restaurant)}>
-        View On Map
         </Button>
         </Card.Content>
       </Card>
@@ -235,14 +232,10 @@ renderOfferCard = () => {
       if (isNaN(checkInRate)){
         checkInRate = "N/A"
       }
+      if (!isNaN(checkInRate)){
+        checkInRate = `${checkInRate} %`
+      }
 
-      //moving this out for now...
-      // <h4 className="rateTxt2"> Check In Rate </h4>
-      // <Card.Content extra>
-      // <Button basic color='red' style={{ width: '18.5em'}}>
-      // Delete Offer
-      // </Button>
-      // </Card.Content>
       return(
         <div>
         <Container>
@@ -274,8 +267,6 @@ renderOfferCard = () => {
       )
   }
 }
-
-
 
   render () {
     return (

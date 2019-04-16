@@ -66,7 +66,7 @@ class Home extends React.Component {
     return (
       <div>
         <h1 className="MealSteals"> MEAL
-        <img className="headerMarker" src={process.env.PUBLIC_URL + '/foodMarker.png'}/> STEALS
+        <img className="headerMarker" src={process.env.PUBLIC_URL + '/foodMarker.png'}/> DEALS
         </h1>
         <div className="searchBar">
           <form onSubmit={this.handleSubmit}>

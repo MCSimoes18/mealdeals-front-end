@@ -228,12 +228,22 @@ class RestaurantHome extends Component {
 
     renderContent = () => {
     if (this.state.displayContent === 'coupon') {
+      if (this.props.current_user.offers.length > 0) {
          return (
           <div>
           <h1> {this.props.current_user.name} </h1>
           {this.renderRestOffers()}
           </div>
-      )
+        )
+      }
+      else {
+        return (
+          <Fragment>
+          <h2> You do not yet have any offers </h2>
+          <br/><br/><br/><br/><br/><br/><br/><br/>
+          </Fragment>
+        )
+      }
     } else if (this.state.displayContent === 'food') {
       return (
         this.renderCouponForm()

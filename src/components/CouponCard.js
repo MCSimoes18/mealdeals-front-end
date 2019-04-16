@@ -94,13 +94,17 @@ class CouponCard extends React.Component {
     })
   }
 
-  activateCoupon = () => {
+activateCoupon = () => {
+  this.sendText(this.state.currentRestaurant)
+  this.displayActiveCoupon()
+}
+
+  displayActiveCoupon = () => {
       this.close()
       var d = new Date();
       let text = `Active Now:    ${d}`
       let t = setInterval(() => {
       var z = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-      this.sendText(this.state.currentRestaurant)
       this.patchStatus('Active Now')
       this.setState({
         couponColor: z,
@@ -156,43 +160,44 @@ renderCoupon = () => {
     month[11] = "December";
   if (this.state.current_status === "inactive") {
     return (
-      <Card color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
+      <Card className="couponCard" borderStyle="dashed" color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
       <Card.Content>
-        <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
+        <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
-        <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
+        <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code}
+        </Card.Meta>
         <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
         <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
         <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
-        <Card.Content extra>
-        Status: {this.state.current_status}
-        <Button fluid style={{backgroundColor: 'green' }} onClick={()=> this.openState()}>
-        {this.state.buttonText}
-        </Button>
+          <Card.Content extra>
+            Status: {this.state.current_status}
+            <Button fluid style={{backgroundColor: 'green', color: 'white' }} onClick={()=> this.openState()}>
+            {this.state.buttonText}
+            </Button>
         </Card.Content>
-        </Card.Content>
+      </Card.Content>
         </Card>
     )} else if (this.state.current_status === "upcoming") {
     return (
       <Card color='yellow' style={{backgroundColor: 'rgb(229, 239, 201)', width:'1000px;'}}>
       <Card.Content>
-        <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
+        <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
         <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
         <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
         <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
-        <Card.Content extra style={{marginLeft: '800px;'}}>
-        <Card.Header> Status: {this.state.current_status} </Card.Header>
-        <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
-        </Card.Content>
-        </Card.Content>
+          <Card.Content extra style={{marginLeft: '800px;'}}>
+            <Card.Header> Status: {this.state.current_status} </Card.Header>
+            <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
+          </Card.Content>
+      </Card.Content>
         </Card>
       )
       } else if (this.state.current_status === 'Active Now') {
         return (
           <Card color='green' style={{backgroundColor: 'rgb(229, 239, 201)', width: '1000px;'}}>
           <Card.Content>
-            <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
+            <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
             <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
             <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
             <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
@@ -210,7 +215,7 @@ renderCoupon = () => {
     return (
       <Card color='gray' style={{backgroundColor: 'rgb(224, 224, 224)', width: '1000px;'}}>
       <Card.Content>
-        <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
+        <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
         <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
         <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
@@ -225,7 +230,7 @@ renderCoupon = () => {
       return (
         <Card color='gray' style={{backgroundColor: 'rgb(221, 234, 255)', width: '1000px;'}}>
         <Card.Content>
-          <Card.Header>{this.props.coupon.offer.offer}</Card.Header>
+          <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
           <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
           <Card.Meta>{this.state.currentRestaurant.address1, this.state.currentRestaurant.city, this.state.currentRestaurant.zip_code} </Card.Meta>
           <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>

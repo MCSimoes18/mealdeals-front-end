@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import CouponCard from './CouponCard'
 import MonthlyOffers from './MonthlyOffers'
-import { Card, Form, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { Card, Container, Form, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class UserProfile extends Component {
 
@@ -111,14 +111,14 @@ class UserProfile extends Component {
      return (
        <Sidebar.Pushable as={Segment} className="sideNav">
          <Sidebar as={Menu} animation='push' icon='labeled' vertical visible width='thin'>
-           <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'Your Coupons')}>
+           <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'YOUR COUPONS')}>
              <img
              className="coupon"
              src={process.env.PUBLIC_URL + '/cutcoupon.png'}
              />
              My Coupons
            </Menu.Item >
-           <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('food', 'Restaurants of the Month')}>
+           <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('food', 'RESTAURANTS OF THE MONTH')}>
              <Icon name='food' />
              Restaurants of the Month
            </Menu.Item>
@@ -133,11 +133,15 @@ class UserProfile extends Component {
          </Sidebar>
          <Sidebar.Pusher>
            <Segment basic dimmed={dimmed && visible}>
-             <h1 className="wecomeBack"> Welcome Back {this.props.current_user.name} ! </h1>
+             <h2> Welcome Back {this.props.current_user.name} ! </h2>
              <Divider />
              <h2> {this.state.displayHeader}</h2>
              <Divider />
+             <div className="userContainer">
+             <Container>
              {this.renderContent()}
+             </Container>
+             </div>
            </Segment>
          </Sidebar.Pusher>
        </Sidebar.Pushable>

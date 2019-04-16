@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import RestaurantCard from './RestaurantCard'
 import OfferCard from './OfferCard'
+import Filter from './Filter'
 import GoogleMap from './GoogleMap'
 import { connect } from 'react-redux';
 import { Button, Card, Image } from 'semantic-ui-react'
@@ -11,43 +12,56 @@ class MonthlyOffers extends Component {
 
   state = {
     restaurants: [],
+    openFilters: false
   }
-
-// componentDidMount() {
-//   fetch("http://localhost:3000/api/v1/offers")
-//   .then(res=>res.json())
-//   .then(res => {
-//     this.props.dispatch({ type: "ALL_OFFERS", payload: res })
-//   })
-//   fetch("http://localhost:3000/api/v1/restaurants")
-//     .then(res => res.json())
-//     .then(res => {
-//       this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
-//     })
-//     fetch("http://localhost:3000/api/v1/coupon_users")
-//     .then(res => res.json())
-//     .then(res => {
-//       this.props.dispatch({ type: "ALL_COUPONS", payload: res })
-//     })
-//   }
 
 
   renderCards = () => {
   var d = new Date();
   let current_month = d.getMonth()
   let currentOffers = this.props.allOffers.filter(offer => offer.earn_month === current_month)
-  return currentOffers.map(offer => {
-    return (
-        <OfferCard
-        offer={offer}
-        viewOnMap={this.props.viewOnMap}
-        />
-      )
-    })
-}
+  if (this.props.selectedCity === 'All Cities') {
+    return currentOffers.map(offer => {
+      return (
+          <OfferCard
+          offer={offer}
+          viewOnMap={this.props.viewOnMap}
+          />
+        )
+      })
+  }
+  else {
+    currentOffers = currentOffers.filter(offer => offer.restaurant.city === this.props.selectedCity)
+    return currentOffers.map(offer => {
+      return (
+          <OfferCard
+          offer={offer}
+          viewOnMap={this.props.viewOnMap}
+          />
+        )
+      })
+    }
+  }
 
 renderMap = () => {
   return ( <GoogleMap />)
+}
+
+toggleFilters = () => {
+  let filterState = !this.state.openFilters
+  this.setState({
+    openFilters: filterState
+  })
+}
+
+renderFilters = () => {
+  if (this.state.openFilters === true) {
+    return (
+      <Filter allRetaurants={this.props.allRestaurants}/>
+    )
+  } else {
+    return null
+  }
 }
 
 render () {
@@ -68,7 +82,11 @@ render () {
   let current_month = month[d.getMonth()];
   return (
     <Fragment>
-      <h1> {current_month} Offers </h1>
+      <h1 className="MealSteals"> {current_month}
+       Offers
+      <img onClick={() => this.toggleFilters()} className="headerMarker" src={process.env.PUBLIC_URL + '/arrow.png'}/>
+      </h1>
+      {this.renderFilters()}
       <Card.Group centered >
         {this.renderCards()}
       </Card.Group>
@@ -88,6 +106,7 @@ function mapStateToProps(state) {
     current_user: state.current_user,
     allRestaurants: state.allRestaurants,
     allOffers: state.allOffers,
-    allCoupons: state.allCoupons
+    allCoupons: state.allCoupons,
+    selectedCity: state.selectedCity
   }
 }

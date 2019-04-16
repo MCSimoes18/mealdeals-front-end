@@ -13,6 +13,7 @@ import RestaurantLogin from './RestaurantLogin';
 import SignUp from './SignUp';
 import RestaurantSignUp from './RestaurantSignUp';
 import Search from './Search';
+import SearchWithMap from './SearchWithMap';
 import { Card, Button, Input, Container, Grid, Divider, Segment, List, Header} from 'semantic-ui-react'
 
 
@@ -50,7 +51,7 @@ class Home extends React.Component {
         return null
       }
       else if (this.props.rests.businesses.length > 0) {
-        return <Redirect to='/Search' />
+        return <Redirect to='/SearchWithMap' />
       }
     }
 
@@ -67,21 +68,6 @@ class Home extends React.Component {
    .then(res => res.json())
    .then(results => this.props.dispatch({ type: "SEARCH_RESULTS", payload: results }))
  }
-
-
-  // renderSearchCards = () => {
-  //   if (this.state.rests.length == 0) {
-  //     return null
-  //   } else {
-  //     return this.state.rests.businesses.map(rest => {
-  //       return (
-  //       <RestaurantCard restaurant={rest} />
-  //       )
-  //     }
-  //   )
-  //   }
-  // }
-
 
   render() {
 
@@ -111,16 +97,17 @@ class Home extends React.Component {
             Get rewarded for eating with eating. <br/>
             <p> Check-In at local restaurants during their designated earn-period.
             <br/> Then come back and redeem exclusive offers. </p> <br/>
-            <Button>
+            <Button className="outerBtn">
             <NavLink className="innerBtn" to="/SignUp" component={SignUp}>
                 Sign Up
             </NavLink>
             </Button>
-            <Button>
+            <Button className="outerBtn">
             <NavLink className="innerBtn" to="/Login" component={Login}>
                 Login
             </NavLink>
             </Button>
+            <br/><br/><br/>
             </Container>
             </Grid.Column>
             <Grid.Column verticalAlign='middle'>
@@ -144,6 +131,7 @@ class Home extends React.Component {
                 Login
             </NavLink>
             </Button>
+            <br/><br/><br/>
             </Container>
             </Grid.Column>
             </Grid>

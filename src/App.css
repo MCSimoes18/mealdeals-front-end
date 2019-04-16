@@ -18,6 +18,11 @@ text-align: center;
   display: inline-block;
 }
 
+.mapSideBar {
+  height: 1000px;
+  position: fixed;
+}
+
 .signup {
   text-align: center;
 }
@@ -148,6 +153,14 @@ display: inline-block;
   margin-bottom: 10px;
 }
 
+.couponCard {
+  border-style: dashed;
+}
+
+.cpnTitle {
+  font-family: 'A Love of Thunder';
+}
+
 
 .navContent1{
   margin-top: 20px;
@@ -213,9 +226,6 @@ display: inline-block;
   color: rgb(178, 58, 58);
 }
 
-.footer {
-  padding-top: -100px;
-}
 
 .headerMarker {
   height: 50px;
@@ -226,6 +236,35 @@ display: inline-block;
 font-family: 'A Love of Thunder';
 font-size: 40px;
 }
+
+.page-wrap {
+  width: 600px;
+  margin: 15px auto;
+  position: relative;
+}
+
+.filterCities {
+  text-align: center;
+}
+
+.ui.segment {
+  margin: 0;
+}
+
+.userContainer {
+  width: 90%;
+  background-color: 'red';
+  margin-left: -50px;
+}
+
+.signUpRest {
+  text-align: center
+}
+
+.yelpTxt {
+  font-color: 'red'
+}
+
 
 /* .sideNav {
   /* height: fixed;

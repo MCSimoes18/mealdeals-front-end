@@ -28,9 +28,9 @@ class RestaurantCard extends React.Component {
               <p>{this.props.restaurant.price}</p>
               <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} />
             </Card.Content>
-            <button onClick={() => this.findBusiness()}>
+            <Button onClick={() => this.findBusiness()}>
               This is Me
-            </button>
+            </Button>
           </Card>
           )
       } else if (this.props.user_type === null || this.props.user_type === "user") {
@@ -43,12 +43,15 @@ class RestaurantCard extends React.Component {
               <p>{this.props.restaurant.price}</p>
               <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} />
             </Card.Content>
-            <Button basic color='red'>
-              <a href={this.props.restaurant.url} target="_blank"> View On Yelp </a>
+            <Card.Content extra>
+            <Button basic color='red' style={{ width: '18.5em', marginBottom: '1em'}}>
+              <a href={this.props.restaurant.url} target="_blank" className="yelpTxt"> View On Yelp </a>
             </Button>
-            <Button basic color='red' onClick={() => this.props.viewOnMap(this.props.restaurant)}>
-              View On Map
+
+            <Button basic color='blue' style={{ width: '18.5em', marginBottom: '1em'}} onClick={() => this.props.viewOnMap(this.props.restaurant)}>
+            View On Map
             </Button>
+            </Card.Content>
           </Card>
           )
       }

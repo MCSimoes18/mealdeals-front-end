@@ -15,13 +15,15 @@ state = {
   visible: false,
   activeMarker: {},
   lat: 40.7128,
-  long: -74.0060
+  long: -74.0060,
+  name: "",
 }
 
 viewOnMap = (restaurant) => {
   this.setState({
     lat: restaurant.latitude,
-    long: restaurant.longitude
+    long: restaurant.longitude,
+    name: restaurant.name
   }, () => this.makeVisible())
 }
 
@@ -55,6 +57,7 @@ renderMap = () => {
     >
     <Marker
       icon={iconMarker}
+      name={this.state.name}
       position = {{ lat: this.state.lat, lng: this.state.long }}
     />
     </Map>

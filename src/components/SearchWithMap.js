@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import RestaurantCard from './RestaurantCard'
 import OfferCard from './OfferCard'
+import Search from './Search'
 import MonthlyOffers from './MonthlyOffers'
 import { connect } from 'react-redux';
 import { Button, Item, Card, Image, Sidebar, Menu, Icon, Segment } from 'semantic-ui-react'
 import { Map, GoogleApiWrapper, InfoWrapper, Marker } from 'google-maps-react';
 
-class GoogleMap extends Component {
+class SearchWithMap extends Component {
 
 state = {
   animation: 'overlay',
@@ -20,8 +21,8 @@ state = {
 
 viewOnMap = (restaurant) => {
   this.setState({
-    lat: restaurant.latitude,
-    long: restaurant.longitude
+    lat: restaurant.coordinates.latitude,
+    long: restaurant.coordinates.longitude
   }, () => this.makeVisible())
 }
 
@@ -71,8 +72,8 @@ closeMap = () => {
 
 returnDisplay = () => {
   return (
-  <Fragment>
-    <Sidebar.Pushable as={Segment}>
+  <div className="pageWrap">
+    <Sidebar.Pushable as={Segment} className="mapSideBar">
       <Sidebar as={Menu}
         animation={'push'}
         direction={'left'}
@@ -85,11 +86,11 @@ returnDisplay = () => {
       </Sidebar>
     <Sidebar.Pusher>
       <Segment basic>
-        <MonthlyOffers viewOnMap={this.viewOnMap}/>
+        <Search viewOnMap={this.viewOnMap}/>
       </Segment>
     </Sidebar.Pusher>
     </Sidebar.Pushable>
-  </Fragment>
+  </div>
   )
 }
 
@@ -104,4 +105,4 @@ render () {
 
  export default GoogleApiWrapper({
    apiKey: 'AIzaSyCfIfVkpVNgZlpN9nI7QFlxsrNPkRLCPAo'
- })(GoogleMap);
+ })(SearchWithMap);

@@ -7,7 +7,8 @@ const initialState = {
   rests: null,
   allOffers: [],
   allCoupons: [],
-  newCoupon: null
+  newCoupon: null,
+  selectedCity: 'All Cities'
 }
 
 function reducer(state = initialState, action, payload) {
@@ -21,20 +22,22 @@ function reducer(state = initialState, action, payload) {
       console.log("testing results", action.payload)
       return {...state, rests: action.payload }
     case "LOGIN_USER":
-      debugger
       console.log("testing reducer1", action.payload)
       return {...state, current_user: action.payload }
     case "LOGIN_USER_TYPE":
       console.log("testing reducer2", action.payload)
       return {...state, user_type: action.payload }
+    case "SELECTED_CITY":
+      console.log("testing reducer3", action.payload)
+      return {...state, selectedCity: action.payload }
     case "ALL_RESTAURANTS":
       return {...state, allRestaurants: action.payload }
     case "ALL_OFFERS":
       return {...state, allOffers: action.payload }
     case "ALL_COUPONS":
       return {...state, allCoupons: action.payload }
-      case "NEW_COUPON":
-        return {...state, allCoupons: action.payload }
+    case "NEW_COUPON":
+      return {...state, allCoupons: action.payload }
     case "ADD_COUPON":
       return { ...state, newCoupon: action.payload }
     default:

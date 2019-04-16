@@ -103,10 +103,11 @@ class NavBar extends Component {
     }
     else if (this.props.user_type === null || this.props.user_type === 'before_restaurant') {
       return (
-      <Segment inverted>
+        <Segment inverted style={{paddingBottom: '0px;'}}>
           <Menu inverted pointing secondary >
             <NavLink to="/">
-              <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+              <Menu.Item name='home'
+              active={activeItem === 'home'} onClick={this.handleItemClick} />
             </NavLink>
 
             <NavLink to="/MonthlyOffers">

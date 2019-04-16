@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 // Import Components //
 import NavBar from './NavBar';
 import RestaurantCard from './RestaurantCard';
-import { Container, Form, Input, Button, Card } from 'semantic-ui-react'
+import { Container, Form, Input, Button, Card, List } from 'semantic-ui-react'
 
 class RestaurantSignUp extends Component {
 
@@ -108,23 +108,27 @@ class RestaurantSignUp extends Component {
       } else {
         return (
           <div>
-            <h2> Create Account For:  </h2>
-            <h1> {restaurant.name} </h1>
-            <p>  Address: {restaurant.location.address1} </p>
-            <p>  {restaurant.location.city}, {restaurant.location.zip_code} </p>
-            <p>  Phone: {restaurant.location.phone} </p>
-            <form onSubmit={(e) => this.registerRestaurant(e, restaurant)}>
-              <label> Username: </label>
-                <br />
-              <input onChange={this.handleChange} type="text"  name="username" placeholder="username" value={this.state.username}/>
-                <br />
-              <label> password: </label>
-                <br />
-              <input onChange={this.handleChange} type="password"  name="password" placeholder="password" value={this.state.password}/>
-                <br />
-                <br />
-              <button type="submit">Create Account</button>
-            </form>
+          <br/>
+            <div>
+            <h2 style={{textAlign: 'center'}}> Create Account For </h2>
+            <h2> {restaurant.name} </h2>
+            <List>
+              <List.Item>
+                <List.Icon name='food' />
+                <List.Content>{restaurant.name} </List.Content>
+              </List.Item>
+              <List.Item>
+                <List.Icon name='marker' />
+                <List.Content>{restaurant.location.address1}, {restaurant.location.city} {restaurant.location.zip_code} </List.Content>
+              </List.Item>
+            </List>
+            <br/>
+            </div>
+            <Form onSubmit={this.signupSubmit}>
+              <Form.Field className="userName" control={Input} label="Username:" onChange={this.handleChange} type="text"  name="username" placeholder="AngelicaPickles" value={this.state.username}/> <br />
+              <Form.Field className="password" control={Input} label="Password:"onChange={this.handleChange} type="password"  name="password" placeholder="8-16 characters" value={this.state.password}/> <br />
+            </Form>
+
           </div>
         )
       }

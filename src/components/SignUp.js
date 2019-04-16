@@ -63,15 +63,16 @@ class SignUp extends Component {
       .then(() => this.props.history.push(`/UserProfile`))
   }
 
+
   renderSignUpForm = () => {
     return (
       <div className="signup">
         <Form onSubmit={this.signupSubmit}>
-          <Form.Field className="firstName" control={Input} label="First Name" onChange={this.handleChange} type="text" name="firstName" placeholder="Angelica" value={this.state.firstName}/> <br />
-          <Form.Field className="userName" control={Input} label="Username:" onChange={this.handleChange} type="text"  name="username" placeholder="AngelicaPickles" value={this.state.username}/> <br />
-          <Form.Field className="password" control={Input} label="Password:"onChange={this.handleChange} type="password"  name="password" placeholder="8-16 characters" value={this.state.password}/> <br />
-          <Form.Field className="email" control={Input} label= "Email:" onChange={this.handleChange} type="email"  name="email" placeholder="angelica.pickles@gmail.com" value={this.state.email}/><br />
-          <Form.Field className="phone" control={Input} label="Phone"onChange={this.handleChange} type="phone"  name="phone" placeholder="(123)-456-7890" value={this.state.phone}/><br />
+          <Form.Field className="firstName" control={Input} label="First Name" onChange={this.handleChange} type="text" name="firstName" required={true} placeholder="Angelica" value={this.state.firstName}/> <br />
+          <Form.Field required={true} className="userName" control={Input} label="Username:" onChange={this.handleChange} type="text"  required={true} name="username" placeholder="AngelicaPickles" value={this.state.username}/> <br />
+          <Form.Field className="password" control={Input} label="Password:"onChange={this.handleChange} type="password"  name="password" required={true} placeholder="8-16 characters" value={this.state.password}/> <br />
+          <Form.Field required={true} className="email" control={Input} label= "Email:" onChange={this.handleChange} type="email"  name="email" placeholder="angelica.pickles@gmail.com" value={this.state.email}/><br />
+          <Form.Field required={true} className="phone" control={Input} label="Phone"onChange={this.handleChange} name="phone" placeholder="1234567890" type='number' maxLength="2" value={this.state.phone}/><br />
           <Form.Field className="signUpBtn" control={Button} content="Sign Up" type="submit"/>
         </Form>
       </div>
