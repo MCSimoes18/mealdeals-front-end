@@ -265,18 +265,6 @@ font-size: 40px;
   font-color: 'red'
 }
 
-
-/* .sideNav {
-  /* height: fixed;
-  margin-top: -2000px;
-  background-color: red; */
-  /* min-height: 100vh; */
-/* } */
-/* .pusher { */
-  /* margin-top: 200px; */
-  /* min-height: 100vh; */
-/* } */
-
-/* .welcomeBack {
-  margin-top: 200px;
-} */
+.couponCard {
+  border-style: dashed !important;
+}

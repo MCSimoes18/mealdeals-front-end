@@ -18,14 +18,14 @@ class OfferCard extends React.Component {
   componentDidMount(){
     fetch("http://localhost:3000/api/v1/restaurants")
     .then(res => res.json())
-      .then(res => {
-        this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+    .then(res => {
+      this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
     })
     fetch("http://localhost:3000/api/v1/offers")
     .then(res => res.json())
-      .then(res => {
-        this.props.dispatch({ type: "ALL_OFFERS", payload: res })
-      })
+    .then(res => {
+      this.props.dispatch({ type: "ALL_OFFERS", payload: res })
+    })
     fetch("http://localhost:3000/api/v1/coupon_users")
     .then(res => res.json())
     .then(res => {
@@ -36,42 +36,40 @@ class OfferCard extends React.Component {
   close = () => this.setState({ open: false })
 
   openModal = () => {
-    if (this.state.open === "checkInTrue" ) {
-      let current_restaurant = this.state.current_restaurant
-      return (
-      <Fragment>
-      <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
-      <Modal.Header>Congrats! Youre Checked In!</Modal.Header>
-      <Modal.Content>
-      <p>A coupon for {this.state.current_restaurant.name} has been added to your coupons. </p>
-      </Modal.Content>
-      <Modal.Actions>
-      <Button onClick={()=>this.close()}positive icon='checkmark' labelPosition='right' content='Got It!' />
-      </Modal.Actions>
-      </Modal>
-      </Fragment>
-    )
-  } else if (this.state.open === "checkInFalse"  ) {
-      let current_restaurant = this.state.current_restaurant
-      return (
-      <Fragment>
-      <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
-      <Modal.Header>Oops! Something went wrong...</Modal.Header>
-      <Modal.Content>
-      <p> It doesnt appear that youre at {this.state.current_restaurant.name} at {this.state.current_restaurant.address1}, in {this.state.current_restaurant.city}. Please be sure to check in when you are on-site at this restaurant. </p>
-      </Modal.Content>
-      <Modal.Actions>
-      <Button onClick={()=>this.close()}positive icon='checkmark' labelPosition='right' content='Got It!' />
-      </Modal.Actions>
-      </Modal>
-      </Fragment>
-    )
-    }
-    else  {
+      if (this.state.open === "checkInTrue" ) {
+        let current_restaurant = this.state.current_restaurant
+        return (
+          <Fragment>
+            <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
+            <Modal.Header>Congrats! Youre Checked In!</Modal.Header>
+            <Modal.Content>
+            <p>A coupon for {this.state.current_restaurant.name} has been added to your coupons. </p>
+            </Modal.Content>
+            <Modal.Actions>
+            <Button onClick={()=>this.close()}positive icon='checkmark' labelPosition='right' content='Got It!' />
+            </Modal.Actions>
+            </Modal>
+        </Fragment>
+      )
+    } else if (this.state.open === "checkInFalse"  ) {
+        let current_restaurant = this.state.current_restaurant
+        return (
+          <Fragment>
+            <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
+            <Modal.Header>Oops! Something went wrong...</Modal.Header>
+            <Modal.Content>
+            <p> It doesnt appear that youre at {this.state.current_restaurant.name} at {this.state.current_restaurant.address1}, in {this.state.current_restaurant.city}. Please be sure to check in when you are on-site at this restaurant. </p>
+            </Modal.Content>
+            <Modal.Actions>
+            <Button onClick={()=>this.close()}positive icon='checkmark' labelPosition='right' content='Got It!' />
+            </Modal.Actions>
+            </Modal>
+          </Fragment>
+        )
+    } else  {
       return null
-
+    }
   }
-}
 
   getLocation = () => {
     if (navigator.geolocation) {
@@ -144,7 +142,7 @@ class OfferCard extends React.Component {
 
 
 renderOfferCard = () => {
-    // convert month value to string for display
+  // convert month value to string for display
   var month = new Array();
     month[0] = "January";
     month[1] = "February";
@@ -159,12 +157,15 @@ renderOfferCard = () => {
     month[10] = "November";
     month[11] = "December";
     // using month array to display string instead of value
+    if (this.props.user_type === undefined) {
+      return <h3> LOADING </h3>
+    }
+    else {
     let earn_month = month[this.props.offer.earn_month]
     let redeem_month = month[this.props.offer.redeem_month]
-
-  if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){
-    let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
-    return(
+    if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){
+      let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+      return(
         <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'red'}>
           <Card.Content>
             <Image floated='top' size='large' src={restaurant.image_url} />
@@ -176,36 +177,37 @@ renderOfferCard = () => {
         </Card.Content>
         <Card.Content extra>
         <Button basic color='blue' style={{ width: '18.5em', marginBottom: '1em'}} onClick={() => this.props.viewOnMap(restaurant)}>
-        View On Map
+          View On Map
         </Button>
         <Button basic color='red' style={{ width: '18.5em', marginBottom: '1em'}} >
-        <NavLink to="/Login" component={Login} style={{color: 'red'}}>
-        Sign In To Redeem
-        </NavLink>
+          <NavLink to="/Login" component={Login} style={{color: 'red'}}>
+            Sign In To Redeem
+            </NavLink>
         </Button>
         </Card.Content>
       </Card>
     )
   } else if (this.props.user_type === "user"){
     let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
-    return(
-        <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
-          <Card.Content>
-            <Image floated='top' size='large' src={restaurant.image_url} />
-            <Card.Header> {this.props.offer.offer} </Card.Header>
-            <Card.Meta> {restaurant.name} </Card.Meta>
-            <Card.Meta> {restaurant.address1} , {restaurant.city} </Card.Meta>
-            <Card.Description> Earn During: {earn_month} </Card.Description>
-            <Card.Description> Redeem During: {redeem_month} </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-          <Button onClick={() => this.getLocation()} basic color='yellow' style={{ width: '18.5em'}} > Check In Now </Button>
-          </Card.Content>
-      </Card>
-      )
+      return(
+          <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'green'}>
+            <Card.Content>
+              <Image floated='top' size='large' src={restaurant.image_url} />
+              <Card.Header> {this.props.offer.offer} </Card.Header>
+              <Card.Meta> {restaurant.name} </Card.Meta>
+              <Card.Meta> {restaurant.address1} , {restaurant.city} </Card.Meta>
+              <Card.Description> Earn During: {earn_month} </Card.Description>
+              <Card.Description> Redeem During: {redeem_month} </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+            <Button onClick={() => this.getLocation()} basic color='yellow' style={{ width: '18.5em'}} > Check In Now </Button>
+            </Card.Content>
+        </Card>
+        )
     }
-    if (this.props.user_type === "restaurant"){
+      if (this.props.user_type === "restaurant"){
       let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+      if (restaurant) {
       ////////////////////////////////////////////////////////
       /////// variables defined for coupon analytics /////////
       ////////////////////////////////////////////////////////
@@ -265,6 +267,11 @@ renderOfferCard = () => {
         <Divider />
         </div>
       )
+    }
+    else {
+      return <h3> LOADING </h3>
+    }
+    }
   }
 }
 

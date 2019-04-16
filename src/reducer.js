@@ -7,6 +7,7 @@ const initialState = {
   rests: null,
   allOffers: [],
   allCoupons: [],
+  allUsers: [],
   newCoupon: null,
   selectedCity: 'All Cities'
 }
@@ -36,6 +37,8 @@ function reducer(state = initialState, action, payload) {
       return {...state, allOffers: action.payload }
     case "ALL_COUPONS":
       return {...state, allCoupons: action.payload }
+    case "ALL_USERS":
+      return {...state, allUsers: action.payload }
     case "NEW_COUPON":
       return {...state, allCoupons: action.payload }
     case "ADD_COUPON":

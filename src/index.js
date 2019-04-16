@@ -22,23 +22,11 @@ import GoogleMap from './components/GoogleMap';
 import store from './store';
 
 
+
+
 ReactDOM.render((
   <Provider store={store}>
-    <Router>
-      <NavBar />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/monthlyoffers" component={MonthlyOffers} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/signup" component={SignUp} />
-      <Route exact path="/restaurantsignup" component={RestaurantSignUp} />
-      <Route exact path="/restaurantlogin" component={RestaurantLogin} />
-      <Route exact path="/restauranthome" component={RestaurantHome} />
-      <Route exact path="/userprofile" component={UserProfile} />
-      <Route exact path="/search" component={Search} />
-      <Route exact path="/GoogleMap" component={GoogleMap} />
-      <Route exact path="/SearchWithMap" component={SearchWithMap} />
       <App />
-    </Router>
   </Provider>
 ),
   document.getElementById('root')

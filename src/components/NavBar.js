@@ -24,14 +24,8 @@ class NavBar extends Component {
   state = { activeItem: 'home' }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name, color: 'yellow'} )
 
-  // logout = () => {
-  //   localStorage.removeItem("token")
-  //   this.props.dispatch({ type: "LOGIN_USER", payload: null })
-  //   this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: null })
-  // }
-
   logout = () => {
-    localStorage.removeItem("token")
+    localStorage.clear()
     this.props.dispatch({ type: "LOGIN_USER", payload: null })
     this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: null })
     this.setState({
@@ -52,7 +46,7 @@ class NavBar extends Component {
               <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
             </NavLink>
 
-            <NavLink to="/MonthlyOffers">
+            <NavLink to="/GoogleMap">
               <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
             </NavLink>
 

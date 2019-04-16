@@ -57,7 +57,7 @@ login = (e) => {
             let login_user = response.restaurant
             this.props.dispatch({ type: "LOGIN_USER", payload: response.restaurant })
             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
-            localStorage.setItem('jwt', response.jwt)
+            localStorage.setItem('jwtRest', response.jwt)
             this.props.history.push(`/RestaurantHome`)
             console.log("success!")
           }

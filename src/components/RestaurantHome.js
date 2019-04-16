@@ -98,36 +98,35 @@ class RestaurantHome extends Component {
    }
      }
 
- componentDidMount = () => {
-     fetch("http://localhost:3000/api/v1/offers")
-     .then(res => res.json())
-     .then(res =>
-       this.setState({
-         allOffers: res
-       }, () => console.log(this.state.allOffers))
-     )
-   }
+   // componentDidMount = () => {
+   //     fetch("http://localhost:3000/api/v1/offers")
+   //     .then(res => res.json())
+   //     .then(res =>
+   //       this.setState({
+   //         allOffers: res
+   //       }, () => console.log(this.state.allOffers))
+   //     )
+   //   }
 
 
   renderRestOffers = () => {
-    if (this.state.allOffers == "") {
-      return (
-        <Fragment>
-        <p> You do not have any offers. </p>
-        <br/><br/><br/><br/><br/><br/><br/><br/>
-        </Fragment>
-      )
+    if (this.props.allOffers) {
+      if (this.props.allOffers.length === 0) {
+        return (
+          <Fragment>
+          <p> You do not have any offers. </p>
+          <br/><br/><br/><br/><br/><br/><br/><br/>
+          </Fragment>
+        )
+      } else {
+        let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+          return ResOffers.map(offer => {
+            return <OfferCard offer={offer} />
+        })
+      }
+    } else {
+      return (<h3> LOADING< /h3>)
     }
-    else {
-    // let allMonths = ["jan", "feb", "mar", "april", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]
-    let ResOffers = this.state.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
-    // let sortedRes0ffers = ResOffers.sort(function(a,b){
-    //   return allMonths.indexOf(a) - allMonths.indexOf(b);
-    // })
-    return ResOffers.map(offer => {
-      return <OfferCard offer={offer} />
-    })
-  }
 }
 
   renderCouponForm = () => {
@@ -255,11 +254,11 @@ class RestaurantHome extends Component {
 
 
   render () {
-    debugger
     const { activeItem } = this.state
     const { animation, dimmed, direction, visible } = this.state
     const vertical = direction === 'bottom' || direction === 'top'
     console.log("user is...", this.props.current_user)
+    if (this.props.current_user) {
     let current_user = this.props.current_user
     return (
       <Sidebar.Pushable as={Segment} className="sideNav">
@@ -291,7 +290,10 @@ class RestaurantHome extends Component {
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     )
+  } else {
+    return <h1> LOADING </h1>
   }
+}
 
 
 }
@@ -302,6 +304,13 @@ export default connect(mapStateToProps)(RestaurantHome)
 
 function mapStateToProps(state) {
   return {
-    current_user: state.current_user
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allUsers: state.allUsers,
+    allCoupons: state.allCoupons,
+    newCoupon: state.newCoupon
+
   }
 }

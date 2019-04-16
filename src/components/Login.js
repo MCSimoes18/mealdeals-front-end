@@ -42,28 +42,6 @@ class Login extends Component {
         }
       }
 
-  // login = (e) => {
-  //   e.preventDefault()
-  //   if (this.state.username !== "" || this.state.password !== "") {
-  //     this.loginUser(this.state.username, this.state.password)
-  //   }
-  // }
-  //
-  // loginUser = (username, password) => {
-  //   console.log("will log in user", username, password);
-  //   fetch("http://localhost:3000/api/v1/users")
-  //   .then(res => res.json())
-  //   .then( json => {
-  //   let login_user = json.find( user => user.username === username)
-  //     if (login_user.password === password) {
-  //       console.log("success!")
-  //       this.props.dispatch({ type: "LOGIN_USER", payload: login_user })
-  //       this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
-  //       this.setRedirect()
-  //     }
-  //   })
-  // }
-
 login = (e) => {
   let data = {
     username: this.state.username,
@@ -82,21 +60,13 @@ login = (e) => {
         if (response.errors) {
           alert(response.errors)
         } else {
-            // we need to login at the top level where we are holding our current user!
-            // setState in App to currentuser
-            if (response.user) {
-              console.log("true")
-            }
-            else {
-                console.log("true")
-              }
-            this.props.dispatch({ type: "LOGIN_USER", payload: response.user })
-            this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
-            localStorage.setItem('jwt', response.jwt)
-            this.props.history.push(`/UserProfile`)
-          }
-        })
-  }
+              localStorage.setItem('jwtUser', response.jwt)
+              localStorage.setItem('user', response.user.id )
+              this.props.dispatch({ type: "LOGIN_USER", payload: response.user })
+              this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+        }})
+            .then(() => this.props.history.push(`/UserProfile`))
+        }
 
   renderLoginForm = () => {
   return (
@@ -119,8 +89,6 @@ login = (e) => {
         ATTN: RESTAURANTS! Interested in working with us?
         <NavLink to="/RestaurantSignUp"> Register with us here </NavLink>
         <NavLink to="/RestaurantLogin"> Restaurant Login</NavLink>
-
-
       {
         this.props.errorLogin ?
         <p>Invalid Username or Password</p>

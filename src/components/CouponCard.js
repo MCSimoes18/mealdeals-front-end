@@ -160,7 +160,7 @@ renderCoupon = () => {
     month[11] = "December";
   if (this.state.current_status === "inactive") {
     return (
-      <Card className="couponCard" borderStyle="dashed" color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
+      <Card className="couponCard" color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
       <Card.Content>
         <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -179,7 +179,7 @@ renderCoupon = () => {
         </Card>
     )} else if (this.state.current_status === "upcoming") {
     return (
-      <Card color='yellow' style={{backgroundColor: 'rgb(229, 239, 201)', width:'1000px;'}}>
+      <Card className="couponCard" color='yellow' style={{backgroundColor: 'rgb(229, 239, 201)', width:'1000px;'}}>
       <Card.Content>
         <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -195,7 +195,7 @@ renderCoupon = () => {
       )
       } else if (this.state.current_status === 'Active Now') {
         return (
-          <Card color='green' style={{backgroundColor: 'rgb(229, 239, 201)', width: '1000px;'}}>
+          <Card className="couponCard" color='green' style={{backgroundColor: 'rgb(229, 239, 201)', width: '1000px;'}}>
           <Card.Content>
             <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
             <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -213,7 +213,7 @@ renderCoupon = () => {
             </Card>
     )} else if (this.state.current_status === "expired" ) {
     return (
-      <Card color='gray' style={{backgroundColor: 'rgb(224, 224, 224)', width: '1000px;'}}>
+      <Card className="couponCard" color='gray' style={{backgroundColor: 'rgb(224, 224, 224)', width: '1000px;'}}>
       <Card.Content>
         <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
         <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>
@@ -228,7 +228,7 @@ renderCoupon = () => {
         </Card>
 )} else if (this.state.current_status === 'Redeemed' ) {
       return (
-        <Card color='gray' style={{backgroundColor: 'rgb(221, 234, 255)', width: '1000px;'}}>
+        <Card className="couponCard" color='gray' style={{backgroundColor: 'rgb(221, 234, 255)', width: '1000px;'}}>
         <Card.Content>
           <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
           <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>

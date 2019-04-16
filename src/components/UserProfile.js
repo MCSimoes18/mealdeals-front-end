@@ -6,9 +6,6 @@ import { Card, Container, Form, Input, Divider, Button, Header, Icon, Label, Ima
 
 class UserProfile extends Component {
 
-  static defaultProps = { // <-- DEFAULT PROPS
-      userCoupons: []      // undefined gets converted to array,render won't trigger error
-  }
 
   state = {
     // allCoupons: [],
@@ -22,7 +19,29 @@ class UserProfile extends Component {
     displayHeader: 'Your Coupons'
   }
 
-
+  // reLogin = () => {
+  //   if (jwt){
+  //     fetch("http://localhost:3000/api/v1/auto_login", {
+  //       headers: {
+  //         "Authorization": jwt
+  //       }
+  //     })
+  //       .then(res => res.json())
+  //       .then((response) => {
+  //         if (response.errors) {
+  //           alert(response.errors)
+  //         } else {
+  //           this.props.dispatch({ type: "LOGIN_USER", payload: response })
+  //           if (response.user) {
+  //             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+  //           }
+  //           else {
+  //             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
+  //           }
+  //         }
+  //       })
+  //   }}
+  //   //
 
   updateContent = (content, header) => {
     this.setState({
@@ -39,16 +58,22 @@ class UserProfile extends Component {
     })
   }
 
-  componentDidMount() {
-    fetch("http://localhost:3000/api/v1/coupon_users")
-    .then(res => res.json())
-    .then(res => {
-      let findUserCoupons = res.filter(coupon => coupon.user_id === this.props.current_user.id)
-      this.setState({
-        userCoupons: findUserCoupons
-      })
-    })
-  }
+  // componentDidMount() {
+  //   fetch("http://localhost:3000/api/v1/coupon_users")
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     let findUserCoupons = res.filter(coupon => coupon.user_id === this.props.current_user.id)
+  //     this.setState({
+  //       userCoupons: findUserCoupons
+  //     })
+    // })
+    // fetch("http://localhost:3000/api/v1/users")
+    // .then(res => res.json())
+    // .then(res => {
+    //   let findUser = res.find(user => user.id == localStorage.user)
+    //   this.props.dispatch({ type: "ALL_RESTAURANTS", payload: findUser })
+    // })
+  // }
     // })
   //   fetch("http://localhost:3000/api/v1/restaurants")
   //   .then(res => res.json())
@@ -64,8 +89,9 @@ class UserProfile extends Component {
   // }
 
   renderContent = () => {
+  let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
   if (this.state.displayContent === 'coupon') {
-    if (this.state.userCoupons.length === 0){
+    if (findUserCoupons.length === 0){
       return (
         <Fragment>
         <h1> You do not have any coupons </h1>
@@ -73,7 +99,7 @@ class UserProfile extends Component {
         </Fragment>
       )
     } else {
-      return this.state.userCoupons.map(coupon => {
+      return findUserCoupons.map(coupon => {
         return (
           <CouponCard
           coupon= {coupon}
@@ -108,46 +134,55 @@ class UserProfile extends Component {
     const { activeItem } = this.state
     const { animation, dimmed, direction, visible } = this.state
     const vertical = direction === 'bottom' || direction === 'top'
-     return (
-       <Sidebar.Pushable as={Segment} className="sideNav">
-         <Sidebar as={Menu} animation='push' icon='labeled' vertical visible width='thin'>
-           <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'YOUR COUPONS')}>
-             <img
-             className="coupon"
-             src={process.env.PUBLIC_URL + '/cutcoupon.png'}
-             />
-             My Coupons
-           </Menu.Item >
-           <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('food', 'RESTAURANTS OF THE MONTH')}>
-             <Icon name='food' />
-             Restaurants of the Month
-           </Menu.Item>
-           <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('heart')}>
-             <Icon name='heart' />
-             My Restaurants
-           </Menu.Item>
-           <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('setting')}>
-             <Icon name='setting' />
-             Settings
-           </Menu.Item>
-         </Sidebar>
-         <Sidebar.Pusher>
-           <Segment basic dimmed={dimmed && visible}>
-             <h2> Welcome Back {this.props.current_user.name} ! </h2>
-             <Divider />
-             <h2> {this.state.displayHeader}</h2>
-             <Divider />
-             <div className="userContainer">
-             <Container>
-             {this.renderContent()}
-             </Container>
-             </div>
-           </Segment>
-         </Sidebar.Pusher>
-       </Sidebar.Pushable>
+    if (this.props.current_user) {
+      console.log(this.props.current_user)
+      let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
+      return (
+        <Sidebar.Pushable as={Segment} className="sideNav">
+        <Sidebar as={Menu} animation='push' icon='labeled' vertical visible width='thin'>
+        <Menu.Item as='a' className="navContent1" onClick={() => this.updateContent('coupon', 'YOUR COUPONS')}>
+        <img
+        className="coupon"
+        src={process.env.PUBLIC_URL + '/cutcoupon.png'}
+        />
+        My Coupons
+        </Menu.Item >
+        <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('food', 'RESTAURANTS OF THE MONTH')}>
+        <Icon name='food' />
+        Restaurants of the Month
+        </Menu.Item>
+        <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('heart')}>
+        <Icon name='heart' />
+        My Restaurants
+        </Menu.Item>
+        <Menu.Item as='a' className="navContent" onClick={() => this.updateContent('setting')}>
+        <Icon name='setting' />
+        Settings
+        </Menu.Item>
+        </Sidebar>
+        <Sidebar.Pusher>
+        <Segment basic dimmed={dimmed && visible}>
+        <h2> Welcome Back {this.props.current_user.name} ! </h2>
+        <Divider />
+        <h2> {this.state.displayHeader}</h2>
+        <Divider />
+        <div className="userContainer">
+        <Container>
+        {this.renderContent()}
+        </Container>
+        </div>
+        </Segment>
+        </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      )
+    }
+    else {
+      return (
+        <h3>LOADING</h3>
       )
     }
   }
+}
 
 export default connect(mapStateToProps)(UserProfile)
 
@@ -158,6 +193,7 @@ function mapStateToProps(state) {
     user_type: state.user_type,
     allRestaurants: state.allRestaurants,
     allOffers: state.allOffers,
+    allUsers: state.allUsers,
     allCoupons: state.allCoupons,
     newCoupon: state.newCoupon
   }
