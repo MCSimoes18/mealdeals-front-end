@@ -186,7 +186,7 @@ display: inline-block;
 .pieChart2 {
   margin-top: -350px;
   margin-bottom: 200px;
-  margin-left: 550px;
+  margin-left: 700px;
 }
 
 .rateTxt1 {
@@ -196,7 +196,7 @@ display: inline-block;
 }
 
 .rateTxt2 {
-  margin-left: 790px;
+  margin-left: 870px;
   margin-bottom: -100px;
   margin-top: 100px;
 }
@@ -208,7 +208,7 @@ display: inline-block;
 }
 
 .rate2 {
-  margin-left: 820px;
+  margin-left: 890px;
   margin-top: 100px;
   margin-bottom: -100px;
 }
@@ -257,12 +257,21 @@ font-size: 40px;
   margin-left: -50px;
 }
 
+
+
 .signUpRest {
   text-align: center
 }
 
 .yelpTxt {
   font-color: 'red'
+}
+
+.noAnalytics {
+  color: red;
+  margin-left: 600px;
+  margin-top: -200px;
+  padding-bottom: 200px;
 }
 
 .couponCard {

@@ -124,9 +124,10 @@ class RestaurantSignUp extends Component {
             </List>
             <br/>
             </div>
-            <Form onSubmit={this.signupSubmit}>
-              <Form.Field className="userName" control={Input} label="Username:" onChange={this.handleChange} type="text"  name="username" placeholder="AngelicaPickles" value={this.state.username}/> <br />
+            <Form onSubmit={() => this.registerRestaurant(restaurant)}>
+              <Form.Field className="userName" control={Input} label="Username:" onChange={this.handleChange} type="text"  name="username" placeholder="shakeshack" value={this.state.username}/> <br />
               <Form.Field className="password" control={Input} label="Password:"onChange={this.handleChange} type="password"  name="password" placeholder="8-16 characters" value={this.state.password}/> <br />
+              <Form.Field className="signUpBtn" control={Button} content="Sign Up" type="submit"/>
             </Form>
 
           </div>
@@ -160,8 +161,7 @@ class RestaurantSignUp extends Component {
     }
   }
 
-  registerRestaurant(e, restaurant) {
-      e.preventDefault()
+  registerRestaurant(restaurant) {
       let data = {
         username: this.state.username,
         password: this.state.password,

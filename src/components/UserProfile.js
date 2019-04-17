@@ -19,29 +19,6 @@ class UserProfile extends Component {
     displayHeader: 'Your Coupons'
   }
 
-  // reLogin = () => {
-  //   if (jwt){
-  //     fetch("http://localhost:3000/api/v1/auto_login", {
-  //       headers: {
-  //         "Authorization": jwt
-  //       }
-  //     })
-  //       .then(res => res.json())
-  //       .then((response) => {
-  //         if (response.errors) {
-  //           alert(response.errors)
-  //         } else {
-  //           this.props.dispatch({ type: "LOGIN_USER", payload: response })
-  //           if (response.user) {
-  //             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
-  //           }
-  //           else {
-  //             this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
-  //           }
-  //         }
-  //       })
-  //   }}
-  //   //
 
   updateContent = (content, header) => {
     this.setState({
@@ -58,35 +35,6 @@ class UserProfile extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   fetch("http://localhost:3000/api/v1/coupon_users")
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     let findUserCoupons = res.filter(coupon => coupon.user_id === this.props.current_user.id)
-  //     this.setState({
-  //       userCoupons: findUserCoupons
-  //     })
-    // })
-    // fetch("http://localhost:3000/api/v1/users")
-    // .then(res => res.json())
-    // .then(res => {
-    //   let findUser = res.find(user => user.id == localStorage.user)
-    //   this.props.dispatch({ type: "ALL_RESTAURANTS", payload: findUser })
-    // })
-  // }
-    // })
-  //   fetch("http://localhost:3000/api/v1/restaurants")
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
-  //   })
-
-  // findUserCoupons = () => {
-  //   let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
-  //   this.setState({
-  //     userCoupons: findUserCoupons
-  //   }, () => console.log("here are my coupons", this.state.userCoupons))
-  // }
 
   renderContent = () => {
   let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
@@ -99,6 +47,12 @@ class UserProfile extends Component {
         </Fragment>
       )
     } else {
+      // let couponStatuses = {
+      //   [key: 'inactive', text: 'inactive', value: 'inactive']
+      //   [key: 'redeemed', text: redeemed, value: redeemde]
+      //   [key: expired, text: expired, value: expired]
+      // }
+      // <Select placeholder='Select Status' options={'All Coupons', cityOptions} name='selectedCity'onChange={(e, data) => this.handleSelectChange(e, data)}/><br/> <br/> <br/>
       return findUserCoupons.map(coupon => {
         return (
           <CouponCard
@@ -135,7 +89,7 @@ class UserProfile extends Component {
     const { animation, dimmed, direction, visible } = this.state
     const vertical = direction === 'bottom' || direction === 'top'
     if (this.props.current_user) {
-      console.log(this.props.current_user)
+      console.log(this.props.current_user && this.props.allCoupons.length > 0)
       let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
       return (
         <Sidebar.Pushable as={Segment} className="sideNav">

@@ -1,11 +1,12 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, createRef } from 'react'
 import RestaurantCard from './RestaurantCard'
 import OfferCard from './OfferCard'
 import Search from './Search'
 import MonthlyOffers from './MonthlyOffers'
 import { connect } from 'react-redux';
-import { Button, Item, Card, Image, Sidebar, Menu, Icon, Segment } from 'semantic-ui-react'
+import { Button, Sticky, Item, Card, Image, Sidebar, Menu, Ref, Icon, Segment } from 'semantic-ui-react'
 import { Map, GoogleApiWrapper, InfoWrapper, Marker } from 'google-maps-react';
+import {GOOGLE_KEY} from '../keys.js'
 
 class SearchWithMap extends Component {
 
@@ -45,6 +46,8 @@ renderMap = () => {
                 null, /* anchor is bottom center of the scaled image */
                 new window.google.maps.Size(50, 50)
               )
+
+  const contextRef = createRef()
   return (
     <Fragment>
     <Item className="closeMap" onClick={()=>this.closeMap()}> Close Map </Item>
@@ -74,6 +77,8 @@ returnDisplay = () => {
   return (
   <div className="pageWrap">
     <Sidebar.Pushable as={Segment} className="mapSideBar">
+    <Ref innerRef={this.contextRef}>
+    <Sticky context={this.contextRef} pushing>
       <Sidebar as={Menu}
         animation={'push'}
         direction={'left'}
@@ -84,6 +89,8 @@ returnDisplay = () => {
         style={{width:'30%'}}>
         {this.renderMap()}
       </Sidebar>
+      </Sticky>
+      </Ref>
     <Sidebar.Pusher>
       <Segment basic>
         <Search viewOnMap={this.viewOnMap}/>
@@ -104,5 +111,5 @@ render () {
  }
 
  export default GoogleApiWrapper({
-   apiKey: 'AIzaSyCfIfVkpVNgZlpN9nI7QFlxsrNPkRLCPAo'
+   apiKey: GOOGLE_KEY
  })(SearchWithMap);

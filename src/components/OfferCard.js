@@ -12,7 +12,8 @@ class OfferCard extends React.Component {
     user_latitude: "",
     user_longitude: "",
     open: false,
-    current_restaurant: null
+    current_restaurant: null,
+    showCharts: true
   }
 
   componentDidMount(){
@@ -157,14 +158,14 @@ renderOfferCard = () => {
     month[10] = "November";
     month[11] = "December";
     // using month array to display string instead of value
-    if (this.props.user_type === undefined) {
+    if (this.props.user_type === undefined || this.props.allRestaurants.length === 0) {
       return <h3> LOADING </h3>
     }
     else {
     let earn_month = month[this.props.offer.earn_month]
     let redeem_month = month[this.props.offer.redeem_month]
     if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){
-      let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
+    let restaurant = this.props.allRestaurants.find(rest => rest.id === this.props.offer.restaurant_id)
       return(
         <Card style={{ marginLeft: '4em', marginRight: '2em'}} color={'red'}>
           <Card.Content>
@@ -257,12 +258,7 @@ renderOfferCard = () => {
             <Card.Description> Redeem During: {redeem_month} </Card.Description>
           </Card.Content>
         </Card>
-        <div className='pieChart1'>
-        <PieChart data={[["Redeemed", redeemedCount], ["Total Check-Ins", unRedeemedCount]]} />
-        </div>
-        <div className='pieChart2'>
-        <PieChart data={[["Your Check-Ins", myCouponCount], ["Total Meal Deals Check-Ins", notMyCouponCount]]} />
-        </div>
+        {this.showPieCharts(checkInRate, redemptionRate, redeemedCount, unRedeemedCount, myCouponCount, notMyCouponCount)}
         </Container>
         <Divider />
         </div>
@@ -273,6 +269,23 @@ renderOfferCard = () => {
     }
     }
   }
+}
+
+showPieCharts = (checkInRate, redemptionRate, redeemedCount, unRedeemedCount, myCouponCount, notMyCouponCount) => {
+  if (checkInRate == "N/A" || redemptionRate == "N/A") {
+    return (<h3 className="noAnalytics"> offer analytics are not yet available. </h3>)
+  } else {
+      return (
+        <Fragment>
+        <div className='pieChart1'>
+        <PieChart data={[[ "Redeemed", redeemedCount], ["Total Check-Ins", unRedeemedCount]]} />
+        </div>
+        <div className='pieChart2'>
+        <PieChart data={[["Your Check-Ins", myCouponCount], ["Total Meal Deals Check-Ins", notMyCouponCount]]} />
+        </div>
+        </Fragment>
+      )
+    }
 }
 
   render () {

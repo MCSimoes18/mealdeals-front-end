@@ -23,10 +23,9 @@ class RestaurantCard extends React.Component {
             <Card.Content>
               <Image src={this.props.restaurant.image_url} alt="image" style={{width:'350px'}, {height:'300px'}}/>
               <h1>{this.props.restaurant.name}</h1>
-              <h4><b>{this.props.restaurant.location.display_address}</b></h4>
-              <p> {this.props.restaurant.rating} </p>
+              <h4><b>{this.props.restaurant.location.address1},  {this.props.restaurant.location.city},  {this.props.restaurant.location.zip_code}</b></h4>
               <p>{this.props.restaurant.price}</p>
-              <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} />
+              <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} disabled/>
             </Card.Content>
             <Button onClick={() => this.findBusiness()}>
               This is Me
@@ -41,7 +40,7 @@ class RestaurantCard extends React.Component {
               <h1>{this.props.restaurant.name}</h1>
               <h4><b>{this.props.restaurant.location.display_address}</b></h4>
               <p>{this.props.restaurant.price}</p>
-              <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} />
+              <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} disabled/>
             </Card.Content>
             <Card.Content extra>
             <Button basic color='red' style={{ width: '18.5em', marginBottom: '1em'}}>

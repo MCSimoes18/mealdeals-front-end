@@ -19,8 +19,10 @@ class RestaurantHome extends Component {
     visible: false,
     displayContent: 'coupon',
     displayHeader: 'Your Offers',
-    open: false
+    open: false,
+    localNewOffer: null
   }
+
 
   handleChange = (e) => {
     this.setState({
@@ -56,6 +58,7 @@ class RestaurantHome extends Component {
       earn_month: this.state.earn_month,
       redeem_month: this.state.redeem_month
     }
+    console.log("before fetch", this.props.allOffers)
     fetch("http://localhost:3000/api/v1/offers", {
        method: "POST",
        headers: {
@@ -65,68 +68,174 @@ class RestaurantHome extends Component {
          body: JSON.stringify(data)
        })
        .then(res => res.json())
-       .then(res => {
-         this.setState( prevState => {
-           return { allOffers: [...prevState.allOffers, res], open: true, offer: ""}
-         })
-       })
-     }
+       .then(res =>
+          this.props.dispatch({ type: "ADD_OFFER", payload: res })
+        )
+       .then( () => this.setState ({
+          open: true,
+          offer: ""
+        }))
+   }
 
      close = () => {
-       this.setState({ open: false })
-       this.updateContent('coupon', 'Your Offers')
+       this.setState({ open: false }, () => this.updateContent('coupon', 'Your Offers'))
      }
 
-     offerSuccess = () => {
+    offerSuccess = () => {
        if (this.state.open === true) {
        return (
-       <Fragment>
-       <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
-       <Modal.Header>Congratulations! Get Ready for Business! </Modal.Header>
-       <Modal.Content>
-       <p> Your offer has been added to Meal Deals. </p>
-       </Modal.Content>
-       <Modal.Actions>
-       <Button onClick={() => this.close()} positive icon='checkmark' labelPosition='right' content='Got It!' />
-       </Modal.Actions>
-       </Modal>
-       </Fragment>
-     )
-   }
-   else {
-     return null
-   }
-     }
+         <Fragment>
+         <Modal size={'tiny'} open={this.state.open} onClose={this.close}>
+         <Modal.Header>Congratulations! Get Ready for Business! </Modal.Header>
+         <Modal.Content>
+         <p> Your offer has been added to Meal Deals. </p>
+         </Modal.Content>
+         <Modal.Actions>
+         <Button onClick={() => this.close()} positive icon='checkmark' labelPosition='right' content='Got It!' />
+         </Modal.Actions>
+         </Modal>
+         </Fragment>
+         )
+       }
+       else {
+         return null
+       }
+    }
 
-   // componentDidMount = () => {
-   //     fetch("http://localhost:3000/api/v1/offers")
-   //     .then(res => res.json())
-   //     .then(res =>
-   //       this.setState({
-   //         allOffers: res
-   //       }, () => console.log(this.state.allOffers))
-   //     )
-   //   }
+    componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.allOffers !== this.props.allOffers) {
+      this.setState({
+      })
+    }
+  }
 
+////////////////RENDER REST OFFERS KEEP FOR NOW//////////
 
   renderRestOffers = () => {
-    if (this.props.allOffers) {
-      if (this.props.allOffers.length === 0) {
-        return (
+    let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+    if (ResOffers.length === 0) {
+      return (
           <Fragment>
           <p> You do not have any offers. </p>
           <br/><br/><br/><br/><br/><br/><br/><br/>
           </Fragment>
         )
-      } else {
-        let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
-          return ResOffers.map(offer => {
-            return <OfferCard offer={offer} />
-        })
-      }
-    } else {
-      return (<h3> LOADING< /h3>)
     }
+    else {
+      return ResOffers.map(offer => {
+        return <OfferCard offer={offer} />
+      })
+    }
+  }
+  // renderRestOffers = () => {
+  //   debugger
+  //   if (this.props.allOffers) {
+  //     let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+  //     if (this.state.localNewOffer === null && ResOffers.length == 0) {
+  //       debugger
+  //         return (
+  //           <Fragment>
+  //           <p> You do not have any offers. </p>
+  //           <br/><br/><br/><br/><br/><br/><br/><br/>
+  //           </Fragment>
+  //         )
+  //       }
+  //       else if (this.state.localNewOffer !== null && ResOffers.length == 0) {
+  //         let ResOffers = []
+  //         ResOffers = [...ResOffers, this.state.localNewOffer]
+  //         debugger
+  //           return ResOffers.map(offer => {
+  //             return <OfferCard offer={offer} />
+  //           })
+  //       }
+  //       else if (this.state.localNewOffer === null && ResOffers.length > 0) {
+  //         debugger
+  //         return ResOffers.map(offer => {
+  //           return <OfferCard offer={offer} />
+  //         })
+  //       }
+  //       else if (this.state.localNewOffer !== null && ResOffers.length > 0){
+  //         debugger
+  //         let ResOffers = [...ResOffers, this.state.localNewOffers]
+  //         return ResOffers.map(offer => {
+  //           return <OfferCard offer={offer} />
+  //         })
+  //       }
+  //     }
+  //   }
+
+
+
+//       } else {
+//         let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+//           return ResOffers.map(offer => {
+//             return <OfferCard offer={offer} />
+//         })
+//       }
+//     } else {
+//       return (<h3> LOADING< /h3>)
+//     }
+// }
+
+// renderRestOffers = () => {
+//   if (this.props.allOffers) {
+//     let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+//       if (ResOffers.length === undefined && this.state.newOffer === null) {
+//         return (
+//           <Fragment>
+//           <p> You do not have any offers. </p>
+//           <br/><br/><br/><br/><br/><br/><br/><br/>
+//           </Fragment>
+//         )
+//       } else if (this.state.newOffer != null && !ResOffers.includes(this.state.newOffer)) {
+//         let ResOffers = [...ResOffers, this.state.newOffer]
+//         return ResOffers.map(offer => {
+//           return <OfferCard offer={offer} />
+//           })
+//       } else if (ResOffers.length > 0 && this.state.newOffer === null) {
+//         return ResOffers.map(offer => {
+//           return <OfferCard offer={offer} />
+//         })
+//       }
+//     } else {
+//       return (<h3> LOADING.. </h3>)
+//     }
+//   }
+//
+//   renderContent = () => {
+//   if (this.state.displayContent === 'coupon') {
+//     if (this.props.current_user) {
+//        return (
+//         <div>
+//         <h1> {this.props.current_user.name} </h1>
+//         {this.renderRestOffers()}
+//         </div>
+//       )
+//     } else if (this.state.displayContent === 'food') {
+//       return (
+//         this.renderCouponForm()
+//       )
+//     } else if (this.state.displayContent === 'setting'){
+//       console.log("this will update user info")
+//     }
+//   }
+// }
+
+renderContent = () => {
+if (this.state.displayContent === 'coupon') {
+       return (
+        <div>
+        <h1> {this.props.current_user.name} </h1>
+        {this.renderRestOffers()}
+        </div>
+      )
+} else if (this.state.displayContent === 'food') {
+    return (
+      this.renderCouponForm()
+    )
+} else if (this.state.displayContent === 'setting'){
+  return (<h2> This Feature is Not Yet Available </h2> )
+}
 }
 
   renderCouponForm = () => {
@@ -225,39 +334,12 @@ class RestaurantHome extends Component {
       )
   }
 
-    renderContent = () => {
-    if (this.state.displayContent === 'coupon') {
-      if (this.props.current_user.offers.length > 0) {
-         return (
-          <div>
-          <h1> {this.props.current_user.name} </h1>
-          {this.renderRestOffers()}
-          </div>
-        )
-      }
-      else {
-        return (
-          <Fragment>
-          <h2> You do not yet have any offers </h2>
-          <br/><br/><br/><br/><br/><br/><br/><br/>
-          </Fragment>
-        )
-      }
-    } else if (this.state.displayContent === 'food') {
-      return (
-        this.renderCouponForm()
-      )
-    } else if (this.state.displayContent === 'setting'){
-      console.log("this will update user info")
-    }
-  }
 
 
   render () {
     const { activeItem } = this.state
     const { animation, dimmed, direction, visible } = this.state
     const vertical = direction === 'bottom' || direction === 'top'
-    console.log("user is...", this.props.current_user)
     if (this.props.current_user) {
     let current_user = this.props.current_user
     return (
@@ -284,7 +366,11 @@ class RestaurantHome extends Component {
             <Divider />
             <h2> {this.state.displayHeader}</h2>
             <Divider />
+            <div className="restContent">
+            <Container>
             {this.renderContent()}
+            </Container>
+            </div>
             {this.offerSuccess()}
           </Segment>
         </Sidebar.Pusher>
@@ -310,7 +396,8 @@ function mapStateToProps(state) {
     allOffers: state.allOffers,
     allUsers: state.allUsers,
     allCoupons: state.allCoupons,
-    newCoupon: state.newCoupon
+    newCoupon: state.newCoupon,
+    newOffer: state.newOffer
 
   }
 }

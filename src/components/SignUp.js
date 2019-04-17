@@ -54,7 +54,6 @@ class SignUp extends Component {
       // we need to login at the top level where we are holding our current user!
       // setState in App to currentuser
       .then(response => {
-        debugger
       this.props.dispatch({ type: "LOGIN_USER", payload: response })
       this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
       localStorage.setItem('jwt', response.jwt)
