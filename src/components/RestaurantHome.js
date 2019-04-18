@@ -122,10 +122,16 @@ class RestaurantHome extends Component {
         )
     }
     else {
+      let ResOffers = this.props.allOffers.filter(res => res.restaurant_id === this.props.current_user.id)
+      ResOffers = ResOffers.filter(this.onlyUnique)
       return ResOffers.map(offer => {
         return <OfferCard offer={offer} />
       })
     }
+  }
+
+  onlyUnique = (value, index, self) => {
+    return self.indexOf(value) === index;
   }
   // renderRestOffers = () => {
   //   debugger

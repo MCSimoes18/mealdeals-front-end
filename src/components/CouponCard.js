@@ -22,6 +22,7 @@ class CouponCard extends React.Component {
       currentRestaurant: findRestaurant
     })
     if (this.props.coupon.offer.redeem_month === current_month && this.props.coupon.status !== 'Redeemed' && this.props.coupon.status !== 'Active Now'){
+
       this.setState({
         current_status: "inactive"
       },() => this.patchStatus(this.state.current_status))
@@ -39,11 +40,6 @@ class CouponCard extends React.Component {
     else if (this.props.coupon.status === 'Redeemed'){
       this.setState({
         current_status: 'Redeemed'
-      },() => this.patchStatus(this.state.current_status))
-    }
-    else if (this.props.coupon.status === 'Active Now'){
-      this.setState({
-        current_status: 'Active Now'
       },() => this.patchStatus(this.state.current_status))
     }
   }
@@ -105,7 +101,7 @@ activateCoupon = () => {
       let text = `Active Now:    ${d}`
       let t = setInterval(() => {
       var z = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-      this.patchStatus('Active Now')
+      this.patchStatus('Redeemed')
       this.setState({
         couponColor: z,
         buttonText: text,
@@ -114,7 +110,6 @@ activateCoupon = () => {
       }, 200);
       setTimeout(() => {
         clearInterval(t);
-        this.patchStatus('Redeemed')
         this.setState({
           current_status: 'Redeemed'
         })
