@@ -20,7 +20,6 @@ text-align: center;
 
 .mapSideBar {
   height: 1000px;
-  position: fixed;
 }
 
 .signup {
@@ -276,4 +275,14 @@ font-size: 40px;
 
 .couponCard {
   border-style: dashed !important;
+}
+
+.mapSideBar:not(body) {
+  transform: none;
+}
+
+.mapSideBar:not(body) > .ui.sidebar,
+.mapSideBar:not(body) > .fixed,
+.mapSideBar:not(body) > .pusher:after {
+  position: fixed;
 }

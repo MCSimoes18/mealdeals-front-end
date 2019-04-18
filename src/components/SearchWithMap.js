@@ -78,7 +78,6 @@ returnDisplay = () => {
   <div className="pageWrap">
     <Sidebar.Pushable as={Segment} className="mapSideBar">
     <Ref innerRef={this.contextRef}>
-    <Sticky context={this.contextRef} pushing>
       <Sidebar as={Menu}
         animation={'push'}
         direction={'left'}
@@ -87,9 +86,10 @@ returnDisplay = () => {
         vertical
         visible={this.state.visible}
         style={{width:'30%'}}>
+        <Sticky context={this.contextRef} pushing>
         {this.renderMap()}
+        </Sticky>
       </Sidebar>
-      </Sticky>
       </Ref>
     <Sidebar.Pusher>
       <Segment basic>

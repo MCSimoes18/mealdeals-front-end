@@ -10,6 +10,7 @@ import {GOOGLE_KEY} from '../keys.js'
 class GoogleMap extends Component {
 
 state = {
+  currentOffers: null,
   animation: 'overlay',
   direction: 'left',
   dimmed: false,
@@ -20,12 +21,10 @@ state = {
   name: "",
 }
 
-viewOnMap = (restaurant) => {
-  this.setState({
-    lat: restaurant.latitude,
-    long: restaurant.longitude,
-    name: restaurant.name
-  }, () => this.makeVisible())
+componentDidMount = () => {
+  fetch("http://localhost:3000/api/v1/offers")
+  .then(res => res.json())
+  .then(res => this.setState({ currentOffers: res }))
 }
 
 makeVisible = () => {
@@ -34,12 +33,42 @@ makeVisible = () => {
   })
 }
 
-renderMap = () => {
-  const mapStyles = {
-    width: '100%',
-    height: '100%'
+viewOnMap = (restaurant, offer) => {
+  if (this.state.currentOffers != null) {
+    let uniqueCurrentOffers = this.state.currentOffers.filter(o => o.restaurant_id != restaurant.id)
+    this.setState({
+      lat: restaurant.latitude,
+      long: restaurant.longitude,
+      name: restaurant.name,
+      currentOffers: uniqueCurrentOffers
+    }, () => this.makeVisible())
   }
+}
 
+returnMarkers = () => {
+  if (this.state.currentOffers === null) {
+    return null
+  } else {
+    let iconMarker = new window.google.maps.MarkerImage(
+                  process.env.PUBLIC_URL + '/blue.png',
+                  null, /* size is determined at runtime */
+                  null, /* origin is 0,0 */
+                  null, /* anchor is bottom center of the scaled image */
+                  new window.google.maps.Size(20, 25)
+                )
+    return this.state.currentOffers.map(offer => {
+      return (
+        <Marker
+        name={{name: offer.restaurant.name}}
+        icon={iconMarker}
+        position = {{ lat: offer.restaurant.latitude, lng: offer.restaurant.longitude }}
+        />
+      )
+    })
+  }
+}
+
+returnUniqueMarker = () => {
   let iconMarker = new window.google.maps.MarkerImage(
                 process.env.PUBLIC_URL + '/foodMarker.png',
                 null, /* size is determined at runtime */
@@ -47,6 +76,21 @@ renderMap = () => {
                 null, /* anchor is bottom center of the scaled image */
                 new window.google.maps.Size(50, 50)
               )
+  return (
+    <Marker
+      icon={iconMarker}
+      name={{name: this.state.name}}
+      position = {{ lat: this.state.lat, lng: this.state.long }}
+    />
+  )
+}
+
+renderMap = () => {
+  const mapStyles = {
+    width: '100%',
+    height: '100%'
+  }
+
   return (
     <Fragment>
     <Item className="closeMap" onClick={()=>this.closeMap()}> Close Map </Item>
@@ -56,11 +100,8 @@ renderMap = () => {
     style={mapStyles}
     center = {{ lat: this.state.lat, lng: this.state.long }}
     >
-    <Marker
-      icon={iconMarker}
-      name={this.state.name}
-      position = {{ lat: this.state.lat, lng: this.state.long }}
-    />
+    {this.returnMarkers()}
+    {this.returnUniqueMarker()}
     </Map>
     </Fragment>
   )
@@ -76,7 +117,7 @@ closeMap = () => {
 returnDisplay = () => {
   return (
   <Fragment>
-    <Sidebar.Pushable as={Segment}>
+    <Sidebar.Pushable as={Segment} className="mapSideBar">
       <Sidebar as={Menu}
         animation={'push'}
         direction={'left'}

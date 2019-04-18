@@ -37,6 +37,7 @@ class MonthlyOffers extends Component {
           <OfferCard
           offer={offer}
           viewOnMap={this.props.viewOnMap}
+          currentOffers={currentOffers}
           />
         )
       })

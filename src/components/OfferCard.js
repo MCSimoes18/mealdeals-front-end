@@ -177,7 +177,7 @@ renderOfferCard = () => {
           <Card.Description> Redeem During: {redeem_month} </Card.Description>
         </Card.Content>
         <Card.Content extra>
-        <Button basic color='blue' style={{ width: '18.5em', marginBottom: '1em'}} onClick={() => this.props.viewOnMap(restaurant)}>
+        <Button basic color='blue' style={{ width: '18.5em', marginBottom: '1em'}} onClick={() => this.props.viewOnMap(restaurant, this.props.offer)}>
           View On Map
         </Button>
         <Button basic color='red' style={{ width: '18.5em', marginBottom: '1em'}} >
