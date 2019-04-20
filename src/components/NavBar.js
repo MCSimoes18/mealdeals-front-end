@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { NavLink } from 'react-router-dom';
 import { Menu, Segment, Button, Fixed } from 'semantic-ui-react'
 import { connect } from 'react-redux';
+import MonthlyOffers from './MonthlyOffers'
 
 const colors = [
   'red',
@@ -46,7 +47,7 @@ class NavBar extends Component {
               <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
             </NavLink>
 
-            <NavLink to="/GoogleMap">
+            <NavLink to="/MonthlyOffers">
               <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
             </NavLink>
 
@@ -104,12 +105,8 @@ class NavBar extends Component {
               active={activeItem === 'home'} onClick={this.handleItemClick} />
             </NavLink>
 
-            <NavLink to="/MonthlyOffers">
-              <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
-            </NavLink>
-
             <NavLink to="/GoogleMap">
-              <Menu.Item name='Map' active={activeItem === 'Map'} onClick={this.handleItemClick} />
+              <Menu.Item name='Restaurants of the Month' active={activeItem === 'Restaurants of the Month'} onClick={this.handleItemClick} />
             </NavLink>
 
             <Menu.Item position='right'>

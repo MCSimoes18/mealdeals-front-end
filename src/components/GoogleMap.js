@@ -11,6 +11,7 @@ class GoogleMap extends Component {
 
 state = {
   currentOffers: null,
+  filteredCurrentOffers: null,
   animation: 'overlay',
   direction: 'left',
   dimmed: false,
@@ -24,8 +25,17 @@ state = {
 componentDidMount = () => {
   fetch("http://localhost:3000/api/v1/offers")
   .then(res => res.json())
-  .then(res => this.setState({ currentOffers: res }))
+  .then(res => this.setState({ currentOffers: res, filteredCurrentOffers: res }))
 }
+
+componentDidUpdate = (prevProps, prevState) => {
+    // if (prevProps.lat !== this.state.lat) {
+    //   this.setState({
+    //     lat: this.props.events[0].latitude,
+    //     longitude: this.props.events[0].longitude
+    //   })
+    // }
+  }
 
 makeVisible = () => {
   this.setState({
@@ -35,7 +45,7 @@ makeVisible = () => {
 
 viewOnMap = (restaurant, offer) => {
   if (this.state.currentOffers != null) {
-    let uniqueCurrentOffers = this.state.currentOffers.filter(o => o.restaurant_id != restaurant.id)
+    let uniqueCurrentOffers = this.state.filteredCurrentOffers.filter(o => o.restaurant_id != restaurant.id)
     this.setState({
       lat: restaurant.latitude,
       long: restaurant.longitude,
@@ -59,7 +69,7 @@ returnMarkers = () => {
     return this.state.currentOffers.map(offer => {
       return (
         <Marker
-        name={{name: offer.restaurant.name}}
+        title={offer.restaurant.name}
         icon={iconMarker}
         position = {{ lat: offer.restaurant.latitude, lng: offer.restaurant.longitude }}
         />
@@ -79,7 +89,7 @@ returnUniqueMarker = () => {
   return (
     <Marker
       icon={iconMarker}
-      name={{name: this.state.name}}
+      title={this.state.name}
       position = {{ lat: this.state.lat, lng: this.state.long }}
     />
   )
