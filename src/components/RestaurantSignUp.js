@@ -12,14 +12,14 @@ import { Container, Form, Input, Button, Card, List } from 'semantic-ui-react'
 class RestaurantSignUp extends Component {
 
   state = {
-    cuisine: "",
-    location: "",
-    rests: [],
-    business: "",
+    cuisine: "", //search input to find business
+    location: "", //search input to find business
+    rests: [], // restaurant search results
+    business: "", // selected 'found' restaurant business
     showSearch: true,
     foundBusiness: false,
-    username: null,
-    password: null,
+    username: null, //data to create restaurant account
+    password: null, //data to create restaurant account
     redirect: false
   }
 

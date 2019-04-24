@@ -8,8 +8,8 @@ import { Form, Input, Button } from 'semantic-ui-react'
 
 class RestaurantLogin extends Component {
   state = {
-    username: "",
-    password: "",
+    username: "", //login info
+    password: "", //login info
     redirect: false // in order to redirect to restaurant profile
   }
 

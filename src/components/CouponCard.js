@@ -22,17 +22,18 @@ class CouponCard extends React.Component {
       currentRestaurant: findRestaurant
     })
     if (this.props.coupon.offer.redeem_month === current_month && this.props.coupon.status !== 'Redeemed' && this.props.coupon.status !== 'Active Now'){
+      debugger
 
       this.setState({
         current_status: "inactive"
       },() => this.patchStatus(this.state.current_status))
     }
-    else if (this.props.coupon.offer.redeem_month < current_month && this.props.coupon.status !== 'Redeemed' && this.props.coupon.status !== 'Active Now'){
+    else if (this.props.coupon.offer.redeem_month > current_month && this.props.coupon.status !== 'Redeemed' && this.props.coupon.status !== 'Active Now'){
       this.setState({
         current_status: "upcoming"
       },() => this.patchStatus(this.state.current_status))
     }
-    else if (this.props.coupon.offer.redeem_month > current_month){
+    else if (this.props.coupon.offer.redeem_month < current_month){
       this.setState({
         current_status: "expired"
       },() => this.patchStatus(this.state.current_status && this.props.coupon.status !== 'Redeemed' && this.props.coupon.status !== 'Active Now'))
@@ -82,6 +83,7 @@ class CouponCard extends React.Component {
       .then(res => {
         this.props.dispatch({ type: "UPDATE_COUPONS", payload: res })
       })
+      debugger
     }
 
   openState = () => {
@@ -153,6 +155,7 @@ renderCoupon = () => {
   month[9] = "October";
   month[10] = "November";
   month[11] = "December";
+  debugger
   if (this.state.current_status === "inactive") {
     return (
       <Card className="couponCard" color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
@@ -174,7 +177,7 @@ renderCoupon = () => {
         </Card>
   )} else if (this.state.current_status === "upcoming") {
       return (
-          <Card className="couponCard" color='yellow' style={{backgroundColor: 'rgb(229, 239, 201)', width:'1000px;'}}>
+          <Card className="couponCard" color='yellow' style={{backgroundColor: 'rgb(255, 249, 209)', width:'1000px;'}}>
           <Card.Content>
             <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
             <Card.Meta>{this.state.currentRestaurant.name}</Card.Meta>

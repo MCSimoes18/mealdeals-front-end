@@ -40,25 +40,27 @@ componentDidUpdate = (prevProps, prevState) => {
 makeVisible = () => {
   this.setState({
     visible: true
+
   })
 }
 
 viewOnMap = (restaurant, offer) => {
+  this.makeVisible()
   if (this.state.currentOffers != null) {
     let uniqueCurrentOffers = this.state.filteredCurrentOffers.filter(o => o.restaurant_id != restaurant.id)
     this.setState({
       lat: restaurant.latitude,
       long: restaurant.longitude,
       name: restaurant.name,
-      currentOffers: uniqueCurrentOffers
-    }, () => this.makeVisible())
+      currentOffers: uniqueCurrentOffers,
+    })
   }
 }
 
 returnMarkers = () => {
   if (this.state.currentOffers === null) {
     return null
-  } else {
+  } else if (this.state.visible === true){
     let iconMarker = new window.google.maps.MarkerImage(
                   process.env.PUBLIC_URL + '/blue.png',
                   null, /* size is determined at runtime */
@@ -66,34 +68,34 @@ returnMarkers = () => {
                   null, /* anchor is bottom center of the scaled image */
                   new window.google.maps.Size(20, 25)
                 )
-    return this.state.currentOffers.map(offer => {
-      return (
+    let chosenIconMarker = new window.google.maps.MarkerImage(
+                  process.env.PUBLIC_URL + '/foodMarker.png',
+                  null, /* size is determined at runtime */
+                  null, /* origin is 0,0 */
+                  null, /* anchor is bottom center of the scaled image */
+                  new window.google.maps.Size(50, 50)
+                )
+    let chosenMarker =
+    <Marker
+    icon={chosenIconMarker}
+    title={this.state.name}
+    position = {{ lat: this.state.lat, lng: this.state.long }}
+    />
+    let displayMarkers = this.state.currentOffers.map(offer =>
         <Marker
-        title={offer.restaurant.name}
         icon={iconMarker}
+        title={offer.restaurant.name}
         position = {{ lat: offer.restaurant.latitude, lng: offer.restaurant.longitude }}
         />
       )
-    })
+    displayMarkers = [...displayMarkers, chosenMarker]
+    return displayMarkers
+  }
+  else {
+    return null
   }
 }
 
-returnUniqueMarker = () => {
-  let iconMarker = new window.google.maps.MarkerImage(
-                process.env.PUBLIC_URL + '/foodMarker.png',
-                null, /* size is determined at runtime */
-                null, /* origin is 0,0 */
-                null, /* anchor is bottom center of the scaled image */
-                new window.google.maps.Size(50, 50)
-              )
-  return (
-    <Marker
-      icon={iconMarker}
-      title={this.state.name}
-      position = {{ lat: this.state.lat, lng: this.state.long }}
-    />
-  )
-}
 
 renderMap = () => {
   const mapStyles = {
@@ -111,7 +113,6 @@ renderMap = () => {
     center = {{ lat: this.state.lat, lng: this.state.long }}
     >
     {this.returnMarkers()}
-    {this.returnUniqueMarker()}
     </Map>
     </Fragment>
   )

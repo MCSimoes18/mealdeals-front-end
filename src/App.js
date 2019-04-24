@@ -93,25 +93,6 @@ class App extends React.Component {
       })
     }
 
-    // this is just so all of our data is as up to date as possible now that we are
-    // just keep state at the top level of our application in order to correctly update
-    // we must have the state be updated properly
-    // updateUser = (user) => {
-    //   this.setState({
-    //     current_user: user
-    //   })
-    // }
-
-  // // we need to reset state and remove the current user and remove the token
-  // logout = () => {
-  //   localStorage.removeItem("token")
-  //   this.props.dispatch({ type: "LOGIN_USER", payload: null })
-  //   this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: null })
-  //   this.setState({
-  //     currentUser: null
-  //   }, () => { this.props.history.push("/login") })
-  // }
-
 render () {
     return (
       <Router>
@@ -137,7 +118,6 @@ export default connect(mapStateToProps)(App)
 
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     current_user: state.current_user,
     user_type: state.user_type,

@@ -64,9 +64,9 @@ login = (e) => {
               localStorage.setItem('user', response.user.id )
               this.props.dispatch({ type: "LOGIN_USER", payload: response.user })
               this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+              this.props.history.push(`/UserProfile`)
         }})
-            .then(() => this.props.history.push(`/UserProfile`))
-        }
+      }
 
   renderLoginForm = () => {
   return (

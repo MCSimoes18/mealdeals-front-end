@@ -11,8 +11,8 @@ import { Card, Button, Input, Container} from 'semantic-ui-react'
 class Home extends React.Component {
 
   state = {
-    loc: "",
-    food: ""
+    loc: "", // dispatches users search input
+    food: "" // dispatches users search input
   }
 
   handleChange = (event) => {
@@ -37,10 +37,10 @@ class Home extends React.Component {
        'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-  })
+    })
    .then(res => res.json())
    .then(results => this.props.dispatch({ type: "SEARCH_RESULTS", payload: results }))
- }
+  }
 
 
   renderSearchCards = () => {
@@ -56,8 +56,7 @@ class Home extends React.Component {
         viewOnMap={this.props.viewOnMap}
         />
         )
-      }
-    )
+      })
     }
   }
 

@@ -11,13 +11,9 @@ import {GOOGLE_KEY} from '../keys.js'
 class SearchWithMap extends Component {
 
 state = {
-  animation: 'overlay',
-  direction: 'left',
-  dimmed: false,
-  visible: false,
-  activeMarker: {},
-  lat: 40.7128,
-  long: -74.0060
+  visible: false, // sidebar map conditionally renders
+  lat: 40.7128, // set map to NYC coordinates by default
+  long: -74.0060 // set map to NYC coordinates by default
 }
 
 viewOnMap = (restaurant) => {

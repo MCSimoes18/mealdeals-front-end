@@ -33,6 +33,9 @@ class Home extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      redirect: true
+    })
     this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.location })
     this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.cuisine })
     this.setState({ location: "", cuisine: "" });
@@ -44,6 +47,7 @@ class Home extends React.Component {
 
   //listening in render() for changed state
   renderRedirect = () => {
+    if (this.state.redirect === true) {
       if (this.props.rests === undefined ){
         return null
       }
@@ -54,6 +58,7 @@ class Home extends React.Component {
         return <Redirect to='/SearchWithMap' />
       }
     }
+  }
 
   handleSearch = (cuisine, location) => {
    const data = {cuisine: cuisine, location: location };

@@ -7,12 +7,11 @@ import { connect } from 'react-redux';
 class SignUp extends Component {
 
   state = {
-    firstName: "",
-    username: "",
-    password: "",
-    email: "",
-    password: "",
-    showLogin: true,
+    firstName: "", // data to create user
+    username: "", // data to create user
+    password: "", // data to create user
+    email: "", // data to create user
+    password: "", // data to create user
     redirect: false // in order to redirect to restaurant profile
   }
 
@@ -57,7 +56,6 @@ class SignUp extends Component {
       this.props.dispatch({ type: "LOGIN_USER", payload: response })
       this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
       localStorage.setItem('jwt', response.jwt)
-      console.log("success!")
       })
       .then(() => this.props.history.push(`/UserProfile`))
   }
@@ -87,7 +85,7 @@ class SignUp extends Component {
     )
   }
 
-}
+} // ends class
 
 export default connect()(SignUp)
 

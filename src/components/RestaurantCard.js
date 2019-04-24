@@ -74,37 +74,3 @@ class RestaurantCard extends React.Component {
       user_type: state.user_type
     }
   }
-
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//       <Card.Content>
-//         image={this.props.restaurant.image_url}
-//         header={this.props.restaurant.name}
-//         meta={this.props.restaurant.rating} Stars
-//         description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-//       />
-//     )
-//   }
-// }
-
-
-
-// <img src={this.props.restaurant.image_url} />
-// <p> Address: {this.props.restaurant.location.display_address} </p>
-// <p> Price: {this.props.restaurant.price} </p>
-// <p> Rating: {this.props.restaurant.rating} </p>
-// <p> Reviews: {this.props.restaurant.review_count} </p>
-// <p> Contact: {this.props.restaurant.display_phone} </p>
-// <a href={this.props.restaurant.url} target="_blank">View On Yelp</a>
-// <br/>
-// <button onClick={() => this.findBusiness()}>This is Me</button>
-// </div>
