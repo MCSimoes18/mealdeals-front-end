@@ -2,13 +2,13 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import CouponCard from './CouponCard'
 import MonthlyOffers from './MonthlyOffers'
+import FilterCoupons from './FilterCoupons'
 import { Card, Container, Form, Input, Divider, Button, Header, Icon, Label, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class UserProfile extends Component {
 
 
   state = {
-    // allCoupons: [],
     userCoupons: [],
     activeItem: 'home',
     animation: 'push',
@@ -35,6 +35,15 @@ class UserProfile extends Component {
     })
   }
 
+  renderFilter = () => {
+    let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
+    if (this.state.displayContent === 'coupon' && findUserCoupons.length > 0) {
+      return (
+        <FilterCoupons />
+      )
+  }
+}
+
 
   renderContent = () => {
   let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
@@ -42,18 +51,31 @@ class UserProfile extends Component {
     if (findUserCoupons.length === 0){
       return (
         <Fragment>
-        <h1> You do not have any coupons </h1>
+        <h2 className="noCoupons"> You do not have any coupons </h2>
         <br/><br/><br/><br/><br/><br/><br/><br/>
         </Fragment>
       )
     } else {
-      // let couponStatuses = {
-      //   [key: 'inactive', text: 'inactive', value: 'inactive']
-      //   [key: 'redeemed', text: redeemed, value: redeemde]
-      //   [key: expired, text: expired, value: expired]
-      // }
-      // <Select placeholder='Select Status' options={'All Coupons', cityOptions} name='selectedCity'onChange={(e, data) => this.handleSelectChange(e, data)}/><br/> <br/> <br/>
-      return findUserCoupons.map(coupon => {
+      if (this.props.selectedCoupon === 'All Coupons'){
+        return findUserCoupons.map(coupon => {
+          return (
+            <CouponCard
+            coupon= {coupon}
+            />
+          )
+        })
+      } else {
+      let userCouponsCopy = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
+      let currentCoupons = userCouponsCopy.filter(coupon => coupon.status === this.props.selectedCoupon)
+      if (currentCoupons.length === 0) {
+        return (
+          <Fragment>
+          <h2 className="noCoupons"> You do not have any {this.props.selectedCoupon} coupons </h2>
+          <br/><br/><br/><br/><br/><br/><br/><br/>
+          </Fragment>
+        )
+      }
+      return currentCoupons.map(coupon => {
         return (
           <CouponCard
           coupon= {coupon}
@@ -61,6 +83,8 @@ class UserProfile extends Component {
         )
       })
     }
+  }
+
     } else if (this.state.displayContent === 'food') {
       return (
         <MonthlyOffers />
@@ -122,6 +146,7 @@ class UserProfile extends Component {
         <Divider />
         <div className="userContainer">
         <Container>
+        {this.renderFilter()}
         {this.renderContent()}
         </Container>
         </div>
@@ -149,6 +174,7 @@ function mapStateToProps(state) {
     allOffers: state.allOffers,
     allUsers: state.allUsers,
     allCoupons: state.allCoupons,
-    newCoupon: state.newCoupon
+    newCoupon: state.newCoupon,
+    selectedCoupon: state.selectedCoupon
   }
 }

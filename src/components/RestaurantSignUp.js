@@ -16,11 +16,11 @@ class RestaurantSignUp extends Component {
     location: "", //search input to find business
     rests: [], // restaurant search results
     business: "", // selected 'found' restaurant business
-    showSearch: true,
-    foundBusiness: false,
+    showSearch: true, // conditionally hide search once business is found
+    foundBusiness: false, //conditionally render business information if business is found
     username: null, //data to create restaurant account
     password: null, //data to create restaurant account
-    redirect: false
+    redirect: false //conditionally redirect for when signup is successful
   }
 
   handleChange = (event) => {

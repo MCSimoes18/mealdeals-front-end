@@ -10,6 +10,7 @@ const initialState = {
   allUsers: [],
   newCoupon: null,
   selectedCity: 'All Cities',
+  selectedCoupon: 'All Coupons',
   newOffer: null
 }
 
@@ -31,6 +32,9 @@ function reducer(state = initialState, action, payload) {
     case "SELECTED_CITY":
       console.log("testing reducer3", action.payload)
       return {...state, selectedCity: action.payload }
+    case "SELECTED_COUPON":
+      console.log("testing reducer4", action.payload)
+      return {...state, selectedCoupon: action.payload }
     case "ALL_RESTAURANTS":
       return {...state, allRestaurants: action.payload }
     case "ALL_OFFERS":

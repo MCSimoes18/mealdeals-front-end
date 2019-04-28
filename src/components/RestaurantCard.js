@@ -38,7 +38,7 @@ class RestaurantCard extends React.Component {
             <Card.Content>
               <Image src={this.props.restaurant.image_url} alt="image" style={{width:'350px'}, {height:'300px'}}/>
               <h1>{this.props.restaurant.name}</h1>
-              <h4><b>{this.props.restaurant.location.display_address}</b></h4>
+              <h4><b>{this.props.restaurant.location.address1},  {this.props.restaurant.location.city},  {this.props.restaurant.location.zip_code}</b></h4>
               <p>{this.props.restaurant.price}</p>
               <Rating icon='star' rating={this.props.restaurant.rating} maxRating={5} disabled/>
             </Card.Content>

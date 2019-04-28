@@ -166,10 +166,10 @@ display: inline-block;
 }
 
 .restSignUp1 {
-  width: 650px;
+  width: 850px;
   text-align: center;
   display: inline-block;
-  padding-left: 400px;
+  padding-left: 600px;
 }
 .restSignUp2 {
   width: 250px;
@@ -285,4 +285,8 @@ font-size: 40px;
 .mapSideBar:not(body) > .fixed,
 .mapSideBar:not(body) > .pusher:after {
   position: fixed;
+}
+
+.noCoupons {
+  margin-left: 350px;
 }

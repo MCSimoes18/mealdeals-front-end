@@ -103,7 +103,7 @@ class OfferCard extends React.Component {
    let floatUserLatitude = this.floatCoordinates(this.state.user_latitude)
    let floatUserLongitude = this.floatCoordinates(this.state.user_longitude)
    console.log("compare", floatRestLatitude, floatUserLatitude, floatRestLongitude, floatUserLongitude)
-   if (floatRestLatitude == floatUserLatitude && floatRestLongitude == floatUserLongitude){
+   if (floatRestLatitude !== floatUserLatitude && floatRestLongitude !== floatUserLongitude){
      console.log("check in")
      this.createCoupon()
      this.setState({
@@ -217,11 +217,12 @@ renderOfferCard = () => {
       // all coupons this month belonging to this offer
       let myCouponsThisMonth = thisMonthsCoupons.filter(coupon => coupon.offer.id === this.props.offer.id)
       let myCouponCount = myCouponsThisMonth.length
-      let notMyCouponCount = thisMonthsCoupons.length - myCouponCount.length
+      let notMyCouponCount = thisMonthsCoupons.length - myCouponCount
       // all coupons this month belonging to this offer that are redeemed
       let redeemedCoupons = myCouponsThisMonth.filter(coupon => coupon.status === "Redeemed")
       // how many people checked into this offer out of all the check ins this month?
       let checkInRate = ((myCouponsThisMonth.length / thisMonthsCoupons.length) * 100).toFixed(0)
+      debugger
       // how many of my coupons for this offer have been redeemed?
       let redemptionRate = ((redeemedCoupons.length / myCouponsThisMonth.length) * 100).toFixed(0)
       let redeemedCount = parseInt(redeemedCoupons.length)
