@@ -20,10 +20,10 @@ Meal Deals is a restaurant marketing application built with React & Semantic UI 
 When neither a customer or restaurant is logged in. The user still has the capability to search for any cuisine by location and receive top results (using Yelp's API). Each restaurant result provide details, ratings, a link to Yelp and the ability to view location with Google Maps. In addition, all restaurants with an "earn" offer during the current month are viewable to all users. The user can see restaurant details, view all offers on google maps, but will need to sign in or create an account in order to earn coupons.
 
 ## Install
-1. Clone down this repository on your local machine
+1. Clone down this repository (master branch) on your local machine
 2. Clone down the [back-end repository](https://github.com/MCSimoes18/mealdeals_back-end) on your local machine
-3. Run ### 'bundle install' in the back-end repository
-4. Run ### 'rails db:create',  ### 'rails db:migrate', and ### 'rails s' in the back-end repository
-5. Once your server is running, run ### 'npm install' in the terminal of this front-end repository.
-6. Then, run ### 'npm start' to open the app in the browser. If prompted to use another port, type ### 'y'
+3. Run ``` 'bundle install' ``` in the back-end repository
+4. Run ### 'rails db:create',  ``` 'rails db:migrate' ```, and ``` 'rails s' ``` in the back-end repository
+5. Once your server is running, run ``` 'npm install' ``` in the terminal of this front-end repository.
+6. Then, run ``` 'npm start' ```to open the app in the browser. If prompted to use another port, type ``` 'y' ```
 7. To create restaurant of the month data, click "sign-up", under "I have deals to give" and create offers for the current month.
