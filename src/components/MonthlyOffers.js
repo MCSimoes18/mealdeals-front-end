@@ -83,8 +83,8 @@ render () {
   let current_month = month[d.getMonth()];
   return (
     <Fragment>
-      <h1 className="MealSteals"> {current_month}
-       Offers
+      <h1 className="MealSteals"> {current_month}{' '}
+        Offers
       <img onClick={() => this.toggleFilters()} className="headerMarker" src={process.env.PUBLIC_URL + '/arrow.png'}/>
       </h1>
       {this.renderFilters()}

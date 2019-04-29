@@ -116,7 +116,7 @@ class RestaurantHome extends Component {
     if (ResOffers.length === 0) {
       return (
           <Fragment>
-          <p> You do not have any offers. </p>
+          <h2 className="noOffers"> you do not have any offers yet. </h2>
           <br/><br/><br/><br/><br/><br/><br/><br/>
           </Fragment>
         )

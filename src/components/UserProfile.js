@@ -37,7 +37,7 @@ class UserProfile extends Component {
 
   renderFilter = () => {
     let findUserCoupons = this.props.allCoupons.filter(coupon => coupon.user_id === this.props.current_user.id)
-    if (this.state.displayContent === 'coupon' && findUserCoupons.length > 0) {
+    if (this.state.displayContent === 'coupon') {
       return (
         <FilterCoupons />
       )
@@ -57,10 +57,11 @@ class UserProfile extends Component {
       )
     } else {
       if (this.props.selectedCoupon === 'All Coupons'){
+        debugger
         return findUserCoupons.map(coupon => {
           return (
             <CouponCard
-            coupon= {coupon}
+            coupon={coupon}
             />
           )
         })

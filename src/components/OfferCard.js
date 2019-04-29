@@ -90,7 +90,7 @@ class OfferCard extends React.Component {
   }
 
   floatCoordinates = (num) => {
-     return Number.parseFloat(num).toFixed(3);
+     return Number.parseFloat(num).toFixed(2);
   }
 
   compareLocations = () => {
@@ -102,8 +102,9 @@ class OfferCard extends React.Component {
    let floatRestLongitude = this.floatCoordinates(checkInRestaurant.longitude)
    let floatUserLatitude = this.floatCoordinates(this.state.user_latitude)
    let floatUserLongitude = this.floatCoordinates(this.state.user_longitude)
+
    console.log("compare", floatRestLatitude, floatUserLatitude, floatRestLongitude, floatUserLongitude)
-   if (floatRestLatitude !== floatUserLatitude && floatRestLongitude !== floatUserLongitude){
+   if (floatRestLatitude === floatUserLatitude && floatRestLongitude === floatUserLongitude){
      console.log("check in")
      this.createCoupon()
      this.setState({
@@ -158,10 +159,12 @@ renderOfferCard = () => {
     month[10] = "November";
     month[11] = "December";
     // using month array to display string instead of value
-    if (this.props.user_type === undefined || this.props.allRestaurants.length === 0) {
+    if (this.props.user_type === undefined || this.props.allRestaurants.length === 0 || this.props.offer === null) {
+      debugger
       return <h3> LOADING </h3>
     }
     else {
+    debugger
     let earn_month = month[this.props.offer.earn_month]
     let redeem_month = month[this.props.offer.redeem_month]
     if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){
@@ -222,7 +225,6 @@ renderOfferCard = () => {
       let redeemedCoupons = myCouponsThisMonth.filter(coupon => coupon.status === "Redeemed")
       // how many people checked into this offer out of all the check ins this month?
       let checkInRate = ((myCouponsThisMonth.length / thisMonthsCoupons.length) * 100).toFixed(0)
-      debugger
       // how many of my coupons for this offer have been redeemed?
       let redemptionRate = ((redeemedCoupons.length / myCouponsThisMonth.length) * 100).toFixed(0)
       let redeemedCount = parseInt(redeemedCoupons.length)

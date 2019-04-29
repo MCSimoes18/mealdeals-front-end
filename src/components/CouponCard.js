@@ -141,6 +141,7 @@ renderCoupon = () => {
   month[9] = "October";
   month[10] = "November";
   month[11] = "December";
+  let current_month = d.getMonth()
   let findRestaurant = this.props.allRestaurants.find(rest => rest.id == this.props.coupon.offer.restaurant_id)
   if (this.props.coupon.status === "expired") {
   return (
@@ -241,8 +242,60 @@ renderCoupon = () => {
               </Card.Content>
               </Card>
             )
+      } else if (this.props.coupon.status == "" && this.props.coupon.offer.redeem_month === current_month ) {
+      return (
+        <Card className="couponCard" color='green' style={{backgroundColor: 'rgb(229, 239, 201)'}}>
+        <Card.Content>
+          <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
+          <Card.Meta>{findRestaurant.name}</Card.Meta>
+          <Card.Meta>{findRestaurant.address1, findRestaurant.city, findRestaurant.zip_code}
+          </Card.Meta>
+          <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
+          <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+          <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
+            <Card.Content extra>
+              Status: Inactive
+              <Button fluid style={{backgroundColor: 'green', color: 'white' }} onClick={()=> this.openState()}>
+              {this.state.buttonText}
+              </Button>
+          </Card.Content>
+        </Card.Content>
+          </Card>
+          )
+      } else if (this.props.coupon.status == "" && this.props.coupon.offer.redeem_month > current_month ) {
+        return (
+            <Card className="couponCard" color='yellow' style={{backgroundColor: 'rgb(255, 249, 209)', width:'1000px;'}}>
+            <Card.Content>
+              <h2 className="cpnTitle" >{this.props.coupon.offer.offer}</h2>
+              <Card.Meta>{findRestaurant.name}</Card.Meta>
+              <Card.Meta>{findRestaurant.address1, findRestaurant.city, findRestaurant.zip_code} </Card.Meta>
+              <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
+              <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+                <Card.Content extra style={{marginLeft: '800px;'}}>
+                  <Card.Header> Status: Upcoming </Card.Header>
+                  <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
+                </Card.Content>
+            </Card.Content>
+              </Card>
+            )
+      } else if (this.props.coupon.status == "" && this.props.coupon.offer.redeem_month < current_month ) {
+        return (
+          <Card className="couponCard" color='gray' style={{backgroundColor: 'rgb(224, 224, 224)', width: '1000px;'}}>
+          <Card.Content>
+            <h2 className="cpnTitle" > {this.props.coupon.offer.offer} </h2>
+            <Card.Meta>{findRestaurant.name}</Card.Meta>
+            <Card.Meta>{findRestaurant.address1, findRestaurant.city, findRestaurant.zip_code} </Card.Meta>
+            <Card.Description>Earned In: {month[this.props.coupon.offer.earn_month]}</Card.Description>
+            <Card.Description>Redeemable: {month[this.props.coupon.offer.redeem_month]}</Card.Description>
+            <Card.Description>Coupon ID:{this.props.coupon.id}</Card.Description>
+            <Card.Content extra>
+            <Card.Header style={{marginLeft: '800px;'}}> Status: Expired </Card.Header>
+            </Card.Content>
+            </Card.Content>
+            </Card>
+            )
+        }
       }
-}
 
 
 render() {

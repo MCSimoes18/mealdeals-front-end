@@ -150,19 +150,19 @@ class Home extends React.Component {
                    <Grid.Column width={3}>
                      <Header inverted as='h4' content='About' />
                      <List link inverted>
-                       <List.Item as='a'>Sitemap</List.Item>
                        <List.Item as='a'>Contact Us</List.Item>
-                       <List.Item as='a'>Religious Ceremonies</List.Item>
-                       <List.Item as='a'>Gazebo Plans</List.Item>
+                       <List.Item as='a'>Linkedin Profile</List.Item>
+                       <List.Item as='a'>Github</List.Item>
+                       <List.Item as='a'>Medium</List.Item>
                      </List>
                    </Grid.Column>
                    <Grid.Column width={3}>
                      <Header inverted as='h4' content='Services' />
                      <List link inverted>
-                       <List.Item as='a'>Banana Pre-Order</List.Item>
-                       <List.Item as='a'>DNA FAQ</List.Item>
-                       <List.Item as='a'>How To Access</List.Item>
-                       <List.Item as='a'>Favorite X-Men</List.Item>
+                       <List.Item as='a'>Full-Stack Web Developer</List.Item>
+                       <List.Item as='a'>JavaScript-React</List.Item>
+                       <List.Item as='a'>Ruby on Rails</List.Item>
+                       <List.Item as='a'>Semantic UI CSS</List.Item>
                      </List>
                    </Grid.Column>
                    <Grid.Column width={7}>
@@ -170,7 +170,7 @@ class Home extends React.Component {
                        Meal Deals Mission
                      </Header>
                      <p>
-                      Using geo-location check-in services, we reward our users for dining out with exclusive offers.
+                      Using geo-location check-in services, we reward our users for dining out with exclusive offers. 
                      </p>
                    </Grid.Column>
                  </Grid.Row>
