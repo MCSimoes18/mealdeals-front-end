@@ -13,8 +13,7 @@ import RestaurantLogin from './RestaurantLogin';
 import SignUp from './SignUp';
 import RestaurantSignUp from './RestaurantSignUp';
 import Search from './Search';
-import SearchWithMap from './SearchWithMap';
-import { Card, Button, Input, Container, Grid, Divider, Segment, List, Header} from 'semantic-ui-react'
+import { Card, Button, Input, Container, Grid, Divider, Segment} from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -33,9 +32,6 @@ class Home extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      redirect: true
-    })
     this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.location })
     this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.cuisine })
     this.setState({ location: "", cuisine: "" });
@@ -47,7 +43,6 @@ class Home extends React.Component {
 
   //listening in render() for changed state
   renderRedirect = () => {
-    if (this.state.redirect === true) {
       if (this.props.rests === undefined ){
         return null
       }
@@ -55,10 +50,9 @@ class Home extends React.Component {
         return null
       }
       else if (this.props.rests.businesses.length > 0) {
-        return <Redirect to='/SearchWithMap' />
+        return <Redirect to='/Search' />
       }
     }
-  }
 
   handleSearch = (cuisine, location) => {
    const data = {cuisine: cuisine, location: location };
@@ -73,6 +67,21 @@ class Home extends React.Component {
    .then(res => res.json())
    .then(results => this.props.dispatch({ type: "SEARCH_RESULTS", payload: results }))
  }
+
+
+  // renderSearchCards = () => {
+  //   if (this.state.rests.length == 0) {
+  //     return null
+  //   } else {
+  //     return this.state.rests.businesses.map(rest => {
+  //       return (
+  //       <RestaurantCard restaurant={rest} />
+  //       )
+  //     }
+  //   )
+  //   }
+  // }
+
 
   render() {
 
@@ -98,21 +107,20 @@ class Home extends React.Component {
             src={process.env.PUBLIC_URL + '/food.png'}
             alt="user"
             />
-            <h1 className="chooseRestTxt2"> I AM LOOKING FOR DEALS </h1>
-            Get rewarded for eating with eating. <br/>
+            <h1> I eat food </h1>
+            <br/> Get rewarded for eating with eating. <br/>
             <p> Check-In at local restaurants during their designated earn-period.
-            <br/> Then come back and redeem exclusive offers. </p> <br/>
-            <Button className="outerBtn">
-            <NavLink className="innerBtn" to="/SignUp" component={SignUp}>
+            <br/> Then come back and redeem exclusive offers. </p>
+            <Button>
+            <NavLink to="/SignUp" component={SignUp}>
                 Sign Up
             </NavLink>
             </Button>
-            <Button className="outerBtn">
-            <NavLink className="innerBtn" to="/Login" component={Login}>
+            <Button>
+            <NavLink to="/Login" component={Login}>
                 Login
             </NavLink>
             </Button>
-            <br/><br/><br/>
             </Container>
             </Grid.Column>
             <Grid.Column verticalAlign='middle'>
@@ -122,63 +130,26 @@ class Home extends React.Component {
             src={process.env.PUBLIC_URL + '/chef.png'}
             alt="restaurant"
             />
-            <h1 className="chooseRestTxt2"> I HAVE DEALS TO GIVE </h1>
+            <h1 style={{textAlign:'center;'}}
+            > I make food </h1>
             <p> Promote your business with Meal Deals.
             <br/> Gain visibility, acquire new customers and increase your customer retention. <br/>Sign up and start submitting exclusive offers.</p>
             <br/>
-            <Button className="outerBtn">
-            <NavLink className="innerBtn" to="/RestaurantSignUp" component={RestaurantSignUp}>
+            <Button>
+            <NavLink to="/RestaurantSignUp" component={RestaurantSignUp}>
                 Sign Up
             </NavLink>
             </Button>
-            <Button className="outerBtn">
-            <NavLink className="innerBtn" to="/RestaurantLogin" component={RestaurantLogin}>
+            <Button>
+            <NavLink to="/RestaurantLogin" component={RestaurantLogin}>
                 Login
             </NavLink>
             </Button>
-            <br/><br/><br/>
             </Container>
             </Grid.Column>
             </Grid>
             <Divider vertical>Or</Divider>
             </Segment>
-
-            <Segment inverted vertical style={{ padding: '5em 0em', marginTop: '-1em', marginBottom: '-10em'}}>
-             <Container>
-               <Grid divided inverted stackable>
-                 <Grid.Row>
-                   <Grid.Column width={3}>
-                     <Header inverted as='h4' content='About' />
-                     <List link inverted>
-                       <List.Item as='a'>Contact Us</List.Item>
-                       <List.Item as='a'>Linkedin Profile</List.Item>
-                       <List.Item as='a'>Github</List.Item>
-                       <List.Item as='a'>Medium</List.Item>
-                     </List>
-                   </Grid.Column>
-                   <Grid.Column width={3}>
-                     <Header inverted as='h4' content='Services' />
-                     <List link inverted>
-                       <List.Item as='a'>Full-Stack Web Developer</List.Item>
-                       <List.Item as='a'>JavaScript-React</List.Item>
-                       <List.Item as='a'>Ruby on Rails</List.Item>
-                       <List.Item as='a'>Semantic UI CSS</List.Item>
-                     </List>
-                   </Grid.Column>
-                   <Grid.Column width={7}>
-                     <Header as='h4' inverted>
-                       Meal Deals Mission
-                     </Header>
-                     <p>
-                      Using geo-location check-in services, we reward our users for dining out with exclusive offers. 
-                     </p>
-                   </Grid.Column>
-                 </Grid.Row>
-               </Grid>
-             </Container>
-           </Segment>
-
-
         <Card.Group text style={{ marginTop: '7em' }}>
           {this.renderRedirect()}
         </Card.Group>

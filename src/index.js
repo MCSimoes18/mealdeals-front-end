@@ -10,16 +10,23 @@ import App from './App';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
 import MonthlyOffers from './components/MonthlyOffers';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import RestaurantSignUp from './components/RestaurantSignUp';
+import RestaurantLogin from './components/RestaurantLogin';
+import RestaurantHome from './components/RestaurantHome';
+import UserProfile from './components/UserProfile';
+import Search from './components/Search';
+import SearchWithMap from './components/SearchWithMap';
+import GoogleMap from './components/GoogleMap';
 import store from './store';
+
+
 
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router>
-      <NavBar />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/MonthlyOffers" component={MonthlyOffers} />
-    </Router>
+      <App />
   </Provider>
 ),
   document.getElementById('root')

@@ -1,0 +1,297 @@
+h1{
+text-align: center;
+}
+
+.searchBar {
+  text-align: center;
+  padding-bottom: 100px;
+}
+
+.login{
+  text-align: center;
+}
+
+.inputText{
+  width: 800px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.mapSideBar {
+  height: 1000px;
+}
+
+.signup {
+  text-align: center;
+}
+.firstName {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.userName{
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.email{
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.password {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.phone {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+}
+
+.feed {
+width: 222px;
+height: 220px;
+margin: auto;
+text-align: center;
+display: inline-block;
+}
+
+.userSide {
+margin: auto;
+text-align: center;
+display: inline-block;
+}
+
+.restSide {
+margin: auto;
+text-align: center;
+display: inline-block;
+/* background-color: rgb(229, 239, 201); */
+}
+
+.EarnMonth {
+margin: auto;
+text-align: center;
+display: inline-block;
+}
+
+.centerBtn {
+  text-align: center;
+  border: 'red';
+}
+
+.RedeemMonth {
+margin: auto;
+text-align: center;
+display: inline-block;
+/* background-color: rgb(229, 239, 201); */
+}
+
+.chooseRestTxt1 {
+  text-align: center;
+  color: red;
+  font-family: 'A Love of Thunder';
+}
+
+.chooseRestTxt2 {
+  text-align: center;
+  font-family: 'A Love of Thunder';
+}
+
+/* background: url( 'https://img.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1220-1491.jpg?size=626&ext=jpg'); */
+/* background: url( 'https://www.healthyalternative.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg'); */
+/* background: url( 'https://image.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-cooking-italian-food-ingredients-view-from-with-copy-space_1309-136.jpg'); */
+
+.home {
+  background-color: #AF473C;
+  background: url( 'https://cdn.firstcrycdn.com/2018/03/446808145-H.jpg');
+  margin-top: -15px;
+  background-size: contain;
+}
+
+/* .offerTitle {
+  margin: auto;
+  text-align: center;
+  /* display: inline-block; */
+/* @font-face {
+    font-family: 'Crimson Text', serif;
+    src: url("https://fonts.googleapis.com/css?family=Crimson+Text")
+  } */
+
+@font-face{
+  font-family: 'A Love of Thunder';
+  font-style: normal;
+  src: local('A Love of Thunder'), local('A Love of Thunder'),
+}
+
+.title {
+  font-family: 'A Love of Thunder';
+  font-size: 100px;
+  padding-top: 250px;
+  padding-bottom: 90px;
+  color: white;
+}
+
+.coupon {
+  height: 25px;
+  width: 25px;
+  padding-left: 41px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.couponCard {
+  border-style: dashed;
+}
+
+.cpnTitle {
+  font-family: 'A Love of Thunder';
+}
+
+
+.navContent1{
+  margin-top: 20px;
+}
+
+.restSignUp1 {
+  width: 850px;
+  text-align: center;
+  display: inline-block;
+  padding-left: 600px;
+}
+.restSignUp2 {
+  width: 250px;
+  text-align: center;
+  display: inline-block;
+}
+
+.pieChart1 {
+  margin-top: -250px;
+  margin-bottom: 10px;
+}
+
+.pieChart2 {
+  margin-top: -310px;
+  margin-bottom: 200px;
+  margin-left: 700px;
+}
+
+.rateTxt1 {
+  margin-left: 505px;
+  margin-bottom: -100px;
+  margin-top: 100px;
+}
+
+.rateTxt2 {
+  margin-left: 870px;
+  margin-bottom: -100px;
+  margin-top: 100px;
+}
+
+.rate1 {
+  margin-left: 542px;
+  margin-bottom: -150px;
+  margin-top: 100px;
+}
+
+.rate2 {
+  margin-left: 890px;
+  margin-top: 100px;
+  margin-bottom: -100px;
+}
+
+.restOfferCard {
+  margin-bottom: 300px;
+  background-color: green;
+}
+
+.closeMap {
+  z-index: 1;
+}
+
+.innerBtn {
+  color: rgb(178, 58, 58);
+}
+
+
+.headerMarker {
+  height: 50px;
+  width: 50px;
+}
+
+.MealSteals {
+font-family: 'A Love of Thunder';
+font-size: 40px;
+}
+
+.page-wrap {
+  width: 600px;
+  margin: 15px auto;
+  position: relative;
+}
+
+.filterCities {
+  text-align: center;
+}
+
+.ui.segment {
+  margin: 0;
+}
+
+.userContainer {
+  width: 90%;
+  background-color: 'red';
+  margin-left: -50px;
+}
+
+
+
+.signUpRest {
+  text-align: center
+}
+
+.yelpTxt {
+  font-color: 'red'
+}
+
+.noAnalytics {
+  color: red;
+  margin-left: 600px;
+  margin-top: -200px;
+  padding-bottom: 200px;
+}
+
+.couponCard {
+  border-style: dashed !important;
+}
+
+.mapSideBar:not(body) {
+  transform: none;
+}
+
+.mapSideBar:not(body) > .ui.sidebar,
+.mapSideBar:not(body) > .fixed,
+.mapSideBar:not(body) > .pusher:after {
+  position: fixed;
+}
+
+.noCoupons {
+  margin-left: 350px;
+  color: red;
+}
+.noOffers {
+  margin-left: 400px;
+  color: red;
+}
