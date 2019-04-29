@@ -23,7 +23,7 @@ When neither a customer or restaurant is logged in. The user still has the capab
 1. Clone down this repository (master branch) on your local machine
 2. Clone down the [back-end repository](https://github.com/MCSimoes18/mealdeals_back-end) on your local machine
 3. Run ``` 'bundle install' ``` in the back-end repository
-4. Run ### 'rails db:create',  ``` 'rails db:migrate' ```, and ``` 'rails s' ``` in the back-end repository
+4. Run ``` 'rails db:create' ```,  ``` 'rails db:migrate' ```, and ``` 'rails s' ``` in the back-end repository
 5. Once your server is running, run ``` 'npm install' ``` in the terminal of this front-end repository.
 6. Then, run ``` 'npm start' ```to open the app in the browser. If prompted to use another port, type ``` 'y' ```
 7. To create restaurant of the month data, click "sign-up", under "I have deals to give" and create offers for the current month.
