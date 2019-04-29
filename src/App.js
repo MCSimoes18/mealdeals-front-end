@@ -2,59 +2,128 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 /////// IMPORT COMPONENTS ////////
-import NavBar from './components/NavBar';
 // import $ from "jquery";
+import './App.css';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+// Import Components //
+import CouponCard from './components/CouponCard';
+import Home from './components/Home';
+import Login from './components/Login';
+import MonthlyOffers from './components/MonthlyOffers';
+import NavBar from './components/NavBar';
+import OfferCard from './components/OfferCard';
+import RestaurantCard from './components/RestaurantCard';
+import RestaurantHome from './components/RestaurantHome';
+import RestaurantLogin from './components/RestaurantLogin';
+import RestaurantSignUp from './components/RestaurantSignUp';
+import Search from './components/Search';
+import SignUp from './components/SignUp';
+import UserProfile from './components/UserProfile';
+import GoogleMap from './components/GoogleMap';
+import SearchWithMap from './components/SearchWithMap';
 
-export default class App extends React.Component {
-  state = {
-    restaurants: []
-  }
+class App extends React.Component {
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/restaurants')
+    console.log('mounting app...')
+    fetch("http://localhost:3000/api/v1/offers")
     .then(res=>res.json())
-    .then(console.log)
-    // .then(rest => {
-    //   this.setState({ restaurants: rest})
-    // }, () => console.log(this.state.restaurants))
-  }
+    .then(res => {
+      this.props.dispatch({ type: "ALL_OFFERS", payload: res })
+    })
+    fetch("http://localhost:3000/api/v1/restaurants")
+    .then(res => res.json())
+    .then(res => {
+      this.props.dispatch({ type: "ALL_RESTAURANTS", payload: res })
+    })
+    fetch("http://localhost:3000/api/v1/users")
+    .then(res => res.json())
+    .then(res => {
+      this.props.dispatch({ type: "ALL_USERS", payload: res })
+    })
+    fetch("http://localhost:3000/api/v1/coupon_users")
+    .then(res => res.json())
+    .then(res => {
+      this.props.dispatch({ type: "ALL_COUPONS", payload: res })
+    })
+
+    const jwtUser = localStorage.getItem('jwtUser')
+    const jwtRest = localStorage.getItem('jwtRest')
+    if (jwtUser) {
+      fetch("http://localhost:3000/api/v1/auto_login", {
+        headers: {
+          "Authorization": jwtUser
+        }
+      })
+      .then(res => res.json())
+      .then((response) => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          this.props.dispatch({ type: "LOGIN_USER", payload: response })
+          this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+        }
+      })
+    } else if (jwtRest) {
+      fetch("http://localhost:3000/api/v1/rest_auto_login", {
+        headers: {
+          "Authorization": jwtRest
+        }
+      })
+      .then(res => res.json())
+      .then((response) => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          this.props.dispatch({ type: "LOGIN_USER", payload: response })
+          this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "restaurant" })
+          }
+        })
+      }
+    }
+
+    // this.props.dispatch({ type: "LOGIN_USER_TYPE", payload: "user" })
+
+    // we need to set the current user and the token
+    setCurrentUser = (response) => {
+    localStorage.setItem("token", response.jwt)
+      this.setState({
+        current_user: response
+      })
+    }
 
 render () {
     return (
-      <div>
-        <NavBar restaurants={this.state.restaurants}/>
-      </div>
+      <Router>
+        <NavBar />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/monthlyoffers" component={MonthlyOffers} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/restaurantsignup" component={RestaurantSignUp} />
+        <Route exact path="/restaurantlogin" component={RestaurantLogin} />
+        <Route exact path="/restauranthome" component={RestaurantHome} />
+        <Route path="/userprofile" render={()=><UserProfile reLogin={this.reLogin}/>}/>
+        <Route exact path="/search" component={Search} />
+        <Route exact path="/GoogleMap" component={GoogleMap} />
+        <Route exact path="/SearchWithMap" component={SearchWithMap} />
+      </Router>
     );
   }
-};
+}
+
+export default connect(mapStateToProps)(App)
 
 
 
-
-
-//
-//   // var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/';
-//   // var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco";
-//
-// getYelp = () => {
-//   fetch(`https://cors-anywhere.herokuapp.com/${`https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco`}`)
-//   .then(res => res.json())
-//   .then(console.log())
-// }
-//   // function mycallbackfunc(info){
-// 	// 	console.log(info);// do whatever you want with your info in the browser here
-// 	// }
-//
-//   // function seek(search_url,inputs,mycallbackfunc) {
-//   // 		var xhr = new XMLHttpRequest();
-//   // 		xhr.open('GET', search_url, true);
-//   // 		// bearer token is evaluated and sent off immediately in our query request to Yelp
-//   // 		xhr.setRequestHeader("Authorization", "Bearer " + "8ESWJF5yfJ2HIjpxhoXJVnZ9CuXnQHtLMIlSgVwsGu1-Sr5VWaDhSThfTM6riZ-HbnTY_xjp8vbPk7wKEgwlSrpmTMFjzrwV9jy1X0CjQzzd-8AYhAbqfTcYasmgXHYx" ));
-//   // 	  	xhr.onreadystatechange = function() {
-//   // 		   if (xhr.readyState == 4 && xhr.status == 200) {
-//   // 	             mycallbackfunc(xhr.responseText);
-//   // 	           }
-//   // 	  	};
-//   // 		xhr.send();
-//   // 	}
-//
+function mapStateToProps(state) {
+  return {
+    current_user: state.current_user,
+    user_type: state.user_type,
+    allRestaurants: state.allRestaurants,
+    allOffers: state.allOffers,
+    allCoupons: state.allCoupons,
+    allUsers: state.allUsers
+  }
+}
