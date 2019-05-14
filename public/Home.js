@@ -35,8 +35,6 @@ class Home extends React.Component {
     this.props.dispatch({ type: "SEARCH_LOC", payload: this.state.location })
     this.props.dispatch({ type: "SEARCH_CUISINE", payload: this.state.cuisine })
     this.setState({ location: "", cuisine: "" });
-    console.log("cuisine", this.state.cuisine)
-    console.log("location", this.state.location)
     this.handleSearch(this.state.cuisine, this.state.location)
   }
 
@@ -69,24 +67,8 @@ class Home extends React.Component {
  }
 
 
-  // renderSearchCards = () => {
-  //   if (this.state.rests.length == 0) {
-  //     return null
-  //   } else {
-  //     return this.state.rests.businesses.map(rest => {
-  //       return (
-  //       <RestaurantCard restaurant={rest} />
-  //       )
-  //     }
-  //   )
-  //   }
-  // }
-
-
   render() {
 
-
-    console.log(this.props)
     return (
       <div className="home">
         <h1 className="title"> Meal Deals </h1>
@@ -168,6 +150,4 @@ function mapStateToProps(state) {
     current_user: state.current_user,
     rests: state.rests
   }
-
-  console.log("here", state.keyword)
 }

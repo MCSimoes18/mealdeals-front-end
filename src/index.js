@@ -22,8 +22,6 @@ import GoogleMap from './components/GoogleMap';
 import store from './store';
 
 
-
-
 ReactDOM.render((
   <Provider store={store}>
       <App />
