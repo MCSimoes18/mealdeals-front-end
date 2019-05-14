@@ -28,15 +28,6 @@ componentDidMount = () => {
   .then(res => this.setState({ currentOffers: res, filteredCurrentOffers: res }))
 }
 
-componentDidUpdate = (prevProps, prevState) => {
-    // if (prevProps.lat !== this.state.lat) {
-    //   this.setState({
-    //     lat: this.props.events[0].latitude,
-    //     longitude: this.props.events[0].longitude
-    //   })
-    // }
-  }
-
 makeVisible = () => {
   this.setState({
     visible: true

@@ -16,6 +16,7 @@ state = {
   long: -74.0060 // set map to NYC coordinates by default
 }
 
+//sets lat and long coordinates of selected restaurant and callbacks to set state to true to show map
 viewOnMap = (restaurant) => {
   this.setState({
     lat: restaurant.coordinates.latitude,
@@ -29,6 +30,7 @@ makeVisible = () => {
   })
 }
 
+// called in rendered but only displayed if visible is true. 'visible' part of semantic UI.
 renderMap = () => {
   const mapStyles = {
     width: '100%',
@@ -62,6 +64,7 @@ renderMap = () => {
   )
 }
 
+// sets state to false to close map
 closeMap = () => {
   this.setState({
     visible: false

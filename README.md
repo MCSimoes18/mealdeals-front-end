@@ -6,7 +6,8 @@ Meal Deals was created during my time at [Flatiron School](https://flatironschoo
 ## Technologies
 - React
 - React-Router
-- Reduxx
+- Redux
+- Redux
 - Ruby on Rails
 - Yelp API
 - Twilio
