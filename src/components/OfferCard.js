@@ -90,7 +90,7 @@ class OfferCard extends React.Component {
   }
 
   floatCoordinates = (num) => {
-     return Number.parseFloat(num).toFixed(2);
+     return Number.parseFloat(num).toFixed(3);
   }
 
   compareLocations = () => {
@@ -102,9 +102,11 @@ class OfferCard extends React.Component {
    let floatRestLongitude = this.floatCoordinates(checkInRestaurant.longitude)
    let floatUserLatitude = this.floatCoordinates(this.state.user_latitude)
    let floatUserLongitude = this.floatCoordinates(this.state.user_longitude)
+   let latitudeDifference = floatRestLatitude - floatUserLatitude
+   let longitudeDifference = floatRestLongitude - floatUserLongitude
 
-   console.log("compare", floatRestLatitude, floatUserLatitude, floatRestLongitude, floatUserLongitude)
-   if (floatRestLatitude === floatUserLatitude && floatRestLongitude === floatUserLongitude){
+   console.log("compare", floatRestLatitude, floatUserLatitude, floatRestLongitude, floatUserLongitude, latitudeDifference, longitudeDifference)
+   if (latitudeDifference > -.0011  && latitudeDifference < .0011 && longitudeDifference > -.0011 && longitudeDifference < .0011 ){
      console.log("check in")
      this.createCoupon()
      this.setState({
@@ -160,11 +162,9 @@ renderOfferCard = () => {
     month[11] = "December";
     // using month array to display string instead of value
     if (this.props.user_type === undefined || this.props.allRestaurants.length === 0 || this.props.offer === null) {
-      debugger
       return <h3> LOADING </h3>
     }
     else {
-    debugger
     let earn_month = month[this.props.offer.earn_month]
     let redeem_month = month[this.props.offer.redeem_month]
     if (this.props.user_type === null || this.props.user_type == 'before_restaurant'){

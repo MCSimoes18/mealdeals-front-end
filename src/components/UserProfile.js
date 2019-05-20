@@ -57,7 +57,6 @@ class UserProfile extends Component {
       )
     } else {
       if (this.props.selectedCoupon === 'All Coupons'){
-        debugger
         return findUserCoupons.map(coupon => {
           return (
             <CouponCard
